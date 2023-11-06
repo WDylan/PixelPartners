@@ -1,0 +1,41 @@
+footer {
+  height: 10em;
+  width: 100%;
+  background-color: #FFF;
+  font-family: Helvetica;
+  list-style: none;
+  font-size: 1.5em;
+}
+
+.footerLink {
+  display: flex;
+  justify-content: space-around;
+}
+
+.footerLink ul {
+  list-style: none;
+  display: flex;
+  font-weight: bolder;
+}
+
+.footerLink ul li {
+  margin: auto 1.5em;
+}
+
+.footerSocials {
+  display: flex;
+  justify-content: center;
+}
+
+.footerSocials svg {
+  width: 3em;
+  height: 3em;
+  margin: auto 1em;
+}
+
+.footerSlogan {
+  display: flex;
+  justify-content: center;
+  margin: 1em;
+  font-style: italic;
+}
