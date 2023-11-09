@@ -1,0 +1,39 @@
+.formInscription {
+  height: 100%;
+  width: 40em;
+  border: solid 1px;
+  border-radius: 5%;
+  padding-top: 2em;
+  padding-left: 2em;
+  background-color: #2a4b47;
+}
+
+.formInscription h2 {
+    text-align: center;
+}
+
+.formInscription input {
+  width: 576px;
+  height: 35px;
+  border-radius: 1em;
+  margin-bottom: 1em;
+}
+
+.formInscription label {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.buttonRegistration {
+  text-align: center;
+}
+
+.buttonEnvoyer {
+  color: #2a4b47;
+  background-color: #c1b37a;
+  font-weight: bold;
+  font-size: 15px;
+  height: 3em;
+  width: 10em;
+  border-radius: 1em;
+}

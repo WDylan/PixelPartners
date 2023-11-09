@@ -1,0 +1,127 @@
+/* MENU */
+header {
+  height: 6.6em;
+  width: 100%;
+  background-color: #2a4b47;
+  color: #c1b37a;
+  font-family: Helvetica;
+  list-style: none;
+  font-size: 1.3em;
+  z-index: 2;
+  margin-bottom: 2em;
+}
+
+.navBar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.logoNav {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  border: 1px solid #c1b37a;
+}
+
+.classementNav {
+  height: 100%;
+  font-weight: bold;
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  z-index: 1;
+}
+
+.classementNav li a {
+  color: #c1b37a;
+  text-decoration: none;
+}
+
+.rechercheNav {
+  margin-right: 7em;
+  height: 3em;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 1.5em;
+}
+
+.titreNav {
+  height: 100%;
+  font-weight: bold;
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  z-index: 1;
+}
+
+.titreNav li a {
+  color: #c1b37a;
+  text-decoration: none;
+}
+
+.connexion,
+.inscription {
+  background-color: #c1b37a;
+  color: #2a4b47;
+  font-weight: bold;
+  font-size: 15px;
+  height: 4em;
+  width: 10em;
+  border-radius: 1.5em;
+  margin-left: 2em;
+}
+
+.langue li {
+  list-style: none;
+}
+/* MENUS DEROULANTS */
+
+.navBar li ul {
+  /* PERMET L'APPARITION DU SS-MENU */
+  display: none;
+  list-style: none;
+  padding: 0;
+  width: 13%;
+  z-index: -2;
+}
+
+.navBar li:hover ul {
+  display: block;
+}
+
+/* SOUS MENUS DEROULANT */
+.navbarClassement {
+  position: absolute;
+  display: block;
+  text-align: center;
+  background-color: #2a4b47;
+  border-radius: 2%;
+  margin-top: 2.7em;
+  z-index: -1;
+}
+.navbarTitre {
+  position: absolute;
+  display: block;
+  text-align: center;
+  background-color: #2a4b47;
+  border-radius: 2%;
+  margin-top: 2.7em;
+  z-index: -1;
+}
+
+/* TAILLE DES SS-CATEGORIES */
+
+.navbarClassement li a,
+.navbarTitre li a {
+  line-height: 2em;
+}
+.navBar li.vide {
+  height: 9.7em;
+  border-bottom: 1px solid #c1b37a;
+}
