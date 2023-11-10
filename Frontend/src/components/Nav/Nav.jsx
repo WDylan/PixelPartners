@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Nav.css";
 
 function Nav() {
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   const handleSearch = (event) => {
     if (event.key === "Enter") {
@@ -10,6 +12,16 @@ function Nav() {
       console.log(`Recherche: ${searchTerm}`);
     }
   };
+  const goToConnexion = () => {
+    // Naviguer vers la page de connexion
+    navigate("/connexion");
+  };
+
+  const goToInscription = () => {
+    // Naviguer vers la page d'inscription
+    navigate("/inscription");
+  };
+
   return (
     <header>
       <div className="navBar">
@@ -57,8 +69,12 @@ function Nav() {
           </ul>
         </li>
         <div>
-          <button className="connexion">Connexion</button>
-          <button className="inscription">Inscription</button>
+          <button className="connexion" onClick={goToConnexion}>
+            Connexion
+          </button>
+          <button className="inscription" onClick={goToInscription}>
+            Inscription
+          </button>
         </div>
       </div>
     </header>

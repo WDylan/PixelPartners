@@ -1,0 +1,51 @@
+.formConnexion {
+  height: 100%;
+  width: 40em;
+  border: solid 1px;
+  border-radius: 5%;
+  padding: 1em;
+  background-color: #2a4b47;
+  text-align: center;
+}
+
+.formConnexion h2 {
+  text-align: center;
+}
+
+.formConnexion hr {
+  margin-bottom: 2em;
+}
+
+.formConnexion input {
+  margin-top: 1em;
+  width: 50%;
+  height: 3em;
+  border-radius: 1em;
+  margin-bottom: 1.5em;
+}
+
+.formConnexion label {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+.buttonConnect {
+  text-align: center;
+}
+
+.buttonConnexion {
+  color: #2a4b47;
+  background-color: #c1b37a;
+  font-weight: bold;
+  font-size: 15px;
+  height: 3em;
+  width: 10em;
+  border-radius: 1em;
+  margin-bottom: 2em;
+}
+
+.inputMdp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2.5em;
+}

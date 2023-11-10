@@ -13,8 +13,8 @@
 }
 
 .formInscription input {
-  width: 576px;
-  height: 35px;
+  width: 90%;
+  height: 3em;
   border-radius: 1em;
   margin-bottom: 1em;
 }
@@ -36,4 +36,20 @@
   height: 3em;
   width: 10em;
   border-radius: 1em;
+}
+.inputDateNaissance {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+}
+
+.inputDateNaissance input {
+  width: 100%;
+}
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
 }
