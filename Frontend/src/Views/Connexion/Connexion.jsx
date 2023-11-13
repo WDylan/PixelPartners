@@ -3,7 +3,7 @@ import Nav from "../../components/Nav/Nav";
 import Footer from "../../components/Footer/Footer";
 import ConnexionForm from "../../components/ConnexionForm/ConnexionForm";
 
-import './Connexion.css';
+import "./Connexion.css";
 
 export default function Connexion() {
   return (

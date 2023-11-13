@@ -8,6 +8,8 @@ const cors = require('cors');
 const app = express();
 const port = 5000;
 
+const jwt = require("jsonwebtoken");
+
 app.use(cors({
     origin: '*',
 }));
@@ -26,6 +28,24 @@ db.connect((err) => {
         console.log('Connecté à la base de données MySQL');
     }
 });
+
+// Middleware pour vérifier le jeton d'authentification
+const verifyToken = (req, res, next) => {
+    const token = req.headers.authorization;
+
+    if (!token) {
+        return res.status(403).json({ error: "Accès interdit" });
+    }
+
+    jwt.verify(token, "votre-secret", (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ error: "Jeton d'authentification non valide" });
+        }
+
+        req.user = decoded;
+        next();
+    });
+};
 
 // Route d'inscription
 app.post('/register', async (req, res) => {
@@ -78,6 +98,7 @@ app.get('/checkUsername', (req, res) => {
         res.json({ exists });
     });
 });
+
 // Endpoint pour vérifier si l'adresse email existe déjà
 app.get('/checkEmail', (req, res) => {
     const { email } = req.query;
@@ -104,40 +125,66 @@ app.get('/checkEmail', (req, res) => {
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
-    // Vérifiez les données d'entrée, s'assyez que le nom d'utilisateur et le mot de passe sont présent
+    // Vérifiez les données d'entrée, assurez-vous que le nom d'utilisateur et le mot de passe sont présents
     if (!username || !password) {
-        return res.status(400).send('Nom d\'utilisateur et mot de passe requis');
+        return res.status(400).json({ error: 'Nom d\'utilisateur et mot de passe requis' });
     }
-
     try {
-        // Récupérer le mot de passe haché de la base de onnées
+        // Récupérer le mot de passe haché de la base de données
         const query = 'SELECT password FROM users WHERE username = ?';
         db.query(query, [username], async (err, result) => {
             if (err) {
-                console.error('Erreur lors de la récupération du mot de passe :' + err.message);
-                return res.status(500).send('Erreur lors de la connexion');
+                console.error('Erreur lors de la récupération du mot de passe :', err.message);
+                return res.status(500).json({ error: 'Erreur lors de la connexion' });
             }
 
+            console.log('Résultat de la requête de récupération du mot de passe :', result);
+
             if (result.length === 0) {
-                return res.status(401).send('Nom d\'utilisateur ou mot de passe incorect');
+                console.log('Nom d\'utilisateur non trouvé');
+                return res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
             }
 
             const hashedPassword = result[0].password;
 
             // Vérifier le mot de passe
             const passwordMatch = await bcrypt.compare(password, hashedPassword);
-
             if (passwordMatch) {
-                res.status(200).send('Connexion réussie !');
+                const token = jwt.sign({ username: username }, "votre-secret", { expiresIn: "30d" });
+                res.status(200).json({ token });
             } else {
-                res.status(401).send('Nom d\'utilisateur ou mot de passe incorrect');
+                res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
             }
         });
     } catch (error) {
-        console.error('Erreur lors de la vérification du mot de passe :' + error.message);
-        res.status(500).send('Erreur lors de la connexion');
+        console.error('Erreur lors de la vérification du mot de passe :', error.message);
+        res.status(500).json({ error: 'Erreur lors de la connexion' });
     }
 });
+
+// Route protégée pour obtenir les informations de l'utilisateur connecté
+app.get('/profil', verifyToken, async (req, res) => {
+    try {
+        // Vous pouvez accéder à l'utilisateur connecté via req.user
+        const username = res.user.username;
+
+        // Récupérez les informations de l'utilisateur à partir de la base de données
+        const query = 'SELECT * FROM users WHERE username = ?';
+        db.query(query, [username], (err, result) => {
+            if (err) {
+                console.error('Erreur lors de la récupération des informations de l\'utilisateur :', err.message);
+                res.status(500).json({ error: 'Erreur lors de la récupération des informations de l\'utilisateur' });
+            } else {
+                const userData = result[0];
+                res.json(userData);
+            }
+        });
+    } catch (error) {
+        console.error('Erreur lors de la récupération des informations de l\'utilisateur :', error.message);
+        res.status(500).json({ error: 'Erreur lors de la récupération des informations de l\'utilisateur' });
+    }
+})
+
 // Servez l'application React depuis le backend
 app.use(express.static(path.join(__dirname, 'PixelPartners/Frontend')));
 

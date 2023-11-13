@@ -288,7 +288,7 @@ const RegistrationForm = () => {
         <button
           className="buttonEnvoyer"
           onClick={handleRegister}
-          onkeyDown={handleKeydown}
+          onKeyDown={handleKeydown}
         >
           Envoyer
         </button>

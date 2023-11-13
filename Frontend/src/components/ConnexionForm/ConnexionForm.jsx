@@ -17,19 +17,21 @@ export default function ConnexionForm() {
         password,
       });
       if (response.status === 200) {
-        setMessage("Connexion réussie !");
+        localStorage.setItem("token", response.data.token);
         // Rediriger l'utilisateur
-        navigate("/");
-      } else if (response.status === 401) {
+        navigate("/profil");
+      } else {
+        setMessage("Nom d'utilisateur ou mot de passe incorrect");
+      }
+    } catch (error) {
+      console.error("Erreur lors de la connexion :", error.message);
+      if (error.response && error.response.status === 401) {
         setMessage("Nom d'utilisateur ou mot de passe incorrect");
       } else {
         setMessage(
           "Une erreur s'est produite lors de la connexion. Veuillez réessayer."
         );
       }
-    } catch (error) {
-      console.error("Erreur lors de la connexion :", error.message);
-      setMessage("Erreur lors de la connexion. Veuillez réessayer.");
     }
   };
 
@@ -67,7 +69,7 @@ export default function ConnexionForm() {
         <button
           className="buttonConnexion"
           onClick={handleConnexion}
-          onkeyDown={handleKeydown}
+          onKeyDown={handleKeydown}
         >
           Valider
         </button>
@@ -76,7 +78,7 @@ export default function ConnexionForm() {
           <br />
           Vous n'êtes pas encore membre ?<br />
           Rejoignez nous !<br />
-          <a href="/">Inscription</a>
+          <a href="/inscription">Inscription</a>
         </span>
       </div>
     </div>

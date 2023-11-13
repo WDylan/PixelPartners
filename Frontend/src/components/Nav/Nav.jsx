@@ -22,10 +22,19 @@ function Nav() {
     navigate("/inscription");
   };
 
+  const goToAccueil = () => {
+    // Naviguer vers la page d'Accueil
+    navigate("/");
+  };
+  const goToProfil = () => {
+    // Naviguer vers la page Profil
+    navigate("/profil");
+  };
+
   return (
     <header>
       <div className="navBar">
-        <li className="logoNav">
+        <li className="logoNav" onClick={goToAccueil}>
           <img className="logo" src="./img/logo.png" alt="img" />
         </li>
         <li>
@@ -74,6 +83,12 @@ function Nav() {
           </button>
           <button className="inscription" onClick={goToInscription}>
             Inscription
+          </button>
+          <button className="deconnexion" onClick={goToAccueil}>
+            Deconnexion
+          </button>
+          <button className="Profil" onClick={goToProfil}>
+            Profil
           </button>
         </div>
       </div>
