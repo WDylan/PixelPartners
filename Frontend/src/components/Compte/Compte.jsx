@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Compte.css";
 
@@ -14,47 +13,40 @@ export default function Compte() {
       annee: "",
     },
   });
-  const navigate = useNavigate();
 
   useEffect(() => {
-    // fonction pour récupérer les informations de l'utilisateur
-    const getUserProfil = async () => {
+    const getUserProfile = async () => {
       try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          // L'utilisateur n'est pas connecter, le rediriger vers la page de connexion
-          navigate("/connexion");
-          return;
-        }
-
         const response = await axios.get("http://localhost:5000/profil", {
-          headers: {
-            Authorization: token,
-          },
+          withCredentials: true,  // Utilisation de withCredentials pour inclure les cookies dans la requête
         });
 
-        // Mettrre à jour l'état avec les informations de l'utilisateur
-        setEditData({
-          username: response.data.username,
-          email: response.data.email,
-          password: "",
-          dateNaissance: {
-            jour: response.data.dateNaissance.jour,
-            mois: response.data.dateNaissance.mois,
-            annee: response.data.dateNaissance.annee,
-          },
-        });
+        console.log("Response data:", response.data);
+
+        if (response.data) {
+          setEditData((prevData) => ({
+            ...prevData,
+            username: response.data.username || "",
+            email: response.data.email || "",
+            password: "",
+            dateNaissance: {
+              jour: response.data.dateNaissance?.jour || "",
+              mois: response.data.dateNaissance?.mois || "",
+              annee: response.data.dateNaissance?.annee || "",
+            },
+          }));
+        } else {
+          console.error("La réponse ne contient pas de données utilisateur.");
+        }
       } catch (error) {
-        console.error(
-          "Erreur lors de la récupération des information de l'utilisateur :",
-          error.message
-        );
-        // Gérez l'erreur, par exemple, déconnectez l'utilisateur s'il y a un problème avec le jeton
+        console.error("Erreur lors de la récupération des informations de l'utilisateur :", error.message);
+        // Vérifiez si l'erreur contient des informations supplémentaires
+        console.error("Error details:", error.response?.data);
       }
     };
-    // Appel de la fonction pour récupérer les informations de l'utilisateur
-    getUserProfil();
-  }, [navigate]);
+
+    getUserProfile();
+  }, []);
 
   const handleInputChange = (field, value) => {
     setEditData((prevData) => ({
@@ -65,19 +57,15 @@ export default function Compte() {
 
   const handleSaveChanges = async () => {
     try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        navigate("/connexion");
-        return;
-      }
-
       await axios.post("http://localhost:5000/profil", editData, {
-        headers: {
-          Authorization: token,
-        },
+        withCredentials: true,  // Assurez-vous d'inclure les cookies dans la requête
       });
+      console.log("Modifications enregistrées avec succès !");
     } catch (error) {
       console.error("Erreur lors de la mise à jour du profil :", error.message);
+      // Vérifiez si l'erreur contient des informations supplémentaires
+      console.error("Error details:", error.response?.data);
+      // Affichez un message d'erreur à l'utilisateur
     }
   };
 

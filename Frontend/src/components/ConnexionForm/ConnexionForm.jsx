@@ -15,9 +15,11 @@ export default function ConnexionForm() {
       const response = await axios.post("http://localhost:5000/login", {
         username,
         password,
+      }, {
+        withCredentials: true,  // Assurez-vous d'inclure les cookies dans la requête
       });
+  
       if (response.status === 200) {
-        localStorage.setItem("token", response.data.token);
         // Rediriger l'utilisateur
         navigate("/profil");
       } else {
@@ -33,7 +35,7 @@ export default function ConnexionForm() {
         );
       }
     }
-  };
+  };  
 
   const handleKeydown = (event) => {
     if (event.key === "Enter") {
