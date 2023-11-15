@@ -66,7 +66,9 @@ header {
 }
 
 .connexion,
-.inscription {
+.inscription,
+.deconnexion,
+.profil {
   background-color: #c1b37a;
   color: #2a4b47;
   font-weight: bold;

@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Nav.css";
+import axios from "axios";
 
 function Nav() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [isConnected, setIsConnected] = useState(() => {
+    const storedIsConnected = localStorage.getItem("isConnected");
+    return storedIsConnected ? JSON.parse(storedIsConnected) : false;
+  });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Mettre à jour le localStorage lorsque isConnected change
+    localStorage.setItem("isConnected", JSON.stringify(isConnected));
+  }, [isConnected]);
 
   const handleSearch = (event) => {
     if (event.key === "Enter") {
@@ -29,6 +39,21 @@ function Nav() {
   const goToProfil = () => {
     // Naviguer vers la page Profil
     navigate("/profil");
+  };
+
+  const handleDeconnexion = async () => {
+    try {
+      // Effectuez la déconnexion coté serveur
+      await axios.post("http://localhost:5000/logout");
+      setIsConnected(false);
+      // Rediriger l'utilisateur après la déconnexion
+      navigate("/");
+
+      // Affichage d'un message de déconnexion réussie coté client
+      console.log("Déconnexion réussie");
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion :", error.message);
+    }
   };
 
   return (
@@ -78,18 +103,26 @@ function Nav() {
           </ul>
         </li>
         <div>
-          <button className="connexion" onClick={goToConnexion}>
-            Connexion
-          </button>
-          <button className="inscription" onClick={goToInscription}>
-            Inscription
-          </button>
-          <button className="deconnexion" onClick={goToAccueil}>
-            Deconnexion
-          </button>
-          <button className="Profil" onClick={goToProfil}>
-            Profil
-          </button>
+          {console.log("isConnected:", isConnected)}
+          {isConnected ? (
+            <>
+              <button className="deconnexion" onClick={handleDeconnexion}>
+                Déconnexion
+              </button>
+              <button className="profil" onClick={goToProfil}>
+                Profil
+              </button>
+            </>
+          ) : (
+            <>
+              <button className="connexion" onClick={goToConnexion}>
+                Connexion
+              </button>
+              <button className="inscription" onClick={goToInscription}>
+                Inscription
+              </button>
+            </>
+          )}
         </div>
       </div>
     </header>
