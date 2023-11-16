@@ -1,13 +1,12 @@
 .formCompte {
-  height: 65%;
-  width: 60%;
   border: solid 1px;
-  border-radius: 5%;
+  border-radius: 3%;
   padding: 1em;
   background-color: #2a4b47;
   text-align: center;
   display: flex;
   flex-direction: row;
+  border: none;
 }
 
 .compte {
