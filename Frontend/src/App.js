@@ -4,7 +4,7 @@ import './App.css';
 import Accueil from './Views/Accueil/Accueil';
 import Connexion from './Views/Connexion/Connexion';
 import Inscription from './Views/Inscription/Inscription'
-import Profil from './Views/Profil/Profil';
+import PageProfil from './Views/PageProfil/PageProfil';
 
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
         <Route exact path="/" element={<Accueil />} />
         <Route path="/connexion" element={<Connexion />} />
         <Route path="/inscription" element={<Inscription />} />
-        <Route path="/profil" element={<Profil />} />
+        <Route path="/profil" element={<PageProfil />} />
 
       </Routes>
     </div>

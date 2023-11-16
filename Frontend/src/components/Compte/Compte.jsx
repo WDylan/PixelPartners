@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Compte.css";
+import { CountryDropdown } from "react-country-region-selector";
 
 export default function Compte() {
   const [editData, setEditData] = useState({
@@ -13,6 +14,13 @@ export default function Compte() {
       mois: "",
       annee: "",
     },
+    genre: "",
+    pays: "",
+    adresse: "",
+    codePostal: "",
+    ville: "",
+    telephone: "",
+    telephonePortable: "",
   });
 
   const [isEditMode, setIsEditMode] = useState(false);
@@ -34,6 +42,13 @@ export default function Compte() {
             email: response.data.email || "",
             password: response.data.password || "",
             dateNaissance: formatDateNaissance(response.data.dateNaissance),
+            genre: response.data.genre || "",
+            pays: response.data.pays || "",
+            adresse: response.data.adresse || "",
+            codePostal: response.data.codePostal || "",
+            ville: response.data.ville || "",
+            telephone: response.data.telephone || "",
+            telephonePortable: response.data.telephonePortable || "",
           }));
         } else {
           console.error("La réponse ne contient pas de données utilisateur.");
@@ -54,31 +69,31 @@ export default function Compte() {
     getUserProfile();
   }, [navigate]);
 
-  // Ajoutez cette vérification au début de la fonction pour s'assurer que l'utilisateur est connecté
-  useEffect(() => {
-    // Vérifiez ici si l'utilisateur est connecté, sinon, redirigez-le vers la page de connexion
-    const checkIfLoggedIn = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/checklogin", {
-          withCredentials: true,
-        });
+  // // Ajoutez cette vérification au début de la fonction pour s'assurer que l'utilisateur est connecté
+  // useEffect(() => {
+  //   // Vérifiez ici si l'utilisateur est connecté, sinon, redirigez-le vers la page de connexion
+  //   const checkIfLoggedIn = async () => {
+  //     try {
+  //       const response = await axios.get("http://localhost:5000/checklogin", {
+  //         withCredentials: true,
+  //       });
 
-        if (response.data && response.data.isLoggedIn) {
-          // L'utilisateur est connecté, continuez comme d'habitude
-        } else {
-          // L'utilisateur n'est pas connecté, redirigez-le vers la page de connexion
-          navigate("/connexion");
-        }
-      } catch (error) {
-        console.error(
-          "Erreur lors de la vérification de la connexion :",
-          error.message
-        );
-      }
-    };
+  //       if (response.data && response.data.isLoggedIn) {
+  //         // L'utilisateur est connecté, continuez comme d'habitude
+  //       } else {
+  //         // L'utilisateur n'est pas connecté, redirigez-le vers la page de connexion
+  //         navigate("/connexion");
+  //       }
+  //     } catch (error) {
+  //       console.error(
+  //         "Erreur lors de la vérification de la connexion :",
+  //         error.message
+  //       );
+  //     }
+  //   };
 
-    checkIfLoggedIn();
-  }, [navigate]); // Ajoutez navigate comme dépendance
+  //   checkIfLoggedIn();
+  // }, [navigate]); // Ajoutez navigate comme dépendance
 
   const formatDateNaissance = (date) => {
     if (!date) {
@@ -141,91 +156,206 @@ export default function Compte() {
 
   return (
     <div className="formCompte">
-      <div className="parametres">
-        <li>Paramètres</li>
-        <ul>
-          <li>Compte</li>
-          <li>Profil</li>
-          <li>Notifications</li>
-          <li>Audios</li>
-          <li>Accessibilité</li>
-          <li>A propos de </li>
-        </ul>
-      </div>
-      <div className="content">
+      <div className="compte">
         <h2>Compte</h2>
-        <label>Nom d'utilisateur : </label>
-        <input
-          type="text"
-          placeholder="Nom d'utilisateur"
-          value={editData.username}
-          onChange={(e) => handleInputChange("username", e.target.value)}
-          readOnly={!isEditMode} // Empêcher la modification si le mode édition est désactivé
-        />
-
-        <label>Adresse email : </label>
-        <input
-          type="text"
-          placeholder="Adresse email"
-          value={editData.email}
-          onChange={(e) => handleInputChange("email", e.target.value)}
-          readOnly={!isEditMode}
-        />
-
-        <label>Mot de passe :</label>
-        <input
-          type="password"
-          placeholder="Mot de passe"
-          value={editData.password}
-          onChange={(e) => handleInputChange("password", e.target.value)}
-          readOnly={!isEditMode}
-        />
-
-        <label>Date de naissance : </label>
-
-        <input
-          type="text"
-          placeholder="Jour"
-          value={editData.dateNaissance.jour}
-          onChange={(e) =>
-            handleInputChange("dateNaissance", {
-              ...editData.dateNaissance,
-              jour: e.target.value,
-            })
-          }
-          readOnly={!isEditMode}
-        />
-        <input
-          type="text"
-          placeholder="Mois"
-          value={editData.dateNaissance.mois}
-          onChange={(e) =>
-            handleInputChange("dateNaissance", {
-              ...editData.dateNaissance,
-              mois: e.target.value,
-            })
-          }
-          readOnly={!isEditMode}
-        />
-        <input
-          type="text"
-          placeholder="Année"
-          value={editData.dateNaissance.annee}
-          onChange={(e) =>
-            handleInputChange("dateNaissance", {
-              ...editData.dateNaissance,
-              annee: e.target.value,
-            })
-          }
-          readOnly={!isEditMode}
-        />
-        {!isEditMode && (
-          <button onClick={() => setIsEditMode(true)}>Modifier</button>
-        )}
-        <div className="buttonRegistration">
-          <button className="buttonValider" onClick={handleSaveChanges}>
-            Valider Modification
-          </button>
+        <div>
+          {" "}
+          <label>Nom d'utilisateur : </label>
+          <input
+            type="text"
+            placeholder="Nom d'utilisateur"
+            value={editData.username}
+            onChange={(e) => handleInputChange("username", e.target.value)}
+            readOnly={!isEditMode} // Empêcher la modification si le mode édition est désactivé
+          />
+        </div>
+        <div>
+          {" "}
+          <label>Adresse email : </label>
+          <input
+            type="text"
+            placeholder="Adresse email"
+            value={editData.email}
+            onChange={(e) => handleInputChange("email", e.target.value)}
+            readOnly={!isEditMode}
+          />
+        </div>
+        <div>
+          {" "}
+          <label>Mot de passe :</label>
+          <input
+            type="password"
+            placeholder="Mot de passe"
+            value={editData.password}
+            onChange={(e) => handleInputChange("password", e.target.value)}
+            readOnly={!isEditMode}
+          />
+        </div>
+        <div>
+          {" "}
+          <label>Date de naissance : </label>
+          <input
+            type="text"
+            placeholder="Jour"
+            value={editData.dateNaissance.jour}
+            onChange={(e) =>
+              handleInputChange("dateNaissance", {
+                ...editData.dateNaissance,
+                jour: e.target.value,
+              })
+            }
+            readOnly={!isEditMode}
+          />
+          <input
+            type="text"
+            placeholder="Mois"
+            value={editData.dateNaissance.mois}
+            onChange={(e) =>
+              handleInputChange("dateNaissance", {
+                ...editData.dateNaissance,
+                mois: e.target.value,
+              })
+            }
+            readOnly={!isEditMode}
+          />
+          <input
+            type="text"
+            placeholder="Année"
+            value={editData.dateNaissance.annee}
+            onChange={(e) =>
+              handleInputChange("dateNaissance", {
+                ...editData.dateNaissance,
+                annee: e.target.value,
+              })
+            }
+            readOnly={!isEditMode}
+          />
+        </div>
+        <div>
+          <label>Genre : </label>
+          <input
+            type="radio"
+            id="homme"
+            name="genre"
+            value="homme"
+            checked={editData.genre === "homme"}
+            onChange={() => handleInputChange("genre", "homme")}
+            readOnly={!isEditMode}
+          />
+          <label htmlFor="homme">Homme</label>
+          <input
+            type="radio"
+            id="femme"
+            name="genre"
+            value="femme"
+            checked={editData.genre === "femme"}
+            onChange={() => handleInputChange("genre", "femme")}
+            readOnly={!isEditMode}
+          />
+          <label htmlFor="femme">Femme</label>
+          <input
+            type="radio"
+            id="nonRenseigne"
+            name="genre"
+            value="nonRenseigne"
+            checked={editData.genre === "nonRenseigne"}
+            onChange={() => handleInputChange("genre", "nonRenseigne")}
+            readOnly={!isEditMode}
+          />
+          <label htmlFor="nonRenseigne">Non renseigné</label>
+        </div>
+        <div>
+          <label>Pays : </label>
+          <CountryDropdown
+            country={editData.pays || "France"}
+            placeholder="Pays"
+            onChange={(selectedCountry) =>
+              handleInputChange("pays", selectedCountry)
+            }
+            disableWhenEmpty={true}
+            readOnly={!isEditMode}
+          />
+          <div>
+            <strong>Pays :</strong> {editData.pays}
+          </div>
+        </div>
+        <div>
+          <label>Adresse : </label>
+          <input
+            type="text"
+            placeholder="Adresse"
+            value={editData.adresse}
+            onChange={(e) => handleInputChange("adresse", e.target.value)}
+            readOnly={!isEditMode}
+          />
+        </div>
+        <div>
+          <label>Code Postal : </label>
+          <input
+            type="text"
+            placeholder="Code Postal"
+            value={editData.codePostal}
+            onChange={(e) => handleInputChange("codePostal", e.target.value)}
+            readOnly={!isEditMode}
+          />
+        </div>
+        <div>
+          <label>Ville : </label>
+          <input
+            type="text"
+            placeholder="Ville"
+            value={editData.ville}
+            onChange={(e) => handleInputChange("ville", e.target.value)}
+            readOnly={!isEditMode}
+          />
+        </div>
+        <div>
+          <label>Téléphone : </label>
+          <input
+            type="text"
+            placeholder="Téléphone"
+            value={editData.telephone}
+            onChange={(e) => handleInputChange("telephone", e.target.value)}
+            readOnly={!isEditMode}
+          />
+        </div>
+        <div>
+          <label>Téléphone Portable : </label>
+          <input
+            type="text"
+            placeholder="Téléphone Portable"
+            value={editData.telephonePortable}
+            onChange={(e) =>
+              handleInputChange("telephonePortable", e.target.value)
+            }
+            readOnly={!isEditMode}
+          />
+        </div>
+        <div>
+          {!isEditMode && (
+            <button
+              className="buttonRegistration"
+              onClick={() => setIsEditMode(true)}
+            >
+              Modifier
+            </button>
+          )}
+          {isEditMode && (
+            <div>
+              <button
+                className="buttonRegistration"
+                onClick={handleSaveChanges}
+              >
+                Valider Modification
+              </button>
+              <button
+                className="buttonRegistration"
+                onClick={() => setIsEditMode(false)}
+              >
+                Annuler
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

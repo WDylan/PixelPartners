@@ -135,11 +135,11 @@ app.post('/login', async (req, res) => {
     }
 
     try {
-        // Récupérer le mot de passe haché et l'ID de l'utilisateur de la base de données
-        const query = 'SELECT id, password, email, dateNaissance FROM users WHERE username = ?';
+        // Récupérer toutes les informations de l'utilisateur de la base de données
+        const query = 'SELECT * FROM users WHERE username = ?';
         db.query(query, [username], async (err, result) => {
             if (err) {
-                console.error('Erreur lors de la récupération du mot de passe :', err.message);
+                console.error('Erreur lors de la récupération des informations de l\'utilisateur :', err.message);
                 return res.status(500).json({ error: 'Erreur lors de la connexion' });
             }
 
@@ -148,22 +148,29 @@ app.post('/login', async (req, res) => {
                 return res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
             }
 
-            const { id, password: hashedPassword, email, dateNaissance } = result[0];
+            const { id, username, email, password: hashedPassword, dateNaissance, genre, pays, adresse, codePostal, ville, telephone, telephonePortable } = result[0];
 
             // Vérifier le mot de passe
             const passwordMatch = await bcrypt.compare(password, hashedPassword);
             if (passwordMatch) {
-                // Création d'une session côté serveur avec l'ID de l'utilisateur
+                // Création d'une session côté serveur avec toutes les informations de l'utilisateur
                 req.session.user = {
                     id,
                     username,
                     email,
                     password,
-                    dateNaissance
+                    dateNaissance,
+                    genre,
+                    pays,
+                    adresse,
+                    codePostal,
+                    ville,
+                    telephone,
+                    telephonePortable
                 };
 
                 // Renvoyer l'identifiant de session au client
-                res.status(200).json({ message: 'Connexion réussie', sessionId: req.sessionID });
+                res.status(200).json({ message: 'Connexion réussie', sessionId: req.sessionID, user: req.session.user });
             } else {
                 res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
             }
@@ -181,45 +188,140 @@ app.post('/login', async (req, res) => {
 app.get('/profil', isLoggedIn, (req, res) => {
     if (req.session.user) {
         // L'utilisateur est authentifié, fournir toutes les données du profil
-        const { id, username, email, dateNaissance } = req.session.user;
-        res.json({ id, username, email, dateNaissance });
+        const { id, username, email, dateNaissance, genre, pays, adresse, codePostal, ville, telephone, telephonePortable } = req.session.user;
+        res.json({ id, username, email, dateNaissance, genre, pays, adresse, codePostal, ville, telephone, telephonePortable });
     }
 });
-app.post('/profil', (req, res) => {
+
+// Route pour mettre à jour les informations du profil utilisateur
+app.post('/profil', isLoggedIn, async (req, res) => {
     if (req.session.user) {
         console.log("Données de modification reçues :", req.body);
         // L'utilisateur est authentifié, vous pouvez maintenant traiter les données de modification
-        const { username, email, password, dateNaissance } = req.body;
+        const {
+            username,
+            email,
+            password,
+            dateNaissance,
+            genre,
+            pays,
+            adresse,
+            codePostal,
+            ville,
+            telephone,
+            telephonePortable
+        } = req.body;
 
         // Assurez-vous que la date de naissance est fournie avant de la mettre à jour
         if (dateNaissance) {
             const { jour, mois, annee } = dateNaissance;
 
             // Vérifiez si le mot de passe a été modifié
-            const updatePassword = password ? ', password=?' : '';
+            const updatePasswordPart = password ? ', password=?' : '';
             const updatePasswordValues = password ? [password] : [];
 
-            const updateQuery = `UPDATE users SET username=?, email=?${updatePassword}, dateNaissance=? WHERE id=?`;
+            const updateQuery = `UPDATE users SET username=?, email=?${updatePasswordPart}, dateNaissance=?, genre=?, pays=?, adresse=?, codePostal=?, ville=?, telephone=?, telephonePortable=? WHERE id=?`;
 
-            db.query(updateQuery, [username, email, ...updatePasswordValues, `${annee}-${mois}-${jour}`, req.session.user.id], (updateErr, updateResult) => {
+            db.query(updateQuery, [
+                username,
+                email,
+                ...updatePasswordValues,
+                `${annee}-${mois}-${jour}`,
+                genre,
+                pays,
+                adresse,
+                codePostal,
+                ville,
+                telephone,
+                telephonePortable,
+                req.session.user.id
+            ], async (updateErr, updateResult) => {
                 if (updateErr) {
                     console.error('Erreur lors de la mise à jour du profil :', updateErr.message);
                     res.status(500).json({ error: 'Erreur lors de la mise à jour du profil' });
                 } else {
-                    console.log('Profil mis à jour avec succès !');
-                    res.status(200).json({ message: 'Mise à jour du profil réussie' });
+                    // Si le mot de passe a été modifié, ré-hasher le nouveau mot de passe
+                    if (password) {
+                        const saltRounds = 10;
+                        const hashedPassword = await bcrypt.hash(password, saltRounds);
+                        db.query('UPDATE users SET password=? WHERE id=?', [hashedPassword, req.session.user.id], (hashErr, hashResult) => {
+                            if (hashErr) {
+                                console.error('Erreur lors du hachage du nouveau mot de passe :', hashErr.message);
+                                res.status(500).json({ error: 'Erreur lors de la mise à jour du mot de passe' });
+                            } else {
+                                console.log('Profil mis à jour avec succès !');
+                                // Mettez à jour les données de session avec les nouvelles informations
+                                req.session.user = {
+                                    ...req.session.user,
+                                    username,
+                                    email,
+                                    dateNaissance: `${annee}-${mois}-${jour}`,
+                                    genre,
+                                    pays,
+                                    adresse,
+                                    codePostal,
+                                    ville,
+                                    telephone,
+                                    telephonePortable,
+                                };
+                                res.status(200).json({ message: 'Mise à jour du profil réussie' });
+                            }
+                        });
+                    } else {
+                        console.log('Profil mis à jour avec succès !');
+                        // Mettez à jour les données de session avec les nouvelles informations
+                        req.session.user = {
+                            ...req.session.user,
+                            username,
+                            email,
+                            dateNaissance: `${annee}-${mois}-${jour}`,
+                            genre,
+                            pays,
+                            adresse,
+                            codePostal,
+                            ville,
+                            telephone,
+                            telephonePortable,
+                        };
+                        res.status(200).json({ message: 'Mise à jour du profil réussie' });
+                    }
                 }
             });
         } else {
             // Si la date de naissance n'est pas fournie, mettez à jour les autres champs sans toucher à la date de naissance existante
-            const updateQuery = 'UPDATE users SET username=?, email=? WHERE id=?';
+            const updateQuery =
+                'UPDATE users SET username=?, email=?, genre=?, pays=?, adresse=?, codePostal=?, ville=?, telephone=?, telephonePortable=? WHERE id=?';
 
-            db.query(updateQuery, [username, email, req.session.user.id], (updateErr, updateResult) => {
+            db.query(updateQuery, [
+                username,
+                email,
+                genre,
+                pays,
+                adresse,
+                codePostal,
+                ville,
+                telephone,
+                telephonePortable,
+                req.session.user.id
+            ], (updateErr, updateResult) => {
                 if (updateErr) {
                     console.error('Erreur lors de la mise à jour du profil :', updateErr.message);
                     res.status(500).json({ error: 'Erreur lors de la mise à jour du profil' });
                 } else {
                     console.log('Profil mis à jour avec succès !');
+                    // Mettez à jour les données de session avec les nouvelles informations
+                    req.session.user = {
+                        ...req.session.user,
+                        username,
+                        email,
+                        genre,
+                        pays,
+                        adresse,
+                        codePostal,
+                        ville,
+                        telephone,
+                        telephonePortable,
+                    };
                     res.status(200).json({ message: 'Mise à jour du profil réussie' });
                 }
             });

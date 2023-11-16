@@ -1,15 +1,15 @@
 import React from "react";
 import Nav from "../../components/Nav/Nav";
 import Footer from "../../components/Footer/Footer";
-import Compte from "../../components/Compte/Compte";
+import Profil from "../../components/Profil/Profil";
 
-import "./Profil.css";
+import "./PageProfil.css";
 
-export default function Profil() {
+export default function PageProfil() {
   return (
     <div className="profilPage">
       <Nav />
-      <Compte />
+      <Profil />
       <Footer />
     </div>
   );
