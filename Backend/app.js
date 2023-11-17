@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const path = require('path');
 const cors = require('cors');
+const multer = require('multer');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -13,6 +14,8 @@ const port = process.env.PORT || 5000;
 // Configuration d'express-session
 const crypto = require('crypto');
 const secret = crypto.randomBytes(64).toString('hex');
+
+app.use(express.static(path.join(__dirname, './image')));
 
 // Middleware pour vérifier si l'utilisateur est connecté
 const isLoggedIn = (req, res, next) => {
@@ -25,7 +28,13 @@ const isLoggedIn = (req, res, next) => {
     }
 };
 
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' })); // Middleware CORS
+// Middleware CORS
+app.use(cors({
+    credentials: true,
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 app.use(session({
     secret: secret,
@@ -50,6 +59,21 @@ db.connect((err) => {
         console.log('Connecté à la base de données MySQL');
     }
 });
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      // Le chemin où stocker les fichiers téléchargés
+      cb(null, './image');
+    },
+    filename: function (req, file, cb) {
+      // Générer un nom de fichier unique, par exemple, la date actuelle
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+    },
+  });
+
+// Utilisez multer avec la configuration de stockage définie
+const upload = multer({ storage: storage });
 
 // Route d'inscription
 app.post('/register', async (req, res) => {
@@ -148,7 +172,7 @@ app.post('/login', async (req, res) => {
                 return res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
             }
 
-            const { id, username, email, password: hashedPassword, dateNaissance, genre, pays, adresse, codePostal, ville, telephone, telephonePortable } = result[0];
+            const { id, username, email, password: hashedPassword, dateNaissance, genre, pays, adresse, codePostal, ville, telephone, telephonePortable, image } = result[0];
 
             // Vérifier le mot de passe
             const passwordMatch = await bcrypt.compare(password, hashedPassword);
@@ -166,7 +190,8 @@ app.post('/login', async (req, res) => {
                     codePostal,
                     ville,
                     telephone,
-                    telephonePortable
+                    telephonePortable,
+                    image
                 };
 
                 // Renvoyer l'identifiant de session au client
@@ -188,15 +213,16 @@ app.post('/login', async (req, res) => {
 app.get('/profil', isLoggedIn, (req, res) => {
     if (req.session.user) {
         // L'utilisateur est authentifié, fournir toutes les données du profil
-        const { id, username, email, dateNaissance, genre, pays, adresse, codePostal, ville, telephone, telephonePortable } = req.session.user;
-        res.json({ id, username, email, dateNaissance, genre, pays, adresse, codePostal, ville, telephone, telephonePortable });
+        const { id, username, email, dateNaissance, genre, pays, adresse, codePostal, ville, telephone, telephonePortable, image } = req.session.user;
+        res.json({ id, username, email, dateNaissance, genre, pays, adresse, codePostal, ville, telephone, telephonePortable, image });
     }
 });
 
 // Route pour mettre à jour les informations du profil utilisateur
-app.post('/profil', isLoggedIn, async (req, res) => {
+app.post('/profil', isLoggedIn, upload.single('image'), async (req, res) => {
     if (req.session.user) {
         console.log("Données de modification reçues :", req.body);
+        console.log("Chemin du fichier côté serveur :", req.file ? req.file.path : null);
         // L'utilisateur est authentifié, vous pouvez maintenant traiter les données de modification
         const {
             username,
@@ -209,8 +235,11 @@ app.post('/profil', isLoggedIn, async (req, res) => {
             codePostal,
             ville,
             telephone,
-            telephonePortable
+            telephonePortable,
         } = req.body;
+
+        // Obtenez les données de l'image depuis multer
+        const image = req.file ? req.file.buffer : null;
 
         // Assurez-vous que la date de naissance est fournie avant de la mettre à jour
         if (dateNaissance) {
@@ -220,7 +249,7 @@ app.post('/profil', isLoggedIn, async (req, res) => {
             const updatePasswordPart = password ? ', password=?' : '';
             const updatePasswordValues = password ? [password] : [];
 
-            const updateQuery = `UPDATE users SET username=?, email=?${updatePasswordPart}, dateNaissance=?, genre=?, pays=?, adresse=?, codePostal=?, ville=?, telephone=?, telephonePortable=? WHERE id=?`;
+            const updateQuery = `UPDATE users SET username=?, email=?${updatePasswordPart}, dateNaissance=?, genre=?, pays=?, adresse=?, codePostal=?, ville=?, telephone=?, telephonePortable=?, image=? WHERE id=?`;
 
             db.query(updateQuery, [
                 username,
@@ -234,6 +263,8 @@ app.post('/profil', isLoggedIn, async (req, res) => {
                 ville,
                 telephone,
                 telephonePortable,
+                // Obtenez les données de l'image depuis multer
+                req.file ? req.file.path : null,
                 req.session.user.id
             ], async (updateErr, updateResult) => {
                 if (updateErr) {
@@ -263,6 +294,7 @@ app.post('/profil', isLoggedIn, async (req, res) => {
                                     ville,
                                     telephone,
                                     telephonePortable,
+                                    image: req.file ? req.file.path : req.session.user.image,
                                 };
                                 res.status(200).json({ message: 'Mise à jour du profil réussie' });
                             }
@@ -282,6 +314,7 @@ app.post('/profil', isLoggedIn, async (req, res) => {
                             ville,
                             telephone,
                             telephonePortable,
+                            image: req.file ? req.file.path : req.session.user.image,
                         };
                         res.status(200).json({ message: 'Mise à jour du profil réussie' });
                     }
@@ -290,7 +323,7 @@ app.post('/profil', isLoggedIn, async (req, res) => {
         } else {
             // Si la date de naissance n'est pas fournie, mettez à jour les autres champs sans toucher à la date de naissance existante
             const updateQuery =
-                'UPDATE users SET username=?, email=?, genre=?, pays=?, adresse=?, codePostal=?, ville=?, telephone=?, telephonePortable=? WHERE id=?';
+                'UPDATE users SET username=?, email=?, genre=?, pays=?, adresse=?, codePostal=?, ville=?, telephone=?, telephonePortable=?, image=? WHERE id=?';
 
             db.query(updateQuery, [
                 username,
@@ -302,6 +335,7 @@ app.post('/profil', isLoggedIn, async (req, res) => {
                 ville,
                 telephone,
                 telephonePortable,
+                req.file ? req.file.path : null, // Utilisez req.file.path pour obtenir le chemin du fichier téléchargé
                 req.session.user.id
             ], (updateErr, updateResult) => {
                 if (updateErr) {
@@ -321,6 +355,7 @@ app.post('/profil', isLoggedIn, async (req, res) => {
                         ville,
                         telephone,
                         telephonePortable,
+                        image: req.file ? req.file.path : req.session.user.image,
                     };
                     res.status(200).json({ message: 'Mise à jour du profil réussie' });
                 }

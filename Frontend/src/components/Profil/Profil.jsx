@@ -1,24 +1,21 @@
 // Profil.jsx
-import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import React from "react";
+import { NavLink, Outlet } from "react-router-dom";
 import "./Profil.css";
 
 const Profil = () => {
   return (
     <div className="profilContainer">
       <div className="parametres">
-        <li>Paramètres</li>
-        <ul>
-          <li>
-            <Link to="compte">Compte</Link>
-          </li>
-          <li>
-            <Link to="supportGaming">Support Gaming</Link>
-          </li>
-          {/* Ajoutez d'autres liens si nécessaire */}
-        </ul>
+        <h2>Paramètres</h2>
+        <NavLink to="compte" className="menuProfil" >
+          <div activeClassName="activeLink" >Compte</div>
+        </NavLink>
+        <NavLink to="supportGaming" className="menuProfil">
+          <div activeClassName="activeLink">Support Gaming</div>
+        </NavLink>
       </div>
-      <div className="profil-content">
+      <div className="profilContent">
         <Outlet />
       </div>
     </div>

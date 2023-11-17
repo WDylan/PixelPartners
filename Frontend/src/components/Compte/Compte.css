@@ -1,28 +1,120 @@
 .formCompte {
-  border: solid 1px;
-  border-radius: 3%;
-  padding: 1em;
-  background-color: #2a4b47;
-  text-align: center;
-  display: flex;
-  flex-direction: row;
-  border: none;
+  height: 100%;
+  border-top-right-radius: 2%;
+  border-bottom-right-radius: 2%;
+  background-color: #54857f;
+  border-left: 1px solid #c1b37a;
 }
 
 .compte {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 
-.buttonRegistration {
+.compte h2 {
+  padding-left: 1em;
+}
+
+.comptePseudo {
+  width: 100%;
+  display: flex;
+  height: 25%;
+}
+
+.buttonModif {
   color: #2a4b47;
   background-color: #c1b37a;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 1em;
   height: 3em;
   width: 10em;
   border-radius: 1em;
   margin-bottom: 2em;
+}
+
+.buttonValidModif {
+  display: flex;
+}
+
+.divisionCompte {
+  display: flex;
+  height: 100%;
+}
+
+.labelCompte {
+  height: 90%;
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.3em;
+  justify-content: space-evenly;
+  padding-left: 1em;
+}
+
+.inputCompte {
+  height: 90%;
+  display: flex;
+  font-size: 1.3em;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.inputCompte div {
+  width: 90%;
+}
+.inputCompteText {
+  width: 100%;
+  height: 2em;
+  border-radius: 0.5em;
+}
+
+.inputComptePseudo {
+  width: 90%;
+  height: 2em;
+  border-radius: 0.5em;
+  background-color: #54857f;
+  color: #c1b37a;
+  border: none;
+  font-weight: bolder;
+  font-size: 1.2em;
+}
+
+.formCompte hr {
+  width: 100%;
+}
+.compteDate {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.inputCompteDate {
+  width: 28%;
+  height: 2em;
+  border-radius: 0.5em;
+  text-align: center;
+}
+
+.inputComptePays {
+  width: 100%;
+  height: 2em;
+  border-radius: 0.5em;
+}
+
+.inputCompteRadio {
+  height: 1em;
+  border-radius: 0.5em;
+}
+
+.compteGenre {
+  display: flex;
+  align-items: center;
+}
+
+.buttonCompte {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

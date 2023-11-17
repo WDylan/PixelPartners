@@ -21,6 +21,7 @@ export default function Compte() {
     ville: "",
     telephone: "",
     telephonePortable: "",
+    image: "",
   });
 
   const [isEditMode, setIsEditMode] = useState(false);
@@ -129,6 +130,17 @@ export default function Compte() {
             ...value,
           },
         };
+      } else if (field === "image") {
+        // Gestion du champ d'image
+        const formData = new FormData();
+        formData.append("image", value);
+        console.log("FormData:", formData); // Ajoutez cette ligne pour débogage
+        const newEditData = {
+          ...prevData,
+          image: value.name, // Utilisez value.name pour obtenir le nom du fichier
+        };
+        console.log("Chemin de l'image côté client :", newEditData.image);
+        return newEditData;
       } else {
         // Pour les autres champs, procédez comme d'habitude
         return {
@@ -143,6 +155,9 @@ export default function Compte() {
     try {
       await axios.post("http://localhost:5000/profil", editData, {
         withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
       console.log("Modifications enregistrées avec succès !");
       setIsEditMode(false); // Désactive le mode édition après l'enregistrement
@@ -158,198 +173,234 @@ export default function Compte() {
     <div className="formCompte">
       <div className="compte">
         <h2>Compte</h2>
-        <div>
-          {" "}
-          <label>Nom d'utilisateur : </label>
-          <input
-            type="text"
-            placeholder="Nom d'utilisateur"
-            value={editData.username}
-            onChange={(e) => handleInputChange("username", e.target.value)}
-            readOnly={!isEditMode} // Empêcher la modification si le mode édition est désactivé
-          />
-        </div>
-        <div>
-          {" "}
-          <label>Adresse email : </label>
-          <input
-            type="text"
-            placeholder="Adresse email"
-            value={editData.email}
-            onChange={(e) => handleInputChange("email", e.target.value)}
-            readOnly={!isEditMode}
-          />
-        </div>
-        <div>
-          {" "}
-          <label>Mot de passe :</label>
-          <input
-            type="password"
-            placeholder="Mot de passe"
-            value={editData.password}
-            onChange={(e) => handleInputChange("password", e.target.value)}
-            readOnly={!isEditMode}
-          />
-        </div>
-        <div>
-          {" "}
-          <label>Date de naissance : </label>
-          <input
-            type="text"
-            placeholder="Jour"
-            value={editData.dateNaissance.jour}
-            onChange={(e) =>
-              handleInputChange("dateNaissance", {
-                ...editData.dateNaissance,
-                jour: e.target.value,
-              })
-            }
-            readOnly={!isEditMode}
-          />
-          <input
-            type="text"
-            placeholder="Mois"
-            value={editData.dateNaissance.mois}
-            onChange={(e) =>
-              handleInputChange("dateNaissance", {
-                ...editData.dateNaissance,
-                mois: e.target.value,
-              })
-            }
-            readOnly={!isEditMode}
-          />
-          <input
-            type="text"
-            placeholder="Année"
-            value={editData.dateNaissance.annee}
-            onChange={(e) =>
-              handleInputChange("dateNaissance", {
-                ...editData.dateNaissance,
-                annee: e.target.value,
-              })
-            }
-            readOnly={!isEditMode}
-          />
-        </div>
-        <div>
-          <label>Genre : </label>
-          <input
-            type="radio"
-            id="homme"
-            name="genre"
-            value="homme"
-            checked={editData.genre === "homme"}
-            onChange={() => handleInputChange("genre", "homme")}
-            readOnly={!isEditMode}
-          />
-          <label htmlFor="homme">Homme</label>
-          <input
-            type="radio"
-            id="femme"
-            name="genre"
-            value="femme"
-            checked={editData.genre === "femme"}
-            onChange={() => handleInputChange("genre", "femme")}
-            readOnly={!isEditMode}
-          />
-          <label htmlFor="femme">Femme</label>
-          <input
-            type="radio"
-            id="nonRenseigne"
-            name="genre"
-            value="nonRenseigne"
-            checked={editData.genre === "nonRenseigne"}
-            onChange={() => handleInputChange("genre", "nonRenseigne")}
-            readOnly={!isEditMode}
-          />
-          <label htmlFor="nonRenseigne">Non renseigné</label>
-        </div>
-        <div>
-          <label>Pays : </label>
-          <CountryDropdown
-            country={editData.pays || "France"}
-            placeholder="Pays"
-            onChange={(selectedCountry) =>
-              handleInputChange("pays", selectedCountry)
-            }
-            disableWhenEmpty={true}
-            readOnly={!isEditMode}
-          />
-          <div>
-            <strong>Pays :</strong> {editData.pays}
+        <hr></hr>
+        <div className="comptePseudo">
+          <div className="imgProfil">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleInputChange("image", e.target.files[0])}
+            />
+            {console.log(
+              "Chemin de l'image côté client :",
+              `http://localhost:5000/image/${editData.image}`
+            )}
+            {editData.image && (
+              <img
+                src={`http://localhost:5000/image/${editData.image}`}
+                alt="Profile"
+              />
+            )}
+          </div>
+          <div className="labelCompte">
+            <label>Pseudo : </label>
+          </div>
+          <div className="inputCompte">
+            <input
+              className="inputComptePseudo"
+              type="text"
+              placeholder="Nom d'utilisateur"
+              value={editData.username}
+              onChange={(e) => handleInputChange("username", e.target.value)}
+              readOnly={!isEditMode} // Empêcher la modification si le mode édition est désactivé
+            />
           </div>
         </div>
-        <div>
-          <label>Adresse : </label>
-          <input
-            type="text"
-            placeholder="Adresse"
-            value={editData.adresse}
-            onChange={(e) => handleInputChange("adresse", e.target.value)}
-            readOnly={!isEditMode}
-          />
+        <hr />
+
+        <div className="divisionCompte">
+          <div className="labelCompte">
+            <label>Adresse email : </label>
+            <label>Mot de passe :</label>
+            <label>Date de naissance : </label>
+            <label>Genre : </label>
+            <label>Pays : </label>
+            <strong>Pays :</strong>
+            <label>Adresse : </label>
+            <label>Code Postal : </label>
+            <label>Ville : </label>
+            <label>Téléphone : </label>
+            <label>Téléphone Portable : </label>
+          </div>
+          <div className="inputCompte">
+            <div>
+              <input
+                className="inputCompteText"
+                type="text"
+                placeholder="Adresse email"
+                value={editData.email}
+                onChange={(e) => handleInputChange("email", e.target.value)}
+                readOnly={!isEditMode}
+              />
+            </div>
+            <div>
+              <input
+                className="inputCompteText"
+                type="password"
+                placeholder="Mot de passe"
+                value={editData.password}
+                onChange={(e) => handleInputChange("password", e.target.value)}
+                readOnly={!isEditMode}
+              />
+            </div>
+            <div className="compteDate">
+              <input
+                className="inputCompteDate"
+                type="text"
+                placeholder="Jour"
+                value={editData.dateNaissance.jour}
+                onChange={(e) =>
+                  handleInputChange("dateNaissance", {
+                    ...editData.dateNaissance,
+                    jour: e.target.value,
+                  })
+                }
+                readOnly={!isEditMode}
+              />
+              <input
+                className="inputCompteDate"
+                type="text"
+                placeholder="Mois"
+                value={editData.dateNaissance.mois}
+                onChange={(e) =>
+                  handleInputChange("dateNaissance", {
+                    ...editData.dateNaissance,
+                    mois: e.target.value,
+                  })
+                }
+                readOnly={!isEditMode}
+              />
+              <input
+                className="inputCompteDate"
+                type="text"
+                placeholder="Année"
+                value={editData.dateNaissance.annee}
+                onChange={(e) =>
+                  handleInputChange("dateNaissance", {
+                    ...editData.dateNaissance,
+                    annee: e.target.value,
+                  })
+                }
+                readOnly={!isEditMode}
+              />
+            </div>
+            <div className="compteGenre">
+              <input
+                className="inputCompteRadio"
+                type="radio"
+                id="homme"
+                name="genre"
+                value="homme"
+                checked={editData.genre === "homme"}
+                onChange={() => handleInputChange("genre", "homme")}
+                readOnly={!isEditMode}
+              />
+              <label htmlFor="homme">Homme</label>
+              <input
+                className="inputCompteRadio"
+                type="radio"
+                id="femme"
+                name="genre"
+                value="femme"
+                checked={editData.genre === "femme"}
+                onChange={() => handleInputChange("genre", "femme")}
+                readOnly={!isEditMode}
+              />
+              <label htmlFor="femme">Femme</label>
+              <input
+                className="inputCompteRadio"
+                type="radio"
+                id="nonRenseigne"
+                name="genre"
+                value="nonRenseigne"
+                checked={editData.genre === "nonRenseigne"}
+                onChange={() => handleInputChange("genre", "nonRenseigne")}
+                readOnly={!isEditMode}
+              />
+              <label htmlFor="nonRenseigne">Non renseigné</label>
+            </div>
+            <div>
+              <CountryDropdown
+                className="inputComptePays"
+                country={editData.pays || "France"}
+                placeholder="Pays"
+                onChange={(selectedCountry) =>
+                  handleInputChange("pays", selectedCountry)
+                }
+                disableWhenEmpty={true}
+                readOnly={!isEditMode}
+              />
+              <div>{editData.pays}</div>
+            </div>
+            <div>
+              <input
+                className="inputCompteText"
+                type="text"
+                placeholder="Adresse"
+                value={editData.adresse}
+                onChange={(e) => handleInputChange("adresse", e.target.value)}
+                readOnly={!isEditMode}
+              />
+            </div>
+            <div>
+              <input
+                className="inputCompteText"
+                type="text"
+                placeholder="Code Postal"
+                value={editData.codePostal}
+                onChange={(e) =>
+                  handleInputChange("codePostal", e.target.value)
+                }
+                readOnly={!isEditMode}
+              />
+            </div>
+            <div>
+              <input
+                className="inputCompteText"
+                type="text"
+                placeholder="Ville"
+                value={editData.ville}
+                onChange={(e) => handleInputChange("ville", e.target.value)}
+                readOnly={!isEditMode}
+              />
+            </div>
+            <div>
+              <input
+                className="inputCompteText"
+                type="text"
+                placeholder="Téléphone"
+                value={editData.telephone}
+                onChange={(e) => handleInputChange("telephone", e.target.value)}
+                readOnly={!isEditMode}
+              />
+            </div>
+            <div>
+              <input
+                className="inputCompteText"
+                type="text"
+                placeholder="Téléphone Portable"
+                value={editData.telephonePortable}
+                onChange={(e) =>
+                  handleInputChange("telephonePortable", e.target.value)
+                }
+                readOnly={!isEditMode}
+              />
+            </div>
+          </div>
         </div>
-        <div>
-          <label>Code Postal : </label>
-          <input
-            type="text"
-            placeholder="Code Postal"
-            value={editData.codePostal}
-            onChange={(e) => handleInputChange("codePostal", e.target.value)}
-            readOnly={!isEditMode}
-          />
-        </div>
-        <div>
-          <label>Ville : </label>
-          <input
-            type="text"
-            placeholder="Ville"
-            value={editData.ville}
-            onChange={(e) => handleInputChange("ville", e.target.value)}
-            readOnly={!isEditMode}
-          />
-        </div>
-        <div>
-          <label>Téléphone : </label>
-          <input
-            type="text"
-            placeholder="Téléphone"
-            value={editData.telephone}
-            onChange={(e) => handleInputChange("telephone", e.target.value)}
-            readOnly={!isEditMode}
-          />
-        </div>
-        <div>
-          <label>Téléphone Portable : </label>
-          <input
-            type="text"
-            placeholder="Téléphone Portable"
-            value={editData.telephonePortable}
-            onChange={(e) =>
-              handleInputChange("telephonePortable", e.target.value)
-            }
-            readOnly={!isEditMode}
-          />
-        </div>
-        <div>
+        <div className="buttonCompte">
           {!isEditMode && (
-            <button
-              className="buttonRegistration"
-              onClick={() => setIsEditMode(true)}
-            >
+            <button className="buttonModif" onClick={() => setIsEditMode(true)}>
               Modifier
             </button>
           )}
           {isEditMode && (
-            <div>
-              <button
-                className="buttonRegistration"
-                onClick={handleSaveChanges}
-              >
+            <div className="buttonValidModif">
+              <button className="buttonModif" onClick={handleSaveChanges}>
                 Valider Modification
               </button>
               <button
-                className="buttonRegistration"
+                className="buttonModif"
                 onClick={() => setIsEditMode(false)}
               >
                 Annuler

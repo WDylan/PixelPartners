@@ -1,7 +1,9 @@
 import React from "react";
 
+import "./SupportGaming.css";
+
 export default function SupportGaming() {
-    return (
-        <div>Ceci est la page supportGaming</div>
-    )
+  return (
+    <div className="containerSupportGaming">Ceci est la page supportGaming</div>
+  );
 }
