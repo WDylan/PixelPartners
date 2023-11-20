@@ -15,7 +15,7 @@ const port = process.env.PORT || 5000;
 const crypto = require('crypto');
 const secret = crypto.randomBytes(64).toString('hex');
 
-app.use(express.static(path.join(__dirname, './image')));
+app.use(express.static(path.join(__dirname, 'image')));
 
 // Middleware pour vérifier si l'utilisateur est connecté
 const isLoggedIn = (req, res, next) => {
@@ -62,14 +62,12 @@ db.connect((err) => {
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        // Utilisation du chemin absolu pour éviter des problèmes de résolution de chemin
         cb(null, path.join(__dirname, 'image'));
     },
     filename: function (req, file, cb) {
-      // Générer un nom de fichier unique, par exemple, la date actuelle
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-      cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-  },
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+    },
 });
 
 // Utilisez multer avec la configuration de stockage définie

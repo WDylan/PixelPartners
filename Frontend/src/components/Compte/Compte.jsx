@@ -112,7 +112,7 @@ export default function Compte() {
         console.log("FormData:", formData); // Ajoutez cette ligne pour débogage
         const newEditData = {
           ...prevData,
-          image: formData,
+          image: value,
         };
         console.log("Chemin de l'image côté client :", newEditData.image);
         return newEditData;
@@ -158,7 +158,7 @@ export default function Compte() {
             />
             {console.log(
               "Chemin de l'image côté client :",
-              `http://localhost:5000/image/${editData.image}`
+              `http://localhost:5000/${editData.image}`
             )}
             {editData.image && (
               <img src={URL.createObjectURL(editData.image)} alt="Profile" />
