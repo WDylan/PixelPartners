@@ -21,7 +21,7 @@ export default function Compte() {
     ville: "",
     telephone: "",
     telephonePortable: "",
-    image: "",
+    image: null,
   });
 
   const [isEditMode, setIsEditMode] = useState(false);
@@ -50,6 +50,7 @@ export default function Compte() {
             ville: response.data.ville || "",
             telephone: response.data.telephone || "",
             telephonePortable: response.data.telephonePortable || "",
+            image: response.data.image || null,
           }));
         } else {
           console.error("La réponse ne contient pas de données utilisateur.");
@@ -69,32 +70,6 @@ export default function Compte() {
 
     getUserProfile();
   }, [navigate]);
-
-  // // Ajoutez cette vérification au début de la fonction pour s'assurer que l'utilisateur est connecté
-  // useEffect(() => {
-  //   // Vérifiez ici si l'utilisateur est connecté, sinon, redirigez-le vers la page de connexion
-  //   const checkIfLoggedIn = async () => {
-  //     try {
-  //       const response = await axios.get("http://localhost:5000/checklogin", {
-  //         withCredentials: true,
-  //       });
-
-  //       if (response.data && response.data.isLoggedIn) {
-  //         // L'utilisateur est connecté, continuez comme d'habitude
-  //       } else {
-  //         // L'utilisateur n'est pas connecté, redirigez-le vers la page de connexion
-  //         navigate("/connexion");
-  //       }
-  //     } catch (error) {
-  //       console.error(
-  //         "Erreur lors de la vérification de la connexion :",
-  //         error.message
-  //       );
-  //     }
-  //   };
-
-  //   checkIfLoggedIn();
-  // }, [navigate]); // Ajoutez navigate comme dépendance
 
   const formatDateNaissance = (date) => {
     if (!date) {
@@ -137,7 +112,7 @@ export default function Compte() {
         console.log("FormData:", formData); // Ajoutez cette ligne pour débogage
         const newEditData = {
           ...prevData,
-          image: value.name, // Utilisez value.name pour obtenir le nom du fichier
+          image: formData,
         };
         console.log("Chemin de l'image côté client :", newEditData.image);
         return newEditData;
@@ -186,10 +161,7 @@ export default function Compte() {
               `http://localhost:5000/image/${editData.image}`
             )}
             {editData.image && (
-              <img
-                src={`http://localhost:5000/image/${editData.image}`}
-                alt="Profile"
-              />
+              <img src={URL.createObjectURL(editData.image)} alt="Profile" />
             )}
           </div>
           <div className="labelCompte">

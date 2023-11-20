@@ -62,15 +62,15 @@ db.connect((err) => {
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      // Le chemin où stocker les fichiers téléchargés
-      cb(null, './image');
+        // Utilisation du chemin absolu pour éviter des problèmes de résolution de chemin
+        cb(null, path.join(__dirname, 'image'));
     },
     filename: function (req, file, cb) {
       // Générer un nom de fichier unique, par exemple, la date actuelle
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
       cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-    },
-  });
+  },
+});
 
 // Utilisez multer avec la configuration de stockage définie
 const upload = multer({ storage: storage });
@@ -222,7 +222,7 @@ app.get('/profil', isLoggedIn, (req, res) => {
 app.post('/profil', isLoggedIn, upload.single('image'), async (req, res) => {
     if (req.session.user) {
         console.log("Données de modification reçues :", req.body);
-        console.log("Chemin du fichier côté serveur :", req.file ? req.file.path : null);
+        console.log("Chemin du fichier côté serveur :", req.file ? req.file.filename : null);
         // L'utilisateur est authentifié, vous pouvez maintenant traiter les données de modification
         const {
             username,
@@ -264,7 +264,7 @@ app.post('/profil', isLoggedIn, upload.single('image'), async (req, res) => {
                 telephone,
                 telephonePortable,
                 // Obtenez les données de l'image depuis multer
-                req.file ? req.file.path : null,
+                req.file ? req.file.filename : null,
                 req.session.user.id
             ], async (updateErr, updateResult) => {
                 if (updateErr) {
@@ -294,7 +294,7 @@ app.post('/profil', isLoggedIn, upload.single('image'), async (req, res) => {
                                     ville,
                                     telephone,
                                     telephonePortable,
-                                    image: req.file ? req.file.path : req.session.user.image,
+                                    image: req.file ? req.file.filename : req.session.user.image,
                                 };
                                 res.status(200).json({ message: 'Mise à jour du profil réussie' });
                             }
@@ -314,7 +314,7 @@ app.post('/profil', isLoggedIn, upload.single('image'), async (req, res) => {
                             ville,
                             telephone,
                             telephonePortable,
-                            image: req.file ? req.file.path : req.session.user.image,
+                            image: req.file ? req.file.filename : req.session.user.image,
                         };
                         res.status(200).json({ message: 'Mise à jour du profil réussie' });
                     }
@@ -335,7 +335,7 @@ app.post('/profil', isLoggedIn, upload.single('image'), async (req, res) => {
                 ville,
                 telephone,
                 telephonePortable,
-                req.file ? req.file.path : null, // Utilisez req.file.path pour obtenir le chemin du fichier téléchargé
+                req.file ? req.file.filename : null, // Utilisez req.file.path pour obtenir le chemin du fichier téléchargé
                 req.session.user.id
             ], (updateErr, updateResult) => {
                 if (updateErr) {
@@ -355,7 +355,7 @@ app.post('/profil', isLoggedIn, upload.single('image'), async (req, res) => {
                         ville,
                         telephone,
                         telephonePortable,
-                        image: req.file ? req.file.path : req.session.user.image,
+                        image: req.file ? req.file.filename : req.session.user.image,
                     };
                     res.status(200).json({ message: 'Mise à jour du profil réussie' });
                 }
