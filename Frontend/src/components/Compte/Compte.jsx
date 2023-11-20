@@ -25,7 +25,9 @@ export default function Compte() {
   });
 
   const [isEditMode, setIsEditMode] = useState(false);
-  const navigate = useNavigate();
+  const [profileImageUrl, setProfileImageUrl] = useState(null);
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     const getUserProfile = async () => {
@@ -52,6 +54,13 @@ export default function Compte() {
             telephonePortable: response.data.telephonePortable || "",
             image: response.data.image || null,
           }));
+          const imageUrl = response.data.image;
+
+          if (imageUrl instanceof Blob) {
+            setProfileImageUrl(URL.createObjectURL(imageUrl));
+          } else {
+            console.error("L'image n'est pas au format attendu :", imageUrl);
+          }
         } else {
           console.error("La réponse ne contient pas de données utilisateur.");
         }
@@ -107,14 +116,13 @@ export default function Compte() {
         };
       } else if (field === "image") {
         // Gestion du champ d'image
-        const formData = new FormData();
-        formData.append("image", value);
-        console.log("FormData:", formData); // Ajoutez cette ligne pour débogage
         const newEditData = {
           ...prevData,
           image: value,
         };
         console.log("Chemin de l'image côté client :", newEditData.image);
+        // Mise à jour de profileImageUrl
+        setProfileImageUrl(URL.createObjectURL(value));
         return newEditData;
       } else {
         // Pour les autres champs, procédez comme d'habitude
@@ -151,6 +159,13 @@ export default function Compte() {
         <hr></hr>
         <div className="comptePseudo">
           <div className="imgProfil">
+            {editData.image && (
+              <img
+              className="imageProfil"
+                src={profileImageUrl || `http://localhost:5000/${editData.image}`}
+                alt="Profile"
+              />
+            )}
             <input
               type="file"
               accept="image/*"
@@ -159,9 +174,6 @@ export default function Compte() {
             {console.log(
               "Chemin de l'image côté client :",
               `http://localhost:5000/${editData.image}`
-            )}
-            {editData.image && (
-              <img src={URL.createObjectURL(editData.image)} alt="Profile" />
             )}
           </div>
           <div className="labelCompte">

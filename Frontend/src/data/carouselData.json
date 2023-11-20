@@ -5,11 +5,11 @@
       "alt": "image 1 for carousel"
     },
     {
-      "src": "https://picsum.photos/seed/picsum/600/400",
+      "src": "https://cdn.pixabay.com/photo/2023/11/17/22/10/road-8395119_1280.jpg",
       "alt": "image 2 for carousel"
     },
     {
-      "src": "https://picsum.photos/seed/picsum/600/400",
+      "src": "https://cdn.pixabay.com/photo/2023/09/27/07/29/mantis-8278996_1280.jpg",
       "alt": "image 3 for carousel"
     }
   ]
