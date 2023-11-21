@@ -40,6 +40,10 @@ function Nav() {
     // Naviguer vers la page Profil
     navigate("/profil");
   };
+  const goToClassement = () => {
+    // Naviguer vers la page Profil
+    navigate("/classement");
+  };
 
   const handleDeconnexion = async () => {
     try {
@@ -72,7 +76,7 @@ function Nav() {
             onKeyDown={handleSearch}
           />
         </li>
-        <li className="classementNav">
+        <li className="classementNav" onClick={goToClassement}>
           Classement
           <ul className="navbarClassement">
             <li className="vide"></li>

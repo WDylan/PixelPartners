@@ -70,6 +70,7 @@ const storage = multer.diskStorage({
     },
 });
 
+// INSCRIPTION ET CONNEXION
 // Utilisez multer avec la configuration de stockage définie
 const upload = multer({ storage: storage });
 
@@ -193,7 +194,8 @@ app.post('/login', async (req, res) => {
                 };
 
                 // Renvoyer l'identifiant de session au client
-                res.status(200).json({ message: 'Connexion réussie', sessionId: req.sessionID, user: req.session.user });
+                const sessionId = req.sessionID; // Récupérer l'identifiant de session
+                res.status(200).json({ message: 'Connexion réussie', sessionId, user: req.session.user });
             } else {
                 res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
             }
@@ -206,7 +208,7 @@ app.post('/login', async (req, res) => {
 });
 
 
-
+// PARTIE CHARGEMENT ET AFFICHAGE DES DONNEES UTILISATEUR
 // Route protégée pour obtenir les informations de l'utilisateur connecté
 app.get('/profil', isLoggedIn, (req, res) => {
     if (req.session.user) {
@@ -365,6 +367,7 @@ app.post('/profil', isLoggedIn, upload.single('image'), async (req, res) => {
     }
 });
 
+// PARTIE DECONNEXION
 // Route de déconnexion
 app.post('/logout', (req, res) => {
     console.log("Route de déconnexion atteinte");
@@ -379,6 +382,51 @@ app.post('/logout', (req, res) => {
     });
 });
 
+
+// PARTIE JEUX
+app.get('/plateformes', (req, res) => {
+    db.query('SELECT * FROM plateformes', (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Erreur lors de la récupération des plateformes.' });
+        }
+        res.json(results);
+    });
+});
+
+app.get('/genres', (req, res) => {
+    db.query('SELECT * FROM genres', (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Erreur lors de la récupération des genres.' });
+        }
+        res.json(results);
+    });
+});
+
+app.get('/jeux', (req, res) => {
+    const { plateforme, genre } = req.query;
+
+    let sql = 'SELECT * FROM jeux';
+    const filters = [];
+
+    if (plateforme) {
+        filters.push(`id_plateforme = (SELECT id FROM plateformes WHERE nom = '${plateforme}')`);
+    }
+
+    if (genre) {
+        filters.push(`id_genre = (SELECT id FROM genres WHERE nom = '${genre}')`);
+    }
+
+    if (filters.length > 0) {
+        sql += ` WHERE ${filters.join(' AND ')}`;
+    }
+
+    db.query(sql, (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Erreur lors de la récupération des jeux.' });
+        }
+        res.json(results);
+    });
+});
 
 
 // Servez l'application React depuis le backend

@@ -6,6 +6,7 @@ import Connexion from './Views/Connexion/Connexion';
 import Inscription from './Views/Inscription/Inscription';
 import SupportGaming from './components/SupportGaming/SupportGaming';
 import Compte from './components/Compte/Compte';
+import Classement from './Views/Classement/Classement';
 
 import './App.css';
 import PageProfil from './Views/PageProfil/PageProfil';
@@ -21,6 +22,7 @@ function App() {
         <Route path="compte" element={<Compte />} />
         <Route path="supportGaming" element={<SupportGaming />} />
       </Route>
+      <Route path="/classement" element={<Classement />} />
     </Routes>
   );
 }
