@@ -405,20 +405,30 @@ app.get('/genres', (req, res) => {
 app.get('/jeux', (req, res) => {
     const { plateforme, genre } = req.query;
 
-    let sql = 'SELECT * FROM jeux';
+    let sql = `
+        SELECT jeux.*, GROUP_CONCAT(DISTINCT genres.nom) AS genres, GROUP_CONCAT(DISTINCT plateformes.nom) AS plateformes
+        FROM jeux
+        LEFT JOIN jeux_genres ON jeux.id = jeux_genres.id_jeu
+        LEFT JOIN genres ON jeux_genres.id_genre = genres.id
+        LEFT JOIN jeux_plateformes ON jeux.id = jeux_plateformes.id_jeu
+        LEFT JOIN plateformes ON jeux_plateformes.id_plateforme = plateformes.id
+    `;
+
     const filters = [];
 
     if (plateforme) {
-        filters.push(`id_plateforme = (SELECT id FROM plateformes WHERE nom = '${plateforme}')`);
+        filters.push(`plateformes.nom = '${plateforme}'`);
     }
 
     if (genre) {
-        filters.push(`id_genre = (SELECT id FROM genres WHERE nom = '${genre}')`);
+        filters.push(`genres.nom = '${genre}'`);
     }
 
     if (filters.length > 0) {
         sql += ` WHERE ${filters.join(' AND ')}`;
     }
+
+    sql += ' GROUP BY jeux.id';
 
     db.query(sql, (err, results) => {
         if (err) {
@@ -427,6 +437,7 @@ app.get('/jeux', (req, res) => {
         res.json(results);
     });
 });
+
 
 
 // Servez l'application React depuis le backend

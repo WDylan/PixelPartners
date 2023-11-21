@@ -82,6 +82,10 @@ function FiltreRecherche() {
         {jeux.map((jeu) => (
           <li key={jeu.id}>
             <h3>{jeu.titre}</h3>
+            <img
+              className="imageJeu"
+              src={`img/jeux/${jeu.image}`}
+              alt={jeu.titre} />
             <p>{formatFullDate(jeu.dateSortie)}</p>
             <p>{jeu.description}</p>
           </li>
