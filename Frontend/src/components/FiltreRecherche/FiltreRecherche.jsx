@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./FiltreRecherche.css";
 
@@ -8,7 +9,13 @@ function FiltreRecherche() {
   const [genres, setGenres] = useState([]);
   const [plateforme, setPlateforme] = useState('');
   const [genre, setGenre] = useState('');
+  const navigate = useNavigate();
 
+  const goToJeu = (jeuId) => {
+    // Naviguer vers la page du jeu avec l'ID
+    navigate(`/jeu/${jeuId}`);
+  };
+  
   const fetchJeux = useCallback(async () => {
     try {
       const response = await axios.get(`http://localhost:5000/jeux?plateforme=${plateforme}&genre=${genre}`);
@@ -80,7 +87,7 @@ function FiltreRecherche() {
       </div>
       <ul>
         {jeux.map((jeu) => (
-          <li key={jeu.id}>
+          <li key={jeu.id} onClick={() => goToJeu(jeu.id)}>
             <h3>{jeu.titre}</h3>
             <img
               className="imageJeu"

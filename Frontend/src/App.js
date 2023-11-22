@@ -7,9 +7,11 @@ import Inscription from './Views/Inscription/Inscription';
 import SupportGaming from './components/SupportGaming/SupportGaming';
 import Compte from './components/Compte/Compte';
 import Classement from './Views/Classement/Classement';
+import PageProfil from './Views/PageProfil/PageProfil';
+import Jeu from './Views/Jeu/Jeu'
 
 import './App.css';
-import PageProfil from './Views/PageProfil/PageProfil';
+
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
         <Route path="supportGaming" element={<SupportGaming />} />
       </Route>
       <Route path="/classement" element={<Classement />} />
+      <Route path="/jeu/:id" element={<Jeu />} />
     </Routes>
   );
 }

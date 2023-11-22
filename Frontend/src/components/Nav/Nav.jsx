@@ -16,12 +16,31 @@ function Nav() {
     localStorage.setItem("isConnected", JSON.stringify(isConnected));
   }, [isConnected]);
 
-  const handleSearch = (event) => {
+  const handleSearch = async (event) => {
     if (event.key === "Enter") {
-      // Lancer la recherche ici (par exemple, appeler une fonction pour effectuer la recherche)
-      console.log(`Recherche: ${searchTerm}`);
+      try {
+        const encodedSearchTerm = encodeURIComponent(searchTerm);
+        console.log('URL de la requête:', `http://localhost:5000/jeux/search?term=${encodedSearchTerm}`);
+        const response = await axios.get(`http://localhost:5000/jeux/search?term=${encodedSearchTerm}`);
+
+        // Si un seul résultat est trouvé, redirige directement vers la page de détail du jeu
+        if (response.data.length === 1) {
+          const firstResult = response.data[0];
+          navigate(`/jeu/${firstResult.id}`);
+          // Vide les résultats de la recherche lors de la navigation vers une page de détail
+          setSearchResults([]);
+        } else {
+          // Si plusieurs résultats, affiche les résultats ou redirige vers une page dédiée
+          setSearchResults(response.data);
+        }
+      } catch (error) {
+        console.error("Erreur lors de la recherche :", error.message);
+      }
     }
   };
+
+  const [searchResults, setSearchResults] = useState([]);
+
   const goToConnexion = () => {
     // Naviguer vers la page de connexion
     navigate("/connexion");
@@ -76,6 +95,18 @@ function Nav() {
             onKeyDown={handleSearch}
           />
         </li>
+        {searchResults.length > 0 && (
+          <div className="search-results">
+            <h3>Résultats de la recherche :</h3>
+            <ul>
+              {searchResults.map((result) => (
+                <li key={result.id}>
+                  <a href={`/jeu/${result.id}`}>{result.titre}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         <li className="classementNav" onClick={goToClassement}>
           Classement
           <ul className="navbarClassement">
@@ -107,7 +138,6 @@ function Nav() {
           </ul>
         </li>
         <div>
-          {console.log("isConnected:", isConnected)}
           {isConnected ? (
             <>
               <button className="deconnexion" onClick={handleDeconnexion}>

@@ -10,6 +10,9 @@ const multer = require('multer');
 const app = express();
 const port = process.env.PORT || 5000;
 
+const morgan = require('morgan');
+app.use(morgan('dev'));
+
 
 // Configuration d'express-session
 const crypto = require('crypto');
@@ -68,6 +71,39 @@ const storage = multer.diskStorage({
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
     },
+});
+
+app.get('/jeux/search', async (req, res) => {
+    console.log('Requête de recherche reçue');
+    try {
+      const searchTerm = req.query.term;
+      console.log('Search Term:', searchTerm);
+        // Requête SQL pour la recherche par titre
+        const sql = `
+            SELECT *
+            FROM jeux
+            WHERE titre LIKE ?
+        `;
+        console.log('Generated SQL:', sql);
+
+        const searchResults = await new Promise((resolve, reject) => {
+            db.query(sql, [`%${searchTerm}%`], (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+
+        console.log('Search Results:', searchResults);
+
+        // Retournez les résultats (un tableau de jeux) au format JSON
+        res.json(searchResults);
+    } catch (error) {
+        console.error('Erreur côté serveur :', error);
+        res.status(500).json({ error: 'Erreur côté serveur.' });
+    }
 });
 
 // INSCRIPTION ET CONNEXION
@@ -438,15 +474,70 @@ app.get('/jeux', (req, res) => {
     });
 });
 
+app.get('/jeux/:id', (req, res) => {
+    const { id } = req.params;
 
+    db.query('SELECT * FROM jeux WHERE id = ?', [id], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Erreur lors de la récupération du jeu.' });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'Jeu non trouvé.' });
+        }
+
+        const jeu = results[0];
+        res.json(jeu);
+    });
+});
+
+app.get('/jeux/:id/plateformes', (req, res) => {
+    const jeuId = req.params.id;
+
+    // Requête SQL pour récupérer les plateformes associées à un jeu spécifique
+    const sql = `
+        SELECT p.nom
+        FROM plateformes p
+        JOIN jeux_plateformes jp ON p.id = jp.id_plateforme
+        WHERE jp.id_jeu = ?
+    `;
+    // Exécution de la requête SQL avec le paramètre du jeuId
+    db.query(sql, [jeuId], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Erreur lors de la récupération des plateformes.' });
+        }
+        res.json(results);
+    });
+});
+
+app.get('/jeux/:id/genres', (req, res) => {
+    const jeuId = req.params.id;
+
+    // Requête SQL pour récupérer les genres associés à un jeu spécifique
+    const sql = `
+        SELECT g.nom
+        FROM genres g
+        JOIN jeux_genres jg ON g.id = jg.id_genre
+        WHERE jg.id_jeu = ?
+    `;
+    // Exécution de la requête SQL avec le paramètre du jeuId
+    db.query(sql, [jeuId], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Erreur lors de la récupération des genres.' });
+        }
+        res.json(results);
+    });
+});
+
+// Routes API
+// Route par défaut pour servir l'application React
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'PixelPartners/Frontend', ''));
+});
 
 // Servez l'application React depuis le backend
 app.use(express.static(path.join(__dirname, 'PixelPartners/Frontend')));
 
-// Route par défaut pour servir l'application React
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'PixelPartners/Frontend', ''));
-});
 
 // Gestion des erreurs
 app.use((err, req, res, next) => {
