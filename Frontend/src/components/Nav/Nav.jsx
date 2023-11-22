@@ -5,10 +5,14 @@ import axios from "axios";
 
 function Nav() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [typingTimeout, setTypingTimeout] = useState(0);
+
   const [isConnected, setIsConnected] = useState(() => {
     const storedIsConnected = localStorage.getItem("isConnected");
     return storedIsConnected ? JSON.parse(storedIsConnected) : false;
   });
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,60 +20,66 @@ function Nav() {
     localStorage.setItem("isConnected", JSON.stringify(isConnected));
   }, [isConnected]);
 
-  const handleSearch = async (event) => {
-    if (event.key === "Enter") {
-      try {
-        const encodedSearchTerm = encodeURIComponent(searchTerm);
-        console.log('URL de la requête:', `http://localhost:5000/jeux/search?term=${encodedSearchTerm}`);
-        const response = await axios.get(`http://localhost:5000/jeux/search?term=${encodedSearchTerm}`);
-
-        // Si un seul résultat est trouvé, redirige directement vers la page de détail du jeu
-        if (response.data.length === 1) {
-          const firstResult = response.data[0];
-          navigate(`/jeu/${firstResult.id}`);
-          // Vide les résultats de la recherche lors de la navigation vers une page de détail
-          setSearchResults([]);
-        } else {
-          // Si plusieurs résultats, affiche les résultats ou redirige vers une page dédiée
-          setSearchResults(response.data);
-        }
-      } catch (error) {
-        console.error("Erreur lors de la recherche :", error.message);
-      }
+  const handleSearch = async () => {
+    try {
+      const encodedSearchTerm = encodeURIComponent(searchTerm);
+      const response = await axios.get(`http://localhost:5000/jeux/search?term=${encodedSearchTerm}`);
+      setSearchResults(response.data);
+    } catch (error) {
+      console.error("Erreur lors de la recherche :", error.message);
     }
-  };
 
-  const [searchResults, setSearchResults] = useState([]);
+  };
+  const handleChange = (event) => {
+    // Réinitialise le timeout à chaque frappe
+    clearTimeout(typingTimeout);
+
+    // Configure un nouveau timeout
+    const timeoutId = setTimeout(() => {
+      handleSearch();
+    }, 300); // Met la durée en millisecondes
+
+    setTypingTimeout(timeoutId);
+
+    // Met à jour le terme de recherche
+    setSearchTerm(event.target.value);
+  };
+  useEffect(() => {
+    // Nettoie le timeout lorsque le composant est démonté ou lorsque searchTerm change
+    return () => {
+      clearTimeout(typingTimeout);
+    };
+  }, [typingTimeout, searchTerm]);
 
   const goToConnexion = () => {
-    // Naviguer vers la page de connexion
+    // Navigue vers la page de connexion
     navigate("/connexion");
   };
 
   const goToInscription = () => {
-    // Naviguer vers la page d'inscription
+    // Navigue vers la page d'inscription
     navigate("/inscription");
   };
 
   const goToAccueil = () => {
-    // Naviguer vers la page d'Accueil
+    // Navigue vers la page d'Accueil
     navigate("/");
   };
   const goToProfil = () => {
-    // Naviguer vers la page Profil
+    // Navigue vers la page Profil
     navigate("/profil");
   };
   const goToClassement = () => {
-    // Naviguer vers la page Profil
+    // Navigue vers la page Profil
     navigate("/classement");
   };
 
   const handleDeconnexion = async () => {
     try {
-      // Effectuez la déconnexion coté serveur
+      // Effectue la déconnexion coté serveur
       await axios.post("http://localhost:5000/logout");
       setIsConnected(false);
-      // Rediriger l'utilisateur après la déconnexion
+      // Redirige l'utilisateur après la déconnexion
       navigate("/");
 
       // Affichage d'un message de déconnexion réussie coté client
@@ -91,7 +101,7 @@ function Nav() {
             type="text"
             placeholder="Rechercher..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleChange} 
             onKeyDown={handleSearch}
           />
         </li>
