@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 import axios from "axios";
 import "./ConnexionForm.css";
 
-export default function ConnexionForm({ onLoginSuccess }) {
+export default function ConnexionForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+
+  // Utilisation du contexte d'aughentification
+  const { login } = useAuth();
 
   const handleConnexion = async () => {
     try {
@@ -25,11 +29,11 @@ export default function ConnexionForm({ onLoginSuccess }) {
       console.log("Response status:", response.status);
 
       if (response.status === 200) {
-        // Appeler la fonction de rappel pour gérer la connexion réussie
-        onLoginSuccess(true);
+        // Appel de la fonction de connexion
+        login(response.data);
 
-        // Rediriger l'utilisateur vers le profil
-        navigate("/profil");
+        // Redirige l'utilisateur vers l'accueil
+        navigate("/");
       } else {
         setMessage("Nom d'utilisateur ou mot de passe incorrect");
       }

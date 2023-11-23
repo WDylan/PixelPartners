@@ -1,3 +1,64 @@
-.formJeu {
-    height: 61.3vh;
-}
+
+.cellule {
+    width: 40px;
+    height: 15px;
+    border: 1px solid black;
+    margin: 0.1em;
+    box-sizing: border-box;
+    float: left;
+    cursor: pointer;
+  }
+  
+  .barre {
+    overflow: hidden;
+  }
+  
+  .arrondieGauche {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+  }
+  
+  .arrondieDroite {
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  
+  .noteRouge {
+    background-color: red;
+  }
+  
+  .noteJaune {
+    background-color: yellow;
+  }
+  
+  .noteVert {
+    background-color: green;
+  }
+  
+  .rond {
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    background-color: white;
+  }
+  
+  .rond.note0, .rond.note1, .rond.note2, .rond.note3  {
+    background-color: red;
+    color: white;
+  }
+  
+  .rond.note4, .rond.note5, .rond.note6 {
+    background-color: yellow;
+    color: black;
+  }
+  
+  .rond.note7, .rond.note8, .rond.note9, .rond.note10 {
+    background-color: green;
+    color: black;
+  }
+  

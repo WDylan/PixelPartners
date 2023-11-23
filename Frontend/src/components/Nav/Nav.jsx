@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 import "./Nav.css";
 import axios from "axios";
 
@@ -8,27 +9,20 @@ function Nav() {
   const [searchResults, setSearchResults] = useState([]);
   const [typingTimeout, setTypingTimeout] = useState(0);
 
-  const [isConnected, setIsConnected] = useState(() => {
-    const storedIsConnected = localStorage.getItem("isConnected");
-    return storedIsConnected ? JSON.parse(storedIsConnected) : false;
-  });
-
+  // Utilisation du contexte d'authentification
+  const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Mettre à jour le localStorage lorsque isConnected change
-    localStorage.setItem("isConnected", JSON.stringify(isConnected));
-  }, [isConnected]);
 
   const handleSearch = async () => {
     try {
       const encodedSearchTerm = encodeURIComponent(searchTerm);
-      const response = await axios.get(`http://localhost:5000/jeux/search?term=${encodedSearchTerm}`);
+      const response = await axios.get(
+        `http://localhost:5000/jeux/search?term=${encodedSearchTerm}`
+      );
       setSearchResults(response.data);
     } catch (error) {
       console.error("Erreur lors de la recherche :", error.message);
     }
-
   };
   const handleChange = (event) => {
     // Réinitialise le timeout à chaque frappe
@@ -77,8 +71,7 @@ function Nav() {
   const handleDeconnexion = async () => {
     try {
       // Effectue la déconnexion coté serveur
-      await axios.post("http://localhost:5000/logout");
-      setIsConnected(false);
+      await logout();
       // Redirige l'utilisateur après la déconnexion
       navigate("/");
 
@@ -101,7 +94,7 @@ function Nav() {
             type="text"
             placeholder="Rechercher..."
             value={searchTerm}
-            onChange={handleChange} 
+            onChange={handleChange}
             onKeyDown={handleSearch}
           />
         </li>
@@ -148,7 +141,7 @@ function Nav() {
           </ul>
         </li>
         <div>
-          {isConnected ? (
+          {isAuthenticated ? (
             <>
               <button className="deconnexion" onClick={handleDeconnexion}>
                 Déconnexion
@@ -172,5 +165,4 @@ function Nav() {
     </header>
   );
 }
-
 export default Nav;

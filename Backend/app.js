@@ -76,8 +76,8 @@ const storage = multer.diskStorage({
 app.get('/jeux/search', async (req, res) => {
     console.log('Requête de recherche reçue');
     try {
-      const searchTerm = req.query.term;
-      console.log('Search Term:', searchTerm);
+        const searchTerm = req.query.term;
+        console.log('Search Term:', searchTerm);
         // Requête SQL pour la recherche par titre
         const sql = `
             SELECT *
@@ -528,6 +528,39 @@ app.get('/jeux/:id/genres', (req, res) => {
         res.json(results);
     });
 });
+
+// PARTIE NOTE
+// Ajout évaluation
+app.post('/notes', async (req, res) => {
+    const { id_user, id_jeu, note, commentaire } = req.body;
+
+    console.log("Donnée note reçue :", req.body)
+
+    const sql = 'INSERT INTO notes (id_user, id_jeu, note, commentaire) VALUES (?,?,?,?)';
+
+    try {
+        await db.query(sql, [id_user, id_jeu, note, commentaire]);
+        res.status(201).json({ message: 'Évaluation ajoutée avec succès' });
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout de l\'évaluation :', error)
+        res.status(500).json({ error: 'Erreur côté serveur' });
+    }
+})
+
+// Récupération des évaluation d'un jeu
+app.get('/jeux/:id/notes', async (req, res) => {
+    const jeuId = req.params.id;
+    const sql = 'SELECT * FROM notes WHERE id_jeu = ?';
+
+    try {
+        const notes = await db.query(sql, [jeuId]);
+        res.json(notes);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des évaluations : ', error);
+        res.status(500).json({ error: 'Erreur côté serveur' });
+    }
+})
+
 
 // Routes API
 // Route par défaut pour servir l'application React

@@ -10,23 +10,28 @@ import Classement from './Views/Classement/Classement';
 import PageProfil from './Views/PageProfil/PageProfil';
 import Jeu from './Views/Jeu/Jeu'
 
+import { AuthProvider } from "./components/AuthContext";
 import './App.css';
 
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Accueil />} />
-      <Route path="/connexion" element={<Connexion />} />
-      <Route path="/inscription" element={<Inscription />} />
-      <Route path="/profil" element={<PageProfil />}>
-        <Route index element={<Compte />} />
-        <Route path="compte" element={<Compte />} />
-        <Route path="supportGaming" element={<SupportGaming />} />
-      </Route>
-      <Route path="/classement" element={<Classement />} />
-      <Route path="/jeu/:id" element={<Jeu />} />
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Accueil />} />
+        <Route path="/connexion" element={<Connexion />} />
+        <Route path="/inscription" element={<Inscription />} />
+        <Route path="/profil" element={<PageProfil />}>
+          <Route index element={<Compte />} />
+          <Route path="compte" element={<Compte />} />
+          <Route path="supportGaming" element={<SupportGaming />} />
+        </Route>
+        <Route path="/classement" element={<Classement />} />
+        <Route path="/jeu/:id" element={<Jeu />} />
+      </Routes>
+    </AuthProvider>
+
+
   );
 }
 
