@@ -10,6 +10,7 @@ function Nav() {
   const [typingTimeout, setTypingTimeout] = useState(0);
 
   // Utilisation du contexte d'authentification
+
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -71,7 +72,17 @@ function Nav() {
   const handleDeconnexion = async () => {
     try {
       // Effectue la déconnexion coté serveur
-      await logout();
+      await fetch("http://localhost:5000/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+      // Mettez à jour le statut d'authentification local
+      console.log("Avant déconnexion - isAuthenticated :", isAuthenticated);
+
+      logout();
+      // Mettez à jour le statut d'authentification local après la déconnexion
+      console.log("Après déconnexion - isAuthenticated :", isAuthenticated);
+
       // Redirige l'utilisateur après la déconnexion
       navigate("/");
 

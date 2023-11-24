@@ -36,13 +36,20 @@ app.use(cors({
     credentials: true,
     origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
 }));
 
 app.use(session({
     secret: secret,
     resave: false,
     saveUninitialized: true,
+    cookie: {
+        path: '/',
+        domain: 'localhost',
+        httpOnly: true,
+        secure: false,
+        maxAge: null
+    }
 }));
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -403,22 +410,6 @@ app.post('/profil', isLoggedIn, upload.single('image'), async (req, res) => {
     }
 });
 
-// PARTIE DECONNEXION
-// Route de déconnexion
-app.post('/logout', (req, res) => {
-    console.log("Route de déconnexion atteinte");
-    req.session.destroy((err) => {
-        if (err) {
-            console.error('Erreur lors de la déconnexion :', err);
-            res.status(500).json({ error: 'Erreur lors de la déconnexion' });
-        } else {
-            res.clearCookie('connect.sid'); // Efface le cookie de session
-            res.status(200).json({ message: 'Déconnexion réussie' });
-        }
-    });
-});
-
-
 // PARTIE JEUX
 app.get('/plateformes', (req, res) => {
     db.query('SELECT * FROM plateformes', (err, results) => {
@@ -550,16 +541,60 @@ app.post('/notes', async (req, res) => {
 // Récupération des évaluation d'un jeu
 app.get('/jeux/:id/notes', async (req, res) => {
     const jeuId = req.params.id;
-    const sql = 'SELECT * FROM notes WHERE id_jeu = ?';
+    const userId = req.query.id_user;
 
+    const sql = 'SELECT * FROM notes WHERE id_jeu = ? AND id_user = ?';
     try {
-        const notes = await db.query(sql, [jeuId]);
-        res.json(notes);
+        const [notes] = await db.query(sql, [jeuId, userId]);
+        console.log('Notes before Array.isArray:', notes);
+        // Vérifiez si notes est un tableau avant de le mapper
+        if (Array.isArray(notes)) {
+            const formattedNotes = notes.map(note => ({
+                id: note.id,
+                note: note.note,
+                commentaire: note.commentaire,
+                // Ajoutez d'autres propriétés si nécessaire
+            }));
+console.log('Formatted notes:', formattedNotes);
+            res.json(formattedNotes);
+        } else {
+            res.status(500).json({ error: 'Réponse inattendue du serveur' });
+        }
     } catch (error) {
         console.error('Erreur lors de la récupération des évaluations : ', error);
         res.status(500).json({ error: 'Erreur côté serveur' });
     }
-})
+});
+
+
+// Vérifie l'état d'authentification
+app.get('/checkAuthStatus', (req, res) => {
+    if (req.session.user) {
+        // L'utilisateur est connecté, renvoi les informations de l'utilisateur
+        res.json(req.session.user);
+    } else {
+        // L'utilisateur n'est pas connecté
+        res.status(401).json({ error: 'Non autorisé' });
+    }
+});
+
+// PARTIE DECONNEXION
+// Route de déconnexion
+app.post('/logout', (req, res) => {
+    console.log("Route de déconnexion atteinte");
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Erreur lors de la déconnexion :', err);
+            res.status(500).json({ error: 'Erreur lors de la déconnexion' });
+        } else {
+            res.clearCookie('connect.sid', { path: '/' }); // Efface le cookie de session
+            console.log('Session détruite avec succès');
+            res.status(200).json({ message: 'Déconnexion réussie' });
+        }
+    });
+});
+
+
 
 
 // Routes API
