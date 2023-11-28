@@ -13,6 +13,7 @@ export default function DescriptifJeu() {
   const [plateformes, setPlateformes] = useState([]);
   const [genres, setGenres] = useState([]);
   const [noteHovered, setNoteHovered] = useState(null);
+
   const notes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const navigate = useNavigate();
 
@@ -21,8 +22,11 @@ export default function DescriptifJeu() {
       try {
         // Récupére les informations du jeu
         const response = await axios.get(`http://localhost:5000/jeux/${id}`);
-        setJeu(response.data);
+        const fetchedJeu = response.data;
+        setJeu(fetchedJeu);
+
         console.log("Jeux API Response:", response.data);
+
         // Récupérer les plateformes associées au jeu
         const plateformesResponse = await axios.get(
           `http://localhost:5000/jeux/${id}/plateformes`
@@ -40,7 +44,7 @@ export default function DescriptifJeu() {
     };
 
     fetchJeu();
-  }, [id]);
+  }, [id, isAuthenticated, user]);
 
   const handleNoteSelected = async (note) => {
     try {
@@ -48,9 +52,10 @@ export default function DescriptifJeu() {
       console.log("user:", user);
       console.log("jeu:", jeu);
 
-      if (isAuthenticated && user && jeu && jeu.id) {
+      if (isAuthenticated && user && jeu) {
+        console.log("Making request with user.id:", user.id);
         const response = await axios.post("http://localhost:5000/notes", {
-          id_user: user.user.id,
+          id_user: user.id,
           id_jeu: jeu.id,
           note: note,
           commentaire: "",
@@ -82,9 +87,8 @@ export default function DescriptifJeu() {
     const year = dateObj.getFullYear();
     const month = dateObj.getMonth() + 1;
     const day = dateObj.getDate();
-    return `${year}-${month < 10 ? "0" : ""}${month}-${
-      day < 10 ? "0" : ""
-    }${day}`;
+    return `${year}-${month < 10 ? "0" : ""}${month}-${day < 10 ? "0" : ""
+      }${day}`;
   };
 
   if (!jeu) {
@@ -97,34 +101,35 @@ export default function DescriptifJeu() {
         <p>{jeu.titre}</p>
         <p>Date de sortie: {formatFullDate(jeu.dateSortie)}</p>
         <hr />
-        <p>Note utilisateur : </p>
+        <p>
+          Note utilisateur :
+        </p>
         <p>Ma note</p>
-        <div>
+        {jeu && (
           <div className="barre">
             {notes.map((note, index) => (
               <div
                 key={index}
                 className={`cellule note${note} 
-            ${index === 0 ? "arrondieGauche" : ""}
-            ${index === 10 ? "arrondieDroite" : ""}
-            ${index < 4 ? "noteRouge" : index < 7 ? "noteJaune" : "noteVert"}
-            `}
+          ${index === 0 ? "arrondieGauche" : ""}
+          ${index === 10 ? "arrondieDroite" : ""}
+          ${index < 4 ? "noteRouge" : index < 7 ? "noteJaune" : "noteVert"}
+        `}
                 onMouseEnter={() => setNoteHovered(note)}
                 onMouseLeave={() => setNoteHovered(null)}
                 onClick={() => handleNoteSelected(note)} // Ajout de la note lors du clic
               ></div>
             ))}
+            <div
+              className={`rond ${noteHovered !== null ? `note${noteHovered}` : ""
+                }`}
+            >
+              {noteHovered !== null && (
+                <div className="noteText">{noteHovered}</div>
+              )}
+            </div>
           </div>
-          <div
-            className={`rond ${
-              noteHovered !== null ? `note${noteHovered}` : ""
-            }`}
-          >
-            {noteHovered !== null && (
-              <div className="noteText">{noteHovered}</div>
-            )}
-          </div>
-        </div>
+        )}
       </div>
       <div>
         <p>Résumé: {jeu.description}</p>
@@ -145,4 +150,4 @@ export default function DescriptifJeu() {
       </div>
     </div>
   );
-}
+} 

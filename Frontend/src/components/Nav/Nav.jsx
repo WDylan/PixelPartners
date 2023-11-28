@@ -68,19 +68,25 @@ function Nav() {
     navigate("/classement");
   };
 
-  const handleDeconnexion = async () => {
-    try {
-      // Effectue la déconnexion coté serveur
-      await logout();
-      // Redirige l'utilisateur après la déconnexion
-      navigate("/");
+const handleDeconnexion = async () => {
+  try {
+    await fetch("http://localhost:5000/logout", {
+      method: "POST",
+      credentials: "include",
+    });
 
-      // Affichage d'un message de déconnexion réussie coté client
-      console.log("Déconnexion réussie");
-    } catch (error) {
-      console.error("Erreur lors de la déconnexion :", error.message);
-    }
-  };
+    // Déconnectez l'utilisateur en utilisant la méthode du contexte d'authentification
+    logout();
+
+    // Redirigez l'utilisateur après la déconnexion
+    navigate("/");
+
+    console.log("Déconnexion réussie");
+  } catch (error) {
+    console.error("Erreur lors de la déconnexion :", error.message);
+  }
+};
+
 
   return (
     <header>

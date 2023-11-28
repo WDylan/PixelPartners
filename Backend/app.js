@@ -36,13 +36,20 @@ app.use(cors({
     credentials: true,
     origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
 }));
 
 app.use(session({
     secret: secret,
     resave: false,
     saveUninitialized: true,
+    cookie: {
+        path: '/', 
+        domain: 'localhost', 
+        httpOnly: true,
+        secure: false, 
+        maxAge: null 
+    }
 }));
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -560,7 +567,16 @@ app.get('/jeux/:id/notes', async (req, res) => {
         res.status(500).json({ error: 'Erreur côté serveur' });
     }
 })
-
+// Vérifie l'état d'authentification
+app.get('/checkAuthStatus', (req, res) => {
+    if (req.session.user) {
+        // L'utilisateur est connecté, renvoi les informations de l'utilisateur
+        res.json(req.session.user);
+    } else {
+        // L'utilisateur n'est pas connecté
+        res.status(401).json({ error: 'Non autorisé' });
+    }
+});
 
 // Routes API
 // Route par défaut pour servir l'application React
@@ -581,4 +597,4 @@ app.use((err, req, res, next) => {
 
 app.listen(port, () => {
     console.log(`Serveur en cours d'exécution sur le port ${port}`);
-});
+}); 
