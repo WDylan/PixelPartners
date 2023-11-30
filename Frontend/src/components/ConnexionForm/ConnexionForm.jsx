@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import axios from "axios";
 import "./ConnexionForm.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function ConnexionForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
@@ -61,6 +63,10 @@ export default function ConnexionForm() {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="formConnexion">
       <h2>Connexion à PixelPartners</h2>
@@ -74,16 +80,22 @@ export default function ConnexionForm() {
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
-      <label>Mot de passe :</label>
-      <div className="inputMdp">
-        <input
-          type="password"
-          placeholder="Mot de passe"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onKeyDown={handleKeydown}
-        />
-        <span>Mot de passe oublié ?</span>
+      <div className="passwordInputContainer">
+        <label>Mot de passe :</label>
+        <div className="inputMdp">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Mot de passe"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <span
+            className="passwordToggleIcon"
+            onClick={togglePasswordVisibility}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
       </div>
       <div className="buttonConnect">
         <button

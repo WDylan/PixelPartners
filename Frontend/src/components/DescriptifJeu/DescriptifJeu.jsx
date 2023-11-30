@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
+import YouTube from "react-youtube";
 
 import "./DescriptifJeu.css";
 
@@ -13,11 +14,6 @@ export default function DescriptifJeu() {
   const [plateformes, setPlateformes] = useState([]);
   const [genres, setGenres] = useState([]);
   const [noteHovered, setNoteHovered] = useState(null);
-<<<<<<< HEAD
-  const [userRating, setUserRating] = useState(null);
-
-  const notes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-=======
   const [selectedNote, setSelectedNote] = useState(null);
   const [userNote, setUserNote] = useState(null); // Ajout de l'état pour stocker la note de l'utilisateur
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,8 +21,6 @@ export default function DescriptifJeu() {
   const [commentaire, setCommentaire] = useState("");
   const [commentaires, setCommentaires] = useState([]);
 
-
->>>>>>> recup
   const navigate = useNavigate();
 
   const notes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -43,10 +37,15 @@ export default function DescriptifJeu() {
           { withCredentials: true }
         );
         console.log("Réponse de la requête GET :", noteResponse.data);
-        setUserNote(noteResponse.data.length > 0 ? noteResponse.data[0].note : null);
+        setUserNote(
+          noteResponse.data.length > 0 ? noteResponse.data[0].note : null
+        );
       }
     } catch (error) {
-      console.error("Erreur lors de la récupération de la note :", error.message);
+      console.error(
+        "Erreur lors de la récupération de la note :",
+        error.message
+      );
       if (error.response) {
         console.error("Réponse du serveur :", error.response.data);
       }
@@ -55,11 +54,19 @@ export default function DescriptifJeu() {
 
   const fetchCommentaires = async () => {
     try {
-      const commentairesResponse = await axios.get(`http://localhost:5000/commentaires/${id}`);
-      console.log("Réponse de la requête GET commentaires :", commentairesResponse.data);
+      const commentairesResponse = await axios.get(
+        `http://localhost:5000/commentaires/${id}`
+      );
+      console.log(
+        "Réponse de la requête GET commentaires :",
+        commentairesResponse.data
+      );
       setCommentaires(commentairesResponse.data);
     } catch (error) {
-      console.error("Erreur lors de la récupération des commentaires :", error.message);
+      console.error(
+        "Erreur lors de la récupération des commentaires :",
+        error.message
+      );
       if (error.response) {
         console.error("Réponse du serveur :", error.response.data);
       }
@@ -75,24 +82,6 @@ export default function DescriptifJeu() {
         const fetchedJeu = response.data;
         setJeu(fetchedJeu);
 
-<<<<<<< HEAD
-        // Récupère la note de l'utilisateur pour ce jeu
-        if (isAuthenticated && user && fetchedJeu) {
-          const userRatingResponse = await axios.get(
-            `http://localhost:5000/jeux/${id}/notes`,
-            {
-              params: { id_user: user.id },
-            }
-          );
-
-          setUserRating(
-            userRatingResponse.data.length > 0
-              ? userRatingResponse.data[0].note
-              : null
-          );
-        }
-=======
->>>>>>> recup
         console.log("Jeux API Response:", response.data);
 
         // Récupérer les plateformes associées au jeu
@@ -111,7 +100,9 @@ export default function DescriptifJeu() {
         fetchNote(); // Utilisation de 'await' pour s'assurer que la note est récupérée avant de continuer
 
         // Récupérer la moyenne des notes pour le jeu
-        const moyenneResponse = await axios.get(`http://localhost:5000/notes/moyenne/${id}`);
+        const moyenneResponse = await axios.get(
+          `http://localhost:5000/notes/moyenne/${id}`
+        );
 
         setMoyenneNotes(moyenneResponse.data.moyenne);
         // Appelle la fonction pour récupérer les commentaires
@@ -122,11 +113,7 @@ export default function DescriptifJeu() {
       }
     };
 
-<<<<<<< HEAD
-    fetchJeu();
-=======
     fetchJeuAndNote();
->>>>>>> recup
   }, [id, isAuthenticated, user]);
 
   const handleNoteSelected = async (note) => {
@@ -136,13 +123,10 @@ export default function DescriptifJeu() {
       console.log("jeu:", jeu);
 
       if (isAuthenticated && user && jeu) {
-<<<<<<< HEAD
-=======
         console.log("Making request with user.id:", user.id);
 
         const commentaire = "";
 
->>>>>>> recup
         const response = await axios.post("http://localhost:5000/notes", {
           id_user: user.id,
           id_jeu: jeu.id,
@@ -158,7 +142,11 @@ export default function DescriptifJeu() {
         // Appelle la fonction pour mettre à jour la note de l'utilisateur après la sélection
         await fetchNote();
       } else {
-        console.error("Utilisateur non authentifié ou ID du jeu manquant :", user, jeu);
+        console.error(
+          "Utilisateur non authentifié ou ID du jeu manquant :",
+          user,
+          jeu
+        );
         navigate("/connexion");
       }
     } catch (error) {
@@ -169,7 +157,6 @@ export default function DescriptifJeu() {
     }
   };
 
-
   const formatFullDate = (dateStr) => {
     if (!dateStr) {
       return "";
@@ -178,8 +165,9 @@ export default function DescriptifJeu() {
     const year = dateObj.getFullYear();
     const month = dateObj.getMonth() + 1;
     const day = dateObj.getDate();
-    return `${year}-${month < 10 ? "0" : ""}${month}-${day < 10 ? "0" : ""
-      }${day}`;
+    return `${year}-${month < 10 ? "0" : ""}${month}-${
+      day < 10 ? "0" : ""
+    }${day}`;
   };
 
   if (!jeu) {
@@ -207,7 +195,10 @@ export default function DescriptifJeu() {
 
       closeModal();
     } catch (error) {
-      console.error("Erreur lors de la soumission de la revue :", error.message);
+      console.error(
+        "Erreur lors de la soumission de la revue :",
+        error.message
+      );
       if (error.response) {
         console.error("Réponse du serveur :", error.response.data);
       }
@@ -227,139 +218,233 @@ export default function DescriptifJeu() {
   };
 
   return (
-    <div className="formJeu">
-      <div>
-        <p>{jeu.titre}</p>
-        <p>Date de sortie: {formatFullDate(jeu.dateSortie)}</p>
-        <hr />
-<<<<<<< HEAD
-        <p>
-          Note utilisateur :{" "}
-          {userRating !== null
-            ? `Votre note : ${userRating}`
-            : "Pas encore noté"}
-        </p>
-=======
-        <p>Note utilisateurs :  <span className={`carre ${getColorClass(moyenneNotes)}`}>{moyenneNotes}</span></p>
->>>>>>> recup
-        <p>Ma note</p>
-        {jeu && (
-          <div className="barre">
-            {notes.map((note, index) => (
-              <div
-                key={index}
-                className={`cellule note${note} 
-          ${index === 0 ? "arrondieGauche" : ""}
-          ${index === 10 ? "arrondieDroite" : ""}
-          ${index < 4 ? "noteRouge" : index < 7 ? "noteJaune" : "noteVert"}
-        `}
-                onMouseEnter={() => setNoteHovered(note)}
-                onMouseLeave={() => setNoteHovered(null)}
-                onClick={() => handleNoteSelected(note)}
-              ></div>
-            ))}
-            <div
-<<<<<<< HEAD
-              className={`rond ${
-                noteHovered !== null ? `note${noteHovered}` : ""
-              }`}
-            >
-              {noteHovered !== null && (
-                <div className="noteText">{noteHovered}</div>
-=======
-              className={`rond ${noteHovered !== null ? `note${noteHovered}` : selectedNote !== null ? `note${selectedNote}` : userNote !== null ? `note${userNote}` : ""}`}
-            >
-              {(noteHovered !== null || selectedNote !== null || userNote !== null) && (
-                <div className="noteText">{noteHovered !== null ? noteHovered : selectedNote !== null ? selectedNote : userNote}</div>
->>>>>>> recup
-              )}
-            </div>
+    <div className="containerFormJeu">
+      <div className="descriptifJeu">
+        <div>
+          {jeu.video && (
+            <YouTube
+              videoId={jeu.video}
+              opts={{ width: "760", height: "415" }}
+              onReady={(e) => e.target.pauseVideo()} // Ajoutez cette ligne pour résoudre le problème
+            />
+          )}
+          {!jeu.video && <p>Aucune vidéo disponible pour ce jeu.</p>}
+        </div>
+        <div className="infosJeu">
+          <h1>{jeu.titre}</h1>
+          <div>
+            <span className="labelJeu">Date de sortie : </span>
+            <span>{formatFullDate(jeu.dateSortie)}</span>
+            <hr />
           </div>
-        )}
-<<<<<<< HEAD
-=======
-        {/* Bouton pour ouvrir la fenêtre modale */}
-        <button onClick={openModal}>Ajouter ma revue</button>
-        {/* Fenêtre modale */}
-        {isModalOpen && (
-          <div className="modal-overlay">
-            <div className="modal">
-              <div className="modal-header">
-                <h2>Ajouter ma revue</h2>
-              </div>
-              <p>{jeu.titre}</p>
-              <hr />
-              <div className="modal-content">
-                <p>Note :</p>
-                {/* Ajouter la barre de notes à la fenêtre modale */}
-                <div
-                  className={`rond ${noteHovered !== null ? `note${noteHovered}` : selectedNote !== null ? `note${selectedNote}` : ""}`}
-                >
-                  {(noteHovered !== null || selectedNote !== null) && (
-                    <div className="noteText">{noteHovered !== null ? noteHovered : selectedNote}</div>
-                  )}
-                </div>
+          <div className="moyenneUtilisateurs">
+            <span className="labelJeu">Note utilisateurs : </span>
+            <span className={`carre ${getColorClass(moyenneNotes)}`}>
+              {moyenneNotes}
+            </span>
+          </div>
+          <div>
+            <span className="labelJeu">Ma note</span>
+            <div className="noteUtilisateur">
+              {jeu && (
                 <div className="barre">
                   {notes.map((note, index) => (
                     <div
                       key={index}
                       className={`cellule note${note} 
-                        ${index === 0 ? "arrondieGauche" : ""}
-                        ${index === 10 ? "arrondieDroite" : ""}
-                        ${index < 4 ? "noteRouge" : index < 7 ? "noteJaune" : "noteVert"}
-                      `}
+          ${index === 0 ? "arrondieGauche" : ""}
+          ${index === 10 ? "arrondieDroite" : ""}
+          ${index < 4 ? "noteRouge" : index < 7 ? "noteJaune" : "noteVert"}
+        `}
                       onMouseEnter={() => setNoteHovered(note)}
                       onMouseLeave={() => setNoteHovered(null)}
-                      onClick={() => setSelectedNote(note)}
+                      onClick={() => handleNoteSelected(note)}
                     ></div>
                   ))}
+                  <div
+                    className={`rond ${
+                      noteHovered !== null
+                        ? `note${noteHovered}`
+                        : selectedNote !== null
+                        ? `note${selectedNote}`
+                        : userNote !== null
+                        ? `note${userNote}`
+                        : ""
+                    }`}
+                  >
+                    {(noteHovered !== null ||
+                      selectedNote !== null ||
+                      userNote !== null) && (
+                      <div className="noteText">
+                        {noteHovered !== null
+                          ? noteHovered
+                          : selectedNote !== null
+                          ? selectedNote
+                          : userNote}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <hr />
-                <p>Ecrivez une revue pour {jeu.titre}</p>
-                <textarea
-                  value={commentaire}
-                  onChange={(e) => setCommentaire(e.target.value)}
-                ></textarea>
-                <button onClick={handleReviewSubmit}>Poster</button>
-                <button onClick={closeModal}>Annuler</button>
-              </div>
+              )}
             </div>
           </div>
-        )}
->>>>>>> recup
-      </div>
-      <div>
-        <p>Résumé: {jeu.description}</p>
-        <div>
-          <div>
-            <p>
-              Plateforme :{" "}
-              {plateformes.map((plateforme) => plateforme.nom).join(", ")}
-            </p>
-            <p>Date de sortie: {formatFullDate(jeu.dateSortie)}</p>
+          <div className="containerButtonRevue">
+            <button className="buttonRevue" onClick={openModal}>
+              Ajouter ma revue
+            </button>
           </div>
-          <div>
-            <p>Developpeur : {jeu.developpeur}</p>
-            <p>Éditeur : {jeu.editeur}</p>
-          </div>
-          <div>Genres : {genres.map((genre) => genre.nom).join(", ")}</div>
+          {/* Fenêtre modale */}
+          {isModalOpen && (
+            <div className="modal-overlay">
+              <div className="modal">
+                <div className="modal-header">
+                  <h>Ajouter ma revue</h>
+                </div>
+                <p className="labelJeu">
+                  <h2>{jeu.titre}</h2>
+                </p>
+                <hr />
+                <div className="modal-content">
+                  <p>Note :</p>
+                  <div className="noteModal">
+                    <div
+                      className={`rond ${
+                        noteHovered !== null
+                          ? `note${noteHovered}`
+                          : selectedNote !== null
+                          ? `note${selectedNote}`
+                          : ""
+                      }`}
+                    >
+                      {(noteHovered !== null || selectedNote !== null) && (
+                        <div className="noteText">
+                          {noteHovered !== null ? noteHovered : selectedNote}
+                        </div>
+                      )}
+                    </div>
+                    <div className="barre">
+                      {notes.map((note, index) => (
+                        <div
+                          key={index}
+                          className={`cellule note${note} 
+                        ${index === 0 ? "arrondieGauche" : ""}
+                        ${index === 10 ? "arrondieDroite" : ""}
+                        ${
+                          index < 4
+                            ? "noteRouge"
+                            : index < 7
+                            ? "noteJaune"
+                            : "noteVert"
+                        }
+                      `}
+                          onMouseEnter={() => setNoteHovered(note)}
+                          onMouseLeave={() => setNoteHovered(null)}
+                          onClick={() => setSelectedNote(note)}
+                        ></div>
+                      ))}
+                    </div>
+                  </div>
+                  <hr />
+                  <p>Ecrivez une revue pour {jeu.titre}</p>
+                  <textarea
+                    className="commentaireModal"
+                    value={commentaire}
+                    onChange={(e) => setCommentaire(e.target.value)}
+                  ></textarea>
+                  <div className="buttonsModal">
+                    <button
+                      className="buttonModal"
+                      onClick={handleReviewSubmit}
+                    >
+                      Poster
+                    </button>
+                    <button className="buttonModal" onClick={closeModal}>
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
+      <div className="complementDescriptifJeu">
+        <h1>Détails</h1>
+        <hr />
+        <div className="displayDescriptifJeu">
+          <div className="resumePart">
+            <span className="labelJeu">Résumé</span>
+            <br />
+            <br />
+            <span>{jeu.description}</span>
+          </div>
+          <div className="editionParts">
+            <div className="editionPart1">
+              <p>
+                <span className="labelJeu">Plateforme : </span>
+                {plateformes.map((plateforme) => plateforme.nom).join(", ")}
+              </p>
+              <p>
+                <span className="labelJeu">Date de sortie : </span>
+                {formatFullDate(jeu.dateSortie)}
+              </p>
+            </div>
+            <div className="editionPart2">
+              <p>
+                <span className="labelJeu">Developpeur : </span>
+                {jeu.developpeur}
+              </p>
+              <p>
+                <span className="labelJeu">Éditeur : </span>
+                {jeu.editeur}
+              </p>
+            </div>
+            <div className="editionPart3">
+              <p>
+                <span className="labelJeu">Genres : </span>
+                {genres.map((genre) => genre.nom).join(", ")}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
       {commentaires.length > 0 && (
         <div>
           <h2>Commentaires</h2>
-          {commentaires.map((commentaire, index) => (
-            <div key={index}>
-              <p>Note: <span className={`carre ${getColorClass(commentaire.note)}`}>{commentaire.note}</span></p>
-              <p>Date: {commentaire.date_note}</p>
-              <p>
-                Utilisateur: {commentaire.id_user ? (commentaire.username ? commentaire.username : "Profil supprimé") : "Profil supprimé"}
-              </p>
-              <p>Commentaire: {commentaire.commentaire}</p>
-            </div>
-          ))}
+          <div className="listeCommentaire">
+            {commentaires.map((commentaire, index) => (
+              <div key={index} className="caseCommentaire">
+                <p className="enteteCommentaire">
+                  <span className={`carre ${getColorClass(commentaire.note)}`}>
+                    {commentaire.note}
+                  </span>
+                  <span className="userName">
+                    {commentaire.id_user
+                      ? commentaire.username
+                        ? commentaire.username
+                        : "Profil supprimé"
+                      : "Profil supprimé"}
+                  </span>
+                </p>
+                <hr />
+                <p>
+                  <span className="labelJeu">Date : </span>
+                  {commentaire.date_note}
+                </p>
+                <hr />
+                <p>
+                  <span className="labelJeu">Commentaire : </span>
+                  <span className="commentaire">
+                    {" "}
+                    {commentaire.commentaire}
+                  </span>
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       )}
-    </div >
+    </div>
   );
-} 
+}

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Compte.css";
 import { CountryDropdown } from "react-country-region-selector";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Compte() {
   const [editData, setEditData] = useState({
@@ -26,8 +27,8 @@ export default function Compte() {
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [profileImageUrl, setProfileImageUrl] = useState(null);
-  const navigate = useNavigate()
-
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUserProfile = async () => {
@@ -152,6 +153,10 @@ export default function Compte() {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="formCompte">
       <div className="compte">
@@ -161,8 +166,10 @@ export default function Compte() {
           <div className="imgProfil">
             {editData.image && (
               <img
-              className="imageProfil"
-                src={profileImageUrl || `http://localhost:5000/${editData.image}`}
+                className="imageProfil"
+                src={
+                  profileImageUrl || `http://localhost:5000/${editData.image}`
+                }
                 alt="Profile"
               />
             )}
@@ -217,15 +224,21 @@ export default function Compte() {
                 readOnly={!isEditMode}
               />
             </div>
-            <div>
+            <div className="inputMdp">
               <input
                 className="inputCompteText"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Mot de passe"
                 value={editData.password}
                 onChange={(e) => handleInputChange("password", e.target.value)}
                 readOnly={!isEditMode}
               />
+              <span
+                className="passwordToggleIcon2"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
             </div>
             <div className="compteDate">
               <input

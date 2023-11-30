@@ -32,22 +32,6 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const checkAuthStatus = async () => {
-<<<<<<< HEAD
-        try {
-            const response = await axios.get("http://localhost:5000/checkAuthStatus", {
-                withCredentials: true
-            });
-            const userData = response.data;
-            login(userData);
-        } catch (error) {
-            // Gérer l'erreur ou définir l'état isConnected sur false
-            setConnected(false);
-        }
-    };
-    checkAuthStatus();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
-=======
       try {
         const response = await axios.get("http://localhost:5000/checkAuthStatus", {
           withCredentials: true
@@ -66,7 +50,6 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
->>>>>>> recup
 
   return (
     <AuthContext.Provider value={{ isAuthenticated: isConnected, user, login, logout, isLoading }}>

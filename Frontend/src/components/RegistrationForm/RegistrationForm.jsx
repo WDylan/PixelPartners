@@ -260,6 +260,7 @@ const RegistrationForm = () => {
       <div className="inputDateNaissance">
         <div>
           <input
+            className="inputJour"
             type="text"
             placeholder="Jour"
             value={day}
@@ -268,6 +269,7 @@ const RegistrationForm = () => {
         </div>
         <div>
           <input
+            className="inputJour"
             type="text"
             placeholder="Mois"
             value={month}
@@ -276,6 +278,7 @@ const RegistrationForm = () => {
         </div>
         <div>
           <input
+            className="inputJour"
             type="text"
             placeholder="Année"
             value={year}

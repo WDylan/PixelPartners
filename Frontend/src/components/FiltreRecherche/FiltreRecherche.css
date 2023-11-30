@@ -1,4 +1,127 @@
+.containerFiltre {
+  padding-left: 2em;
+  padding-right: 2em;
+  min-height: 70vh;
+}
+
+.containerFiltre hr {
+  border-color: #81e883;
+}
+
+.filtreDisplay {
+  display: flex;
+  min-height: 30vh;
+}
+
+.listJeu {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.caseJeu {
+  border-radius: 0.5em;
+  cursor: pointer;
+  display: flex;
+  width: 35%;
+  box-sizing: border-box;
+  padding: 0.5em;
+  margin: 1em;
+  border: 1px solid #81e883;
+  background-color: #222831;
+  overflow: hidden;
+  max-height: 25vh;
+}
+
 .imageJeu {
-    height: 200px;
-    width: 150px;
+  height: 200px;
+  width: 150px;
+  border: 1px solid #81e883;
+  margin-right: 1em;
+}
+
+.descriptionJeu {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.titreJeu {
+  font-size: 1.5em;
+  font-weight: bolder;
+}
+
+.pagination {
+  text-align: center;
+}
+
+.buttonPagination {
+  margin: 0.5em;
+  height: 2em;
+  width: 2em;
+  background-color: #59a52c;
+  color: #222831;
+  border-radius: 0.5em;
+  border: 1px solid #81e883;
+  font-size: 1em;
+}
+
+.listFiltre {
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #81e883;
+  border-radius: 0.5em;
+  width: 30%;
+  height: 100%;
+}
+
+.dropdown {
+  cursor: pointer;
+}
+
+.dropdownContent {
+  margin: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.plateformeGenreChoise {
+  margin: 0.5em;
+}
+
+.plateformeGenreButton:hover,
+.plateformeGenreChoise:hover,
+.plateformeGenreButton:active,
+.plateformeGenreChoise:active {
+  background-color: #59a52c;
+  color: #222831;
+  border: 1px solid #81e883;
+}
+
+.containerButtonFiltre {
+  display: flex;
+  justify-content: center;
+}
+.resetFiltre {
+  text-align: center;
+  width: 40%;
+  background-color: #59a52c;
+  color: #222831;
+  border: 1px solid #81e883;
+  font-weight: bold;
+  font-size: 15px;
+  border-radius: 1.5em;
+}
+
+.resetButtonClicked {
+  background-color: #222831;
+  color: #59a52c;
+  transition: background-color 0.5s ease;
 }

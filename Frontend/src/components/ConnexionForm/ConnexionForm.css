@@ -4,7 +4,7 @@
   border: solid 1px;
   border-radius: 5%;
   padding: 1em;
-  background-color: #2a4b47;
+  background-color: #222831;
   text-align: center;
 }
 
@@ -13,7 +13,8 @@
 }
 
 .formConnexion hr {
-  margin-bottom: 2em;
+  margin-bottom: 3em;
+  border-color: #81e883;
 }
 
 .formConnexion input {
@@ -33,19 +34,32 @@
 }
 
 .buttonConnexion {
-  color: #2a4b47;
-  background-color: #c1b37a;
+  color: #222831;
+  background-color: #59a52c;
   font-weight: bold;
   font-size: 15px;
   height: 3em;
   width: 10em;
   border-radius: 1em;
   margin-bottom: 2em;
+  border: 1px solid #81e883;
 }
 
-.inputMdp {
+.passwordInputContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-bottom: 2.5em;
+}
+.inputMdp {
+  position: relative;
+}
+.formConnexion input {
+  padding-right: 2.5em; /* Ajoutez de l'espace à droite pour l'icône */
+}
+
+.passwordToggleIcon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10em;
+  cursor: pointer;
 }

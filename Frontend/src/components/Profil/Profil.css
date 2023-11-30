@@ -3,10 +3,10 @@
   width: 50%;
   display: flex;
   border: solid 1px;
-  background-color: #2a4b47;
+  background-color: #222831;
   flex-direction: row;
   border-radius: 2%;
-  border-right: 1px solid #c1b37a;
+  border-right: 1px solid #81e883;
 }
 
 .parametres {
@@ -15,14 +15,14 @@
   flex-direction: column;
   align-items: flex-start;
   text-decoration: none;
-  color: #c1b37a;
+  color: #59a52c;
 }
 .parametres h2 {
   padding-left: 0.5em;
 }
 .parametres a {
   text-decoration: none;
-  color: #c1b37a;
+  color: #59a52c;
   font-weight: bold;
   width: 100%;
 }
@@ -38,7 +38,7 @@
 }
 
 .active {
-  background-color: #54857f;
+  background-color: #37414F;
 }
 
 .profilContent {

@@ -1,139 +1,314 @@
+.containerFormJeu {
+  min-height: 60vh;
+  padding-left: 2em;
+  padding-right: 2em;
+}
+.containerFormJeu hr {
+  border-color: #81e883;
+}
 
+.descriptifJeu {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 2.5em;
+}
+
+.infosJeu {
+  width: 100%;
+  margin-left: 3em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
 .cellule {
-    width: 40px;
-    height: 15px;
-    border: 1px solid black;
-    margin: 0.1em;
-    box-sizing: border-box;
-    float: left;
-    cursor: pointer;
-  }
-  
-  .barre {
-    overflow: hidden;
-  }
-  
-  .arrondieGauche {
-    border-bottom-left-radius: 5px;
-    border-top-left-radius: 5px;
-  }
-  
-  .arrondieDroite {
-    border-bottom-right-radius: 5px;
-    border-top-right-radius: 5px;
-  }
-  
-  .noteRouge, .carre.noteRouge {
-    background-color: red;
-  }
-  
-  .noteJaune, .carre.noteJaune {
-    background-color: yellow;
-  }
-  
-  .noteVert, .carre.noteVert {
-    background-color: green;
-  }
-  
-  .rond {
-    width: 50px;
-    height: 50px;
-    border: 1px solid black;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 10px;
-    background-color: white;
-  }
-  
-  .note0{
-    background-color: red;
-    color: white;
-  }
-  .note1{
-    background-color: red;
-    color: white;
-  }
-  .note2{
-    background-color: red;
-    color: white;
-  }
-  .note3{
-    background-color: red;
-    color: white;
-  }
-  .note4{
-    background-color: yellow;
-    color: black;
-  }
-  .note5{
-    background-color: yellow;
-    color: black;
-  }
-  .note6{
-    background-color: yellow;
-    color: black;
-  }
-  .note7{
-    background-color: green;
-    color: black;
-  }
-  
-  .note8{
-    background-color: green;
-    color: black;
-  }
-  
-  .note9{
-    background-color: green;
-    color: black;
-  }
-  
-  .note10{
-    background-color: green;
-    color: black;
-  }
-  
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .modal {
-    background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    width: 40em;
-  }
-  
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .modal-content {
-    margin-top: 20px;
-  }
-  
-  .carre {
-    width: 50px;
-    height: 50px;
-    border: 1px solid black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 10px;
-    background-color: white;
-  }
-  
+  width: 40px;
+  height: 15px;
+  border: 1px solid black;
+  margin: 0.1em;
+  box-sizing: border-box;
+  float: left;
+  cursor: pointer;
+}
 
-  
+.barre {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.arrondieGauche {
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.arrondieDroite {
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.noteRouge,
+.carre.noteRouge {
+  background-color: red;
+}
+
+.noteJaune,
+.carre.noteJaune {
+  background-color: yellow;
+}
+
+.noteVert,
+.carre.noteVert {
+  background-color: green;
+}
+
+.rond {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #81e883;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  background-color: white;
+}
+
+.note0 {
+  background-color: red;
+  color: white;
+}
+.note1 {
+  background-color: red;
+  color: white;
+}
+.note2 {
+  background-color: red;
+  color: white;
+}
+.note3 {
+  background-color: red;
+  color: white;
+}
+.note4 {
+  background-color: yellow;
+  color: black;
+}
+.note5 {
+  background-color: yellow;
+  color: black;
+}
+.note6 {
+  background-color: yellow;
+  color: black;
+}
+.note7 {
+  background-color: green;
+  color: black;
+}
+
+.note8 {
+  background-color: green;
+  color: black;
+}
+
+.note9 {
+  background-color: green;
+  color: black;
+}
+
+.note10 {
+  background-color: green;
+  color: black;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background-color: #222831;
+  color: #59a52c;
+  border: 1px solid #81e883;
+  padding: 1em;
+  border-radius: 5px;
+  width: 50%;
+  height: 55%;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-content {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.noteModal {
+  display: flex;
+  justify-content: space-around;
+}
+
+.commentaireModal {
+  width: 99%;
+  height: 10em;
+}
+.carre {
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  background-color: white;
+  border-radius: 0.5em;
+}
+
+.labelJeu {
+  font-size: large;
+  font-weight: bold;
+}
+
+.moyenneUtilisateurs {
+  display: flex;
+  align-items: center;
+}
+
+.noteUtilisateur {
+  display: flex;
+  align-items: center;
+}
+
+.buttonRevue {
+  text-align: center;
+  width: 40%;
+  height: 3em;
+  background-color: #59a52c;
+  color: #222831;
+  border: 1px solid #81e883;
+  font-weight: bold;
+  font-size: 15px;
+  border-radius: 1em;
+}
+
+.containerButtonRevue {
+  display: flex;
+  justify-content: center;
+}
+
+.displayDescriptifJeu {
+  display: flex;
+  height: 25em;
+}
+
+.resumePart {
+  width: 100%;
+  font-size: 25px;
+}
+
+.editionParts {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-end;
+}
+.editionPart1 {
+  width: 80%;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  display: flex;
+  flex-direction: column;
+  background-color: #222831;
+  color: #59a52c;
+  border: 1px solid #81e883;
+  border-radius: 0.2em;
+  height: fit-content;
+  justify-content: center;
+  font-size: 20px;
+}
+.editionPart2 {
+  width: 80%;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  display: flex;
+  flex-direction: column;
+  background-color: #222831;
+  color: #59a52c;
+  border: 1px solid #81e883;
+  border-radius: 0.2em;
+  height: fit-content;
+  justify-content: center;
+  font-size: 20px;
+}
+.editionPart3 {
+  width: 80%;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  display: flex;
+  flex-direction: column;
+  background-color: #222831;
+  color: #59a52c;
+  border: 1px solid #81e883;
+  border-radius: 0.2em;
+  height: fit-content;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.listeCommentaire {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.caseCommentaire {
+  border-radius: 0.5em;
+  background-color: #222831;
+  color: #59a52c;
+  border: 1px solid #81e883;
+  margin: 1em;
+  width: 45%;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.enteteCommentaire {
+  display: flex;
+  justify-content: space-between;
+}
+
+.userName {
+  font-weight: bold;
+  font-size: larger;
+}
+
+.commentaire {
+  font-size: 20px;
+}
+
+.buttonsModal {
+  display: flex;
+  justify-content: center;
+}
+.buttonModal {
+  text-align: center;
+  width: 40%;
+  height: 3em;
+  background-color: #59a52c;
+  color: #222831;
+  border: 1px solid #81e883;
+  font-weight: bold;
+  font-size: 15px;
+  border-radius: 1em;
+  margin: 1em;
+}

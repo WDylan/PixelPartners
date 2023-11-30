@@ -2,8 +2,8 @@
   height: 100%;
   border-top-right-radius: 2%;
   border-bottom-right-radius: 2%;
-  background-color: #54857f;
-  border-left: 1px solid #c1b37a;
+  background-color: #37414f;
+  border-left: 1px solid #81e883;
 }
 
 .compte {
@@ -25,14 +25,15 @@
 }
 
 .buttonModif {
-  color: #2a4b47;
-  background-color: #c1b37a;
+  background-color: #59a52c;
+  color: #222831;
   font-weight: bold;
   font-size: 1em;
   height: 3em;
   width: 10em;
   border-radius: 1em;
   margin-bottom: 2em;
+  border: 1px solid #81e883;
 }
 
 .buttonValidModif {
@@ -76,8 +77,8 @@
   width: 90%;
   height: 2em;
   border-radius: 0.5em;
-  background-color: #54857f;
-  color: #c1b37a;
+  background-color: #59a52c;
+  color: #222831;
   border: none;
   font-weight: bolder;
   font-size: 1.2em;
@@ -129,4 +130,12 @@
   /* Pour rendre l'image circulaire */
   object-fit: cover;
   /* Pour s'assurer que l'image couvre tout le cercle */
+}
+
+.passwordToggleIcon2 {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 18.5em;
+  cursor: pointer;
 }

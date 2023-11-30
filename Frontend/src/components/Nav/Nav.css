@@ -1,8 +1,8 @@
 /* MENU */
 header {
   width: 100%;
-  background-color: #2a4b47;
-  color: #c1b37a;
+  background-color: #222831;
+  color: #59a52c;
   font-family: Helvetica;
   list-style: none;
   font-size: 1.3em;
@@ -11,7 +11,7 @@ header {
 }
 
 .navBar {
-  height: 6em;
+  height: 7em;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -24,7 +24,8 @@ header {
 }
 
 .logo {
-  border: 1px solid #c1b37a;
+  width: 7em;
+  height: 7em;
 }
 
 .classementNav {
@@ -37,7 +38,7 @@ header {
 }
 
 .classementNav li a {
-  color: #c1b37a;
+  color: #59a52c;
   text-decoration: none;
 }
 
@@ -60,7 +61,7 @@ header {
 }
 
 .titreNav li a {
-  color: #c1b37a;
+  color: #59a52c;
   text-decoration: none;
 }
 
@@ -68,14 +69,15 @@ header {
 .inscription,
 .deconnexion,
 .profil {
-  background-color: #c1b37a;
-  color: #2a4b47;
+  background-color: #59a52c;
+  color: #222831;
   font-weight: bold;
   font-size: 15px;
   height: 4em;
   width: 10em;
   border-radius: 1.5em;
   margin-left: 2em;
+  border: 1px solid #81e883;
 }
 
 .langue li {
@@ -101,7 +103,7 @@ header {
   position: absolute;
   display: block;
   text-align: center;
-  background-color: #2a4b47;
+  background-color: #222831;
   border-radius: 2%;
   margin-top: 2.7em;
   z-index: -1;
@@ -110,7 +112,7 @@ header {
   position: absolute;
   display: block;
   text-align: center;
-  background-color: #2a4b47;
+  background-color: #222831;
   border-radius: 2%;
   margin-top: 2.7em;
   z-index: -1;

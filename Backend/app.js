@@ -86,6 +86,7 @@ const storage = multer.diskStorage({
     },
 });
 
+// Barre de recherche
 app.get('/jeux/search', async (req, res) => {
     console.log('Requête de recherche reçue');
     try {
@@ -139,7 +140,7 @@ const upload = multer({ storage: storage });
 app.post('/register', async (req, res) => {
     const { username, email, password, dateNaissance } = req.body;
 
-    // Vérifiez les données d'entrée, par exemple, assurez-vous que le nom d'utilisateur, l'adresse amil, le mot de passe et la date de naissance sont présents
+    // Vérifie les données d'entrée, s'assure que le nom d'utilisateur, l'adresse amil, le mot de passe et la date de naissance sont présents
     if (!username || !email || !password || !dateNaissance) {
         return res.status(400).send('Nom d\'utilisateur, adresse email, mot de passe requis et date de naissance requis');
     }
@@ -214,13 +215,13 @@ app.post('/login', async (req, res) => {
     console.log('Requête de connexion reçue');
     const { username, password } = req.body;
 
-    // Vérifiez les données d'entrée, assurez-vous que le nom d'utilisateur et le mot de passe sont présents
+    // Vérifie les données d'entrée, s'assure que le nom d'utilisateur et le mot de passe sont présents
     if (!username || !password) {
         return res.status(400).json({ error: 'Nom d\'utilisateur et mot de passe requis' });
     }
 
     try {
-        // Récupérer toutes les informations de l'utilisateur de la base de données
+        // Récupére toutes les informations de l'utilisateur de la base de données
         const query = 'SELECT * FROM users WHERE username = ?';
         db.query(query, [username], async (err, result) => {
             if (err) {
@@ -235,7 +236,7 @@ app.post('/login', async (req, res) => {
 
             const { id, username, email, password: hashedPassword, dateNaissance, genre, pays, adresse, codePostal, ville, telephone, telephonePortable, image } = result[0];
 
-            // Vérifier le mot de passe
+            // Vérifie le mot de passe
             const passwordMatch = await bcrypt.compare(password, hashedPassword);
             if (passwordMatch) {
                 // Création d'une session côté serveur avec toutes les informations de l'utilisateur
@@ -549,37 +550,12 @@ app.post('/notes', async (req, res) => {
     }
 });
 
-<<<<<<< HEAD
-// Récupération des évaluation d'un jeu
-app.get('/jeux/:id/notes', async (req, res) => {
-    const jeuId = req.params.id;
-    const userId = req.query.id_user;
-=======
 app.get('/notes/moyenne/:id_jeu', (req, res) => {
     const { id_jeu } = req.params;
     console.log('Requête GET /notes/moyenne/:id_jeu');
     console.log('ID jeu :', id_jeu);
->>>>>>> recup
 
-    const sql = 'SELECT * FROM notes WHERE id_jeu = ? AND id_user = ?';
     try {
-<<<<<<< HEAD
-        const [notes] = await db.query(sql, [jeuId, userId]);
-        console.log('Notes before Array.isArray:', notes);
-        // Vérifiez si notes est un tableau avant de le mapper
-        if (Array.isArray(notes)) {
-            const formattedNotes = notes.map(note => ({
-                id: note.id,
-                note: note.note,
-                commentaire: note.commentaire,
-                // Ajoutez d'autres propriétés si nécessaire
-            }));
-console.log('Formatted notes:', formattedNotes);
-            res.json(formattedNotes);
-        } else {
-            res.status(500).json({ error: 'Réponse inattendue du serveur' });
-        }
-=======
         // Effectue la requête SQL pour calculer la moyenne
         const query = `
             SELECT AVG(note) AS moyenne
@@ -606,46 +582,12 @@ console.log('Formatted notes:', formattedNotes);
                 }
             }
         });
->>>>>>> recup
     } catch (error) {
         // Gère les erreurs correctement
         console.error('Erreur lors du calcul de la moyenne des notes :', error);
         res.status(500).json({ error: 'Erreur côté serveur' });
     }
 });
-<<<<<<< HEAD
-
-
-// Vérifie l'état d'authentification
-app.get('/checkAuthStatus', (req, res) => {
-    if (req.session.user) {
-        // L'utilisateur est connecté, renvoi les informations de l'utilisateur
-        res.json(req.session.user);
-    } else {
-        // L'utilisateur n'est pas connecté
-        res.status(401).json({ error: 'Non autorisé' });
-    }
-});
-
-// PARTIE DECONNEXION
-// Route de déconnexion
-app.post('/logout', (req, res) => {
-    console.log("Route de déconnexion atteinte");
-    req.session.destroy((err) => {
-        if (err) {
-            console.error('Erreur lors de la déconnexion :', err);
-            res.status(500).json({ error: 'Erreur lors de la déconnexion' });
-        } else {
-            res.clearCookie('connect.sid', { path: '/' }); // Efface le cookie de session
-            console.log('Session détruite avec succès');
-            res.status(200).json({ message: 'Déconnexion réussie' });
-        }
-    });
-});
-
-
-=======
->>>>>>> recup
 
 // Récupére les commentaires utilisateur sur le jeu
 app.get('/commentaires/:id_jeu', async (req, res) => {

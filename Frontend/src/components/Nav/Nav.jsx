@@ -10,7 +10,6 @@ function Nav() {
   const [typingTimeout, setTypingTimeout] = useState(0);
 
   // Utilisation du contexte d'authentification
-
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -78,30 +77,15 @@ function Nav() {
     }
 
     try {
-<<<<<<< HEAD
-      // Effectue la déconnexion coté serveur
-=======
->>>>>>> recup
       await fetch("http://localhost:5000/logout", {
         method: "POST",
         credentials: "include",
       });
-<<<<<<< HEAD
-      // Mettez à jour le statut d'authentification local
-      console.log("Avant déconnexion - isAuthenticated :", isAuthenticated);
-
-      logout();
-      // Mettez à jour le statut d'authentification local après la déconnexion
-      console.log("Après déconnexion - isAuthenticated :", isAuthenticated);
-
-      // Redirige l'utilisateur après la déconnexion
-=======
 
       // Déconnectez l'utilisateur en utilisant la méthode du contexte d'authentification
       logout();
 
       // Redirigez l'utilisateur après la déconnexion
->>>>>>> recup
       navigate("/");
 
       console.log("Déconnexion réussie");
@@ -117,7 +101,7 @@ function Nav() {
     <header>
       <div className="navBar">
         <li className="logoNav" onClick={goToAccueil}>
-          <img className="logo" src="./img/logo.png" alt="img" />
+          <img className="logo" src="./img/LogoPixelPartners.png" alt="img" />
         </li>
         <li>
           <input

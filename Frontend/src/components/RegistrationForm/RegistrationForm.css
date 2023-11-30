@@ -1,15 +1,20 @@
 .formInscription {
-  height: 68%;
+  height: fit-content;
   width: 40em;
   border: solid 1px;
   border-radius: 5%;
   padding-top: 1em;
   padding-left: 2em;
-  background-color: #2a4b47;
+  padding-bottom: 1em;
+  background-color: #222831;
 }
 
 .formInscription h2 {
-    text-align: center;
+  text-align: center;
+}
+
+.formInscription hr {
+  border-color: #81e883;
 }
 
 .formInscription input {
@@ -29,8 +34,9 @@
 }
 
 .buttonEnvoyer {
-  color: #2a4b47;
-  background-color: #c1b37a;
+  color: #222831;
+  background-color: #59a52c;
+  border: 1px solid #81e883;
   font-weight: bold;
   font-size: 15px;
   height: 3em;
@@ -46,6 +52,7 @@
 .inputDateNaissance input {
   width: 100%;
 }
+
 .red {
   color: red;
 }
