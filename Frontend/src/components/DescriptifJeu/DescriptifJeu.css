@@ -23,15 +23,15 @@
     border-top-right-radius: 5px;
   }
   
-  .noteRouge {
+  .noteRouge, .carre.noteRouge {
     background-color: red;
   }
   
-  .noteJaune {
+  .noteJaune, .carre.noteJaune {
     background-color: yellow;
   }
   
-  .noteVert {
+  .noteVert, .carre.noteVert {
     background-color: green;
   }
   
@@ -47,18 +47,93 @@
     background-color: white;
   }
   
-  .rond.note0, .rond.note1, .rond.note2, .rond.note3  {
+  .note0{
     background-color: red;
     color: white;
   }
-  
-  .rond.note4, .rond.note5, .rond.note6 {
+  .note1{
+    background-color: red;
+    color: white;
+  }
+  .note2{
+    background-color: red;
+    color: white;
+  }
+  .note3{
+    background-color: red;
+    color: white;
+  }
+  .note4{
     background-color: yellow;
     color: black;
   }
-  
-  .rond.note7, .rond.note8, .rond.note9, .rond.note10 {
+  .note5{
+    background-color: yellow;
+    color: black;
+  }
+  .note6{
+    background-color: yellow;
+    color: black;
+  }
+  .note7{
     background-color: green;
     color: black;
   }
+  
+  .note8{
+    background-color: green;
+    color: black;
+  }
+  
+  .note9{
+    background-color: green;
+    color: black;
+  }
+  
+  .note10{
+    background-color: green;
+    color: black;
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    width: 40em;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .modal-content {
+    margin-top: 20px;
+  }
+  
+  .carre {
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    background-color: white;
+  }
+  
+
   

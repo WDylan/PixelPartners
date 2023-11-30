@@ -70,12 +70,23 @@ function Nav() {
   };
 
   const handleDeconnexion = async () => {
+    // Ajoutez une fenêtre de confirmation avant de déconnecter
+    const confirmLogout = window.confirm("Êtes-vous sûr de vouloir vous déconnecter ?");
+
+    if (!confirmLogout) {
+      return; // Annule la déconnexion si l'utilisateur annule
+    }
+
     try {
+<<<<<<< HEAD
       // Effectue la déconnexion coté serveur
+=======
+>>>>>>> recup
       await fetch("http://localhost:5000/logout", {
         method: "POST",
         credentials: "include",
       });
+<<<<<<< HEAD
       // Mettez à jour le statut d'authentification local
       console.log("Avant déconnexion - isAuthenticated :", isAuthenticated);
 
@@ -84,14 +95,23 @@ function Nav() {
       console.log("Après déconnexion - isAuthenticated :", isAuthenticated);
 
       // Redirige l'utilisateur après la déconnexion
+=======
+
+      // Déconnectez l'utilisateur en utilisant la méthode du contexte d'authentification
+      logout();
+
+      // Redirigez l'utilisateur après la déconnexion
+>>>>>>> recup
       navigate("/");
 
-      // Affichage d'un message de déconnexion réussie coté client
       console.log("Déconnexion réussie");
     } catch (error) {
       console.error("Erreur lors de la déconnexion :", error.message);
+      // Affiche un message d'erreur à l'utilisateur
+      alert("Erreur lors de la déconnexion. Veuillez réessayer.");
     }
   };
+
 
   return (
     <header>

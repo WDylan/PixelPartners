@@ -39,6 +39,9 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
 }));
 
+// Ajoutez des journaux ici pour déboguer
+console.log('Before session middleware');
+
 app.use(session({
     secret: secret,
     resave: false,
@@ -51,6 +54,9 @@ app.use(session({
         maxAge: null
     }
 }));
+
+// Ajoutez des journaux ici pour déboguer
+console.log('After session middleware');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -110,6 +116,18 @@ app.get('/jeux/search', async (req, res) => {
     } catch (error) {
         console.error('Erreur côté serveur :', error);
         res.status(500).json({ error: 'Erreur côté serveur.' });
+    }
+});
+
+// Vérifie l'état d'authentification
+app.get('/checkAuthStatus', (req, res) => {
+    if (req.session.user) {
+        console.log("User authenticated:", req.session.user);
+        // L'utilisateur est connecté, renvoi les informations de l'utilisateur
+        res.status(200).json(req.session.user);
+    } else {
+        // L'utilisateur n'est pas connecté
+        res.status(401).json({ error: 'Utilisateur non authentifié' });
     }
 });
 
@@ -193,6 +211,7 @@ app.get('/checkEmail', (req, res) => {
 
 // Route de connexion
 app.post('/login', async (req, res) => {
+    console.log('Requête de connexion reçue');
     const { username, password } = req.body;
 
     // Vérifiez les données d'entrée, assurez-vous que le nom d'utilisateur et le mot de passe sont présents
@@ -242,14 +261,12 @@ app.post('/login', async (req, res) => {
             } else {
                 res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
             }
-
         });
     } catch (error) {
         console.error('Erreur lors de la vérification du mot de passe :', error.message);
         res.status(500).json({ error: 'Erreur lors de la connexion' });
     }
 });
-
 
 // PARTIE CHARGEMENT ET AFFICHAGE DES DONNEES UTILISATEUR
 // Route protégée pour obtenir les informations de l'utilisateur connecté
@@ -431,7 +448,6 @@ app.get('/genres', (req, res) => {
 
 app.get('/jeux', (req, res) => {
     const { plateforme, genre } = req.query;
-
     let sql = `
         SELECT jeux.*, GROUP_CONCAT(DISTINCT genres.nom) AS genres, GROUP_CONCAT(DISTINCT plateformes.nom) AS plateformes
         FROM jeux
@@ -440,21 +456,16 @@ app.get('/jeux', (req, res) => {
         LEFT JOIN jeux_plateformes ON jeux.id = jeux_plateformes.id_jeu
         LEFT JOIN plateformes ON jeux_plateformes.id_plateforme = plateformes.id
     `;
-
     const filters = [];
-
     if (plateforme) {
         filters.push(`plateformes.nom = '${plateforme}'`);
     }
-
     if (genre) {
         filters.push(`genres.nom = '${genre}'`);
     }
-
     if (filters.length > 0) {
         sql += ` WHERE ${filters.join(' AND ')}`;
     }
-
     sql += ' GROUP BY jeux.id';
 
     db.query(sql, (err, results) => {
@@ -476,7 +487,6 @@ app.get('/jeux/:id', (req, res) => {
         if (results.length === 0) {
             return res.status(404).json({ error: 'Jeu non trouvé.' });
         }
-
         const jeu = results[0];
         res.json(jeu);
     });
@@ -524,27 +534,36 @@ app.get('/jeux/:id/genres', (req, res) => {
 // Ajout évaluation
 app.post('/notes', async (req, res) => {
     const { id_user, id_jeu, note, commentaire } = req.body;
-
-    console.log("Donnée note reçue :", req.body)
-
-    const sql = 'INSERT INTO notes (id_user, id_jeu, note, commentaire) VALUES (?,?,?,?)';
-
+    console.log("Donnée note reçue :", req.body);
+    const sql = `
+        INSERT INTO notes (id_user, id_jeu, note, commentaire) 
+        VALUES (?,?,?,?)
+        ON DUPLICATE KEY UPDATE note = VALUES(note), commentaire = VALUES(commentaire)
+    `;
     try {
         await db.query(sql, [id_user, id_jeu, note, commentaire]);
-        res.status(201).json({ message: 'Évaluation ajoutée avec succès' });
+        res.status(201).json({ message: 'Évaluation ajoutée ou mise à jour avec succès' });
     } catch (error) {
-        console.error('Erreur lors de l\'ajout de l\'évaluation :', error)
+        console.error('Erreur lors de l\'ajout ou de la mise à jour de l\'évaluation :', error);
         res.status(500).json({ error: 'Erreur côté serveur' });
     }
-})
+});
 
+<<<<<<< HEAD
 // Récupération des évaluation d'un jeu
 app.get('/jeux/:id/notes', async (req, res) => {
     const jeuId = req.params.id;
     const userId = req.query.id_user;
+=======
+app.get('/notes/moyenne/:id_jeu', (req, res) => {
+    const { id_jeu } = req.params;
+    console.log('Requête GET /notes/moyenne/:id_jeu');
+    console.log('ID jeu :', id_jeu);
+>>>>>>> recup
 
     const sql = 'SELECT * FROM notes WHERE id_jeu = ? AND id_user = ?';
     try {
+<<<<<<< HEAD
         const [notes] = await db.query(sql, [jeuId, userId]);
         console.log('Notes before Array.isArray:', notes);
         // Vérifiez si notes est un tableau avant de le mapper
@@ -560,11 +579,41 @@ console.log('Formatted notes:', formattedNotes);
         } else {
             res.status(500).json({ error: 'Réponse inattendue du serveur' });
         }
+=======
+        // Effectue la requête SQL pour calculer la moyenne
+        const query = `
+            SELECT AVG(note) AS moyenne
+            FROM notes
+            WHERE id_jeu = ?
+        `;
+        console.log('Query:', query);
+
+        db.query(query, [id_jeu], (error, results) => {
+            if (error) {
+                console.error('Erreur lors de la requête SQL pour la moyenne des notes. Requête :', query);
+                res.status(500).json({ error: 'Erreur côté serveur' });
+            } else {
+                // Utilise des logs pour vérifier les résultats
+                console.log('Résultat de la requête SQL pour la moyenne des notes :', results);
+
+                // Envoie la réponse au client
+                if (results && results.length > 0) {
+                    console.log('Moyenne des notes pour le jeu avec l\'ID', id_jeu, ':', results);
+                    res.status(200).json({ moyenne: results[0].moyenne });
+                } else {
+                    console.log('Aucun résultat trouvé pour la moyenne des notes.');
+                    res.status(404).json({ error: 'Aucune note trouvée pour ce jeu' });
+                }
+            }
+        });
+>>>>>>> recup
     } catch (error) {
-        console.error('Erreur lors de la récupération des évaluations : ', error);
+        // Gère les erreurs correctement
+        console.error('Erreur lors du calcul de la moyenne des notes :', error);
         res.status(500).json({ error: 'Erreur côté serveur' });
     }
 });
+<<<<<<< HEAD
 
 
 // Vérifie l'état d'authentification
@@ -595,7 +644,102 @@ app.post('/logout', (req, res) => {
 });
 
 
+=======
+>>>>>>> recup
 
+// Récupére les commentaires utilisateur sur le jeu
+app.get('/commentaires/:id_jeu', async (req, res) => {
+    const { id_jeu } = req.params;
+    console.log('Requête GET /commentaires/:id_jeu');
+    console.log('ID jeu :', id_jeu);
+
+    try {
+        // Effectue la requête SQL pour récupérer les commentaires
+        const query = `
+            SELECT notes.note, notes.commentaire, notes.id_user, notes.date_note, users.username
+            FROM notes
+            LEFT JOIN users ON notes.id_user = users.id
+            WHERE notes.id_jeu = ?
+        `;
+        console.log('Query:', query);
+
+        db.query(query, [id_jeu], (error, results) => {
+            if (error) {
+                console.error('Erreur lors de la requête SQL pour les commentaires. Requête :', query);
+                res.status(500).json({ error: 'Erreur côté serveur' });
+            } else {
+                // Utilise des logs pour vérifier les résultats
+                console.log('Résultat de la requête SQL pour les commentaires :', results);
+
+                // Envoie la réponse au client
+                res.status(200).json(results);
+            }
+        });
+    } catch (error) {
+        // Gère les erreurs correctement
+        console.error('Erreur lors de la récupération des commentaires :', error);
+        res.status(500).json({ error: 'Erreur côté serveur' });
+    }
+});
+
+
+// Récupére la note de l'utilisateur sur le jeu
+app.get('/notes/:id_user/:id_jeu', async (req, res) => {
+    const { id_user, id_jeu } = req.params;
+    console.log('Requête GET /notes/:id_user/:id_jeu');
+    console.log('ID utilisateur :', id_user);
+    console.log('ID jeu :', id_jeu);
+
+    try {
+        // Effectue la requête SQL
+        const result = await performSQLQuery(id_user, id_jeu);
+
+        // Utilise des logs pour vérifier les résultats
+        console.log('Résultat de la requête SQL :', result);
+
+        // Envoie la réponse au client
+        res.status(200).json(result);
+    } catch (error) {
+        // Gère les erreurs correctement
+        console.error('Erreur lors de la récupération de la note :', error);
+        res.status(500).json({ error: 'Erreur côté serveur' });
+    }
+});
+
+async function performSQLQuery(id_user, id_jeu) {
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT note, commentaire
+            FROM notes
+            WHERE id_user = ? AND id_jeu = ?
+        `;
+
+        db.query(query, [id_user, id_jeu], (error, results) => {
+            if (error) {
+                // Gère les erreurs correctement
+                console.error('Erreur lors de la requête SQL :', error);
+                reject(error);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+}
+
+// PARTIE DECONNEXION
+// Route de déconnexion
+app.post('/logout', (req, res) => {
+    console.log("Route de déconnexion atteinte");
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Erreur lors de la déconnexion :', err);
+            res.status(500).json({ error: 'Erreur lors de la déconnexion' });
+        } else {
+            res.clearCookie('connect.sid'); // Efface le cookie de session
+            res.status(200).json({ message: 'Déconnexion réussie' });
+        }
+    });
+});
 
 // Routes API
 // Route par défaut pour servir l'application React
@@ -616,4 +760,4 @@ app.use((err, req, res, next) => {
 
 app.listen(port, () => {
     console.log(`Serveur en cours d'exécution sur le port ${port}`);
-});
+}); 
