@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
 
 
   const [user, setUser] = useState(null);  // Ajout de l'état user
+  const [isLoading, setIsLoading] = useState(true); // Nouvel état isLoading
 
   const setConnected = (value) => {
     setIsConnected(value);
@@ -21,6 +22,7 @@ export const AuthProvider = ({ children }) => {
     setUser(userData);  // Mettre à jour l'état de l'utilisateur
     // Stocke les informations d'authentification dans localStorage
     localStorage.setItem('authUser', JSON.stringify(userData));
+    console.log("User authenticated:", userData);
   };
 
   const logout = () => {
@@ -35,10 +37,14 @@ export const AuthProvider = ({ children }) => {
           withCredentials: true
         });
         const userData = response.data;
+        console.log("User data from checkAuthStatus:", userData);
         login(userData);
       } catch (error) {
         // Gérer l'erreur ou définir l'état isConnected sur false
+        console.error("Error checking auth status:", error);
         setConnected(false);
+      } finally {
+        setIsLoading(false)// Met à jour isLoading une fois la vérification terminée
       }
     };
     checkAuthStatus();
@@ -46,7 +52,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated: isConnected, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated: isConnected, user, login, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

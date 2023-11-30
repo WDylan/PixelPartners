@@ -68,24 +68,33 @@ function Nav() {
     navigate("/classement");
   };
 
-const handleDeconnexion = async () => {
-  try {
-    await fetch("http://localhost:5000/logout", {
-      method: "POST",
-      credentials: "include",
-    });
+  const handleDeconnexion = async () => {
+    // Ajoutez une fenêtre de confirmation avant de déconnecter
+    const confirmLogout = window.confirm("Êtes-vous sûr de vouloir vous déconnecter ?");
 
-    // Déconnectez l'utilisateur en utilisant la méthode du contexte d'authentification
-    logout();
+    if (!confirmLogout) {
+      return; // Annule la déconnexion si l'utilisateur annule
+    }
 
-    // Redirigez l'utilisateur après la déconnexion
-    navigate("/");
+    try {
+      await fetch("http://localhost:5000/logout", {
+        method: "POST",
+        credentials: "include",
+      });
 
-    console.log("Déconnexion réussie");
-  } catch (error) {
-    console.error("Erreur lors de la déconnexion :", error.message);
-  }
-};
+      // Déconnectez l'utilisateur en utilisant la méthode du contexte d'authentification
+      logout();
+
+      // Redirigez l'utilisateur après la déconnexion
+      navigate("/");
+
+      console.log("Déconnexion réussie");
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion :", error.message);
+      // Affiche un message d'erreur à l'utilisateur
+      alert("Erreur lors de la déconnexion. Veuillez réessayer.");
+    }
+  };
 
 
   return (

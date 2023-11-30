@@ -11,7 +11,7 @@ export default function ConnexionForm() {
   const navigate = useNavigate();
 
   // Utilisation du contexte d'aughentification
-  const { login } = useAuth();
+  const { login, isLoading } = useAuth();
 
   const handleConnexion = async () => {
     try {
@@ -48,6 +48,11 @@ export default function ConnexionForm() {
       }
     }
   };
+
+  // Attendre que la vérification d'authentification soit terminée avant de rendre le contenu
+  if (isLoading) {
+    return <p>Chargement en cours...</p>;
+  }
 
   const handleKeydown = (event) => {
     if (event.key === "Enter") {
