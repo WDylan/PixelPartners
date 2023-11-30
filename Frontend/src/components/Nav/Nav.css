@@ -42,6 +42,11 @@ header {
   text-decoration: none;
 }
 
+.rechercheFonction {
+  display: flex;
+  justify-content: center;
+}
+
 .rechercheNav {
   margin-right: 7em;
   height: 3em;
@@ -51,6 +56,36 @@ header {
   border-radius: 1.5em;
 }
 
+.rechercheResult {
+  opacity: 90%;
+  height: fit-content;
+  width: fit-content;
+  margin-top: 4.5em;
+  background-color: #222831;
+  position: absolute;
+  border-left: 1px solid #81e883;
+  border-right: 1px solid #81e883;
+  border-bottom: 1px solid #81e883;
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.rechercheResult ul {
+  list-style: none;
+}
+
+.rechercheResult ul li {
+  color: #59a52c;
+  margin: 0.5em;
+  color: inherit;
+  text-decoration: none;
+}
+.jeuRecherches {
+  text-decoration: none;
+  color: inherit;
+}
 .titreNav {
   height: 100%;
   font-weight: bold;
@@ -80,9 +115,7 @@ header {
   border: 1px solid #81e883;
 }
 
-.langue li {
-  list-style: none;
-}
+
 /* MENUS DEROULANTS */
 
 .navBar li ul {
@@ -108,6 +141,7 @@ header {
   margin-top: 2.7em;
   z-index: -1;
 }
+
 .navbarTitre {
   position: absolute;
   display: block;
@@ -124,6 +158,7 @@ header {
 .navbarTitre li a {
   line-height: 2em;
 }
+
 .navBar li.vide {
   height: 10.3em;
 }

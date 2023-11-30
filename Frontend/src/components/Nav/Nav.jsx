@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import "./Nav.css";
@@ -8,6 +8,23 @@ function Nav() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [typingTimeout, setTypingTimeout] = useState(0);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const searchRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setIsSearchOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   // Utilisation du contexte d'authentification
   const { isAuthenticated, logout } = useAuth();
@@ -20,10 +37,12 @@ function Nav() {
         `http://localhost:5000/jeux/search?term=${encodedSearchTerm}`
       );
       setSearchResults(response.data);
+      setIsSearchOpen(true);
     } catch (error) {
       console.error("Erreur lors de la recherche :", error.message);
     }
   };
+
   const handleChange = (event) => {
     // Réinitialise le timeout à chaque frappe
     clearTimeout(typingTimeout);
@@ -100,31 +119,32 @@ function Nav() {
   return (
     <header>
       <div className="navBar">
-        <li className="logoNav" onClick={goToAccueil}>
+        <div className="logoNav" onClick={goToAccueil}>
           <img className="logo" src="./img/LogoPixelPartners.png" alt="img" />
-        </li>
-        <li>
-          <input
-            className="rechercheNav"
-            type="text"
-            placeholder="Rechercher..."
-            value={searchTerm}
-            onChange={handleChange}
-            onKeyDown={handleSearch}
-          />
-        </li>
-        {searchResults.length > 0 && (
-          <div className="search-results">
-            <h3>Résultats de la recherche :</h3>
-            <ul>
-              {searchResults.map((result) => (
-                <li key={result.id}>
-                  <a href={`/jeu/${result.id}`}>{result.titre}</a>
-                </li>
-              ))}
-            </ul>
+        </div>
+        <div className="rechercheFonction"  ref={searchRef}>
+          <div>
+            <input
+              className="rechercheNav"
+              type="text"
+              placeholder="Rechercher..."
+              value={searchTerm}
+              onChange={handleChange}
+            />
           </div>
-        )}
+          {isSearchOpen && searchResults.length > 0 && (
+            <div className="rechercheResult">
+              <h3>Résultats de la recherche :</h3>
+              <ul>
+                {searchResults.map((result) => (
+                  <li key={result.id}>
+                    <a className="jeuRecherches"  href={`/jeu/${result.id}`}>{result.titre}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
         <li className="classementNav" onClick={goToClassement}>
           Classement
           <ul className="navbarClassement">
