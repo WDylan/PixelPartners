@@ -134,8 +134,50 @@
 
 .passwordToggleIcon2 {
   position: absolute;
-  top: 50%;
+  top: 60%;
   transform: translateY(-50%);
-  left: 18.5em;
+  left: 18em;
   cursor: pointer;
+}
+
+@media only screen and (max-width: 1440px) {
+  .passwordToggleIcon2 {
+    left: 18em;
+  }
+
+  .labelCompte {
+    height: 100%;
+  }
+  .inputCompte {
+    height: 100%;
+  }
+  .inputCompteText {
+    height: 1.5em;
+  }
+
+  .inputCompteDate {
+    height: 1.5em;
+  }
+
+  .buttonCompte {
+    padding-top: 1em;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .profilContainer{
+    width: 35em;
+  }
+  .passwordToggleIcon2 {
+    left: 11em;
+  }
+
+  .labelCompte {
+    padding-left: 0.1em;
+  }
+  .inputComptePseudo {
+    width: 2.7em;
+  }
+  .inputCompte {
+    width: 70%;
+  }
 }

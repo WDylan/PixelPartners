@@ -3,6 +3,10 @@
   padding-left: 2em;
   padding-right: 2em;
 }
+iframe {
+  width: 760px;
+  height: 415px;
+}
 .containerFormJeu hr {
   border-color: #81e883;
 }
@@ -311,4 +315,66 @@
   font-size: 15px;
   border-radius: 1em;
   margin: 1em;
+}
+
+@media only screen and (max-width: 768px) {
+  .descriptifJeu {
+    display: flex;
+    flex-direction: column;
+  }
+  .containerFormJeu {
+    padding-left: 0.2em;
+  }
+
+  .containerButtonRevue {
+    margin-top: 1em;
+  }
+
+  .caseCommentaire {
+    width: 40%;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .containerFormJeu {
+    width: 100%;
+  }
+  iframe {
+    width: 400px;
+    height: 200px;
+  }
+  .infosJeu {
+    margin-left: 0;
+  }
+
+  .descriptifJeu {
+    align-items: center;
+  }
+
+  .displayDescriptifJeu {
+    flex-direction: column;
+    height: fit-content;
+    align-items: center;
+  }
+  .rond {
+    width: 40px;
+    height: 40px;
+  }
+
+  .cellule {
+    height: 15px;
+    width: 30px;
+  }
+  .resumePart {
+    margin-bottom: 1em;
+    align-items: center;
+  }
+
+  .editionParts {
+    align-items: center;
+  }
+
+  .caseCommentaire {
+    width: 100%;
+  }
 }

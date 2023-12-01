@@ -115,7 +115,6 @@ header {
   border: 1px solid #81e883;
 }
 
-
 /* MENUS DEROULANTS */
 
 .navBar li ul {
@@ -161,4 +160,51 @@ header {
 
 .navBar li.vide {
   height: 10.3em;
+}
+
+/* Media query pour les tablettes en mode portrait */
+@media only screen and (max-width: 768px) {
+  .classementNav,
+  .titreNav,
+  .connexion,
+  .inscription,
+  .deconnexion,
+  .profil {
+    display: none; 
+  }
+
+  .navBar {
+    margin-left: 5em;
+    height: 5em; 
+    justify-content: space-between;
+  }
+
+  .logo {
+    width: 5em; 
+    height: 5em;
+  }
+
+  .rechercheNav {
+    margin-right: 2em; 
+  }
+
+  .rechercheResult {
+    margin-top: 3.6em; 
+    width: 15em;
+  }
+}
+
+
+@media only screen and (max-width: 425px) {
+  .rechercheFonction {
+    margin-right: 2em;
+  }
+  .rechercheNav {
+    width: 11em;
+  }
+  .navBar {
+    display: flex;
+    margin-left: 0em;
+    justify-content: flex-start;
+  }
 }

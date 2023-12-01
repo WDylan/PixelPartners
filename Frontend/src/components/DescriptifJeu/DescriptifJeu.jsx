@@ -165,8 +165,9 @@ export default function DescriptifJeu() {
     const year = dateObj.getFullYear();
     const month = dateObj.getMonth() + 1;
     const day = dateObj.getDate();
-    return `${year}-${month < 10 ? "0" : ""}${month}-${day < 10 ? "0" : ""
-      }${day}`;
+    return `${year}-${month < 10 ? "0" : ""}${month}-${
+      day < 10 ? "0" : ""
+    }${day}`;
   };
 
   if (!jeu) {
@@ -229,7 +230,7 @@ export default function DescriptifJeu() {
             <YouTube
               videoId={extractVideoId(jeu.video)}
               opts={{ width: "760", height: "415" }}
-              onReady={(e) => e.target.pauseVideo()} // Ajoutez cette ligne pour résoudre le problème
+              onReady={(e) => e.target.pauseVideo()}
             />
           )}
           {!jeu.video && <p>Aucune vidéo disponible pour ce jeu.</p>}
@@ -266,26 +267,27 @@ export default function DescriptifJeu() {
                     ></div>
                   ))}
                   <div
-                    className={`rond ${noteHovered !== null
+                    className={`rond ${
+                      noteHovered !== null
                         ? `note${noteHovered}`
                         : selectedNote !== null
-                          ? `note${selectedNote}`
-                          : userNote !== null
-                            ? `note${userNote}`
-                            : ""
-                      }`}
+                        ? `note${selectedNote}`
+                        : userNote !== null
+                        ? `note${userNote}`
+                        : ""
+                    }`}
                   >
                     {(noteHovered !== null ||
                       selectedNote !== null ||
                       userNote !== null) && (
-                        <div className="noteText">
-                          {noteHovered !== null
-                            ? noteHovered
-                            : selectedNote !== null
-                              ? selectedNote
-                              : userNote}
-                        </div>
-                      )}
+                      <div className="noteText">
+                        {noteHovered !== null
+                          ? noteHovered
+                          : selectedNote !== null
+                          ? selectedNote
+                          : userNote}
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -311,12 +313,13 @@ export default function DescriptifJeu() {
                   <p>Note :</p>
                   <div className="noteModal">
                     <div
-                      className={`rond ${noteHovered !== null
+                      className={`rond ${
+                        noteHovered !== null
                           ? `note${noteHovered}`
                           : selectedNote !== null
-                            ? `note${selectedNote}`
-                            : ""
-                        }`}
+                          ? `note${selectedNote}`
+                          : ""
+                      }`}
                     >
                       {(noteHovered !== null || selectedNote !== null) && (
                         <div className="noteText">
@@ -331,12 +334,13 @@ export default function DescriptifJeu() {
                           className={`cellule note${note} 
                         ${index === 0 ? "arrondieGauche" : ""}
                         ${index === 10 ? "arrondieDroite" : ""}
-                        ${index < 4
-                              ? "noteRouge"
-                              : index < 7
-                                ? "noteJaune"
-                                : "noteVert"
-                            }
+                        ${
+                          index < 4
+                            ? "noteRouge"
+                            : index < 7
+                            ? "noteJaune"
+                            : "noteVert"
+                        }
                       `}
                           onMouseEnter={() => setNoteHovered(note)}
                           onMouseLeave={() => setNoteHovered(null)}

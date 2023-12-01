@@ -63,3 +63,33 @@
   right: 10em;
   cursor: pointer;
 }
+
+@media only screen and (max-width: 768px) {
+  .formConnexion {
+    width: 70%;
+  }
+  .passwordToggleIcon {
+    right: 7em;
+  }
+
+  .formConnexion input {
+    width: 60%;
+    height: 2.5em;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .formConnexion {
+    width: 75%;
+    height: 55%;
+    margin-bottom: 3em;
+  }
+  .passwordToggleIcon {
+    right: 3em;
+  }
+
+  .formConnexion input {
+    height: 2.5em;
+    width: 70%;
+  }
+}

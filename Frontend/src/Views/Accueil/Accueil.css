@@ -11,3 +11,17 @@
 .titreAccueil {
   text-align: center;
 }
+
+@media only screen and (max-width: 768px) {
+  .accueilPage {
+    width: fit-content;
+    height: 100%;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .accueilPage {
+    width: fit-content;
+    height: 80%;
+  }
+}

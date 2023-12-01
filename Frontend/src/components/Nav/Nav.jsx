@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
+import BurgerMenu from "../BurgerMenu/BurgerMenu";
 import "./Nav.css";
 import axios from "axios";
 
@@ -9,6 +10,7 @@ function Nav() {
   const [searchResults, setSearchResults] = useState([]);
   const [typingTimeout, setTypingTimeout] = useState(0);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const searchRef = useRef(null);
 
@@ -89,7 +91,9 @@ function Nav() {
 
   const handleDeconnexion = async () => {
     // Ajoutez une fenêtre de confirmation avant de déconnecter
-    const confirmLogout = window.confirm("Êtes-vous sûr de vouloir vous déconnecter ?");
+    const confirmLogout = window.confirm(
+      "Êtes-vous sûr de vouloir vous déconnecter ?"
+    );
 
     if (!confirmLogout) {
       return; // Annule la déconnexion si l'utilisateur annule
@@ -115,14 +119,18 @@ function Nav() {
     }
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
     <header>
-      <div className="navBar">
+      <div className={`navBar ${isMenuOpen ? "menu-open" : ""}`}>
         <div className="logoNav" onClick={goToAccueil}>
           <img className="logo" src="./img/LogoPixelPartners.png" alt="img" />
         </div>
-        <div className="rechercheFonction"  ref={searchRef}>
+
+        <div className="rechercheFonction" ref={searchRef}>
           <div>
             <input
               className="rechercheNav"
@@ -138,13 +146,18 @@ function Nav() {
               <ul>
                 {searchResults.map((result) => (
                   <li key={result.id}>
-                    <a className="jeuRecherches"  href={`/jeu/${result.id}`}>{result.titre}</a>
+                    <a className="jeuRecherches" href={`/jeu/${result.id}`}>
+                      {result.titre}
+                    </a>
                   </li>
                 ))}
               </ul>
             </div>
           )}
         </div>
+
+        <BurgerMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
+
         <li className="classementNav" onClick={goToClassement}>
           Classement
           <ul className="navbarClassement">

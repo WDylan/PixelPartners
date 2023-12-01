@@ -1,6 +1,5 @@
 .profilContainer {
   height: 100vh;
-  width: 50%;
   display: flex;
   border: solid 1px;
   background-color: #222831;
@@ -38,10 +37,35 @@
 }
 
 .active {
-  background-color: #37414F;
+  background-color: #37414f;
 }
 
 .profilContent {
   width: 80%;
   height: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+  .menuProfil {
+    padding-left: 0.5em;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .profilContainer {
+    flex-direction: column;
+    width: 25em;
+  }
+  .menuProfil {
+    height: 100%;
+    padding-right: 1em;
+    padding-left: 1em;
+  }
+  .parametres {
+    flex-direction: row;
+    align-items: center;
+  }
+  .profilContent {
+    width: 100%;
+  }
 }

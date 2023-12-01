@@ -125,3 +125,33 @@
   color: #59a52c;
   transition: background-color 0.5s ease;
 }
+
+@media only screen and (max-width: 768px) {
+  .caseJeu {
+    width: 80%;
+  }
+
+  .listFiltre {
+    width: 40%;
+  }
+
+  .resetFiltre {
+    width: 80%;
+  }
+
+  .dropdownContent {
+    align-items: baseline;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .listJeu{
+    flex-direction: column;
+  }
+  .caseJeu {
+    width: 50%;
+  }
+  .resetFiltre {
+    width: 100%;
+  }
+}

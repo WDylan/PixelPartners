@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `genres` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(100) COLLATE utf8_unicode_520_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
+) ENGINE=InnoDB  AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
 
 --
 -- Déchargement des données de la table `genres`
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `jeux` (
   `image` varchar(255) COLLATE utf8_unicode_520_ci DEFAULT NULL,
   `video` varchar(255) COLLATE utf8_unicode_520_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
 
 --
 -- Déchargement des données de la table `jeux`
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `jeux_genres` (
   `id_genre` int(11) NOT NULL,
   PRIMARY KEY (`id_jeu`,`id_genre`),
   KEY `id_genre` (`id_genre`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
 
 --
 -- Déchargement des données de la table `jeux_genres`
@@ -209,7 +209,7 @@ CREATE TABLE IF NOT EXISTS `jeux_plateformes` (
   `id_plateforme` int(11) NOT NULL,
   PRIMARY KEY (`id_jeu`,`id_plateforme`),
   KEY `id_plateforme` (`id_plateforme`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
 
 --
 -- Déchargement des données de la table `jeux_plateformes`
@@ -286,7 +286,7 @@ CREATE TABLE IF NOT EXISTS `notes` (
   UNIQUE KEY `unique_user_jeu` (`id_user`,`id_jeu`),
   KEY `id_utilisateur` (`id_user`),
   KEY `id_jeu` (`id_jeu`)
-) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
+) ENGINE=InnoDB  AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
 
 --
 -- Déchargement des données de la table `notes`
@@ -310,7 +310,7 @@ CREATE TABLE IF NOT EXISTS `plateformes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(100) COLLATE utf8_unicode_520_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
+) ENGINE=InnoDB  AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
 
 --
 -- Déchargement des données de la table `plateformes`
@@ -357,7 +357,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
+) ENGINE=InnoDB  AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
 
 --
 -- Déchargement des données de la table `users`

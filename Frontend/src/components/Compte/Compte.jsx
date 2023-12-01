@@ -184,7 +184,6 @@ export default function Compte() {
             )}
           </div>
           <div className="labelCompte">
-            <label>Pseudo : </label>
           </div>
           <div className="inputCompte">
             <input

@@ -60,3 +60,17 @@
 .green {
   color: green;
 }
+
+@media only screen and (max-width: 425px) {
+  .formInscription {
+    width: 80%;
+  }
+
+  .formInscription input {
+    height: 2em;
+  }
+
+  .inputDateNaissance input {
+    width: 80%;
+  }
+}
