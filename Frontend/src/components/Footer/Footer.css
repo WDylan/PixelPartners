@@ -41,3 +41,9 @@ footer {
   margin: 1em;
   font-style: italic;
 }
+
+@media screen and (max-width: 425px) {
+  .footerLink ul {
+   padding: 0;
+  }
+}

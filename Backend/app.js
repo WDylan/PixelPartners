@@ -683,6 +683,29 @@ app.post('/logout', (req, res) => {
     });
 });
 
+//ROUTE SUPPRESSION COMPTE
+app.delete('/users', isLoggedIn, async (req, res) => {
+    const id_user = req.session.user.id; // Utilisez req.session.user.id pour récupérer l'id de l'utilisateur connecté
+    try {
+        const query = 'DELETE FROM users WHERE id = ?';
+        await db.query(query, [id_user]);
+
+        // Déconnectez l'utilisateur après la suppression du compte
+        req.session.destroy((err) => {
+            if (err) {
+                console.error('Erreur lors de la déconnexion :', err);
+                res.status(500).json({ error: 'Erreur lors de la déconnexion' });
+            } else {
+                res.clearCookie('connect.sid'); // Efface le cookie de session
+                res.status(200).json({ message: 'Compte utilisateur supprimé avec succès' });
+            }
+        });
+    } catch (error) {
+        console.error('Erreur lors de la suppression du compte utilisateur :', error);
+        res.status(500).json({ error: 'Une erreur s\'est produite lors de la suppression du compte utilisateur' });
+    }
+});
+
 // Routes API
 // Route par défaut pour servir l'application React
 app.get('*', (req, res) => {

@@ -163,7 +163,7 @@ header {
 }
 
 /* Media query pour les tablettes en mode portrait */
-@media only screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .classementNav,
   .titreNav,
   .connexion,

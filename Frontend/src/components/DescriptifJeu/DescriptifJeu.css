@@ -317,10 +317,28 @@ iframe {
   margin: 1em;
 }
 
-@media only screen and (max-width: 768px) {
+@media screen and (max-width: 1280px) {
+  .descriptifJeu {
+    width: 100%;
+    display: flex;
+    margin-bottom: 2.5em;
+  }
+
+  iframe {
+    width: 600px;
+    height: 300px;
+  }
+  
+  .caseCommentaire {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
   .descriptifJeu {
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
   .containerFormJeu {
     padding-left: 0.2em;
@@ -335,7 +353,7 @@ iframe {
   }
 }
 
-@media only screen and (max-width: 425px) {
+@media screen and (max-width: 425px) {
   .containerFormJeu {
     width: 100%;
   }

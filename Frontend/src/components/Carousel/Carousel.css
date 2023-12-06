@@ -61,7 +61,7 @@
   background-color: #59a52c;
 }
 
-@media only screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .slide {
     border-radius: 0.5rem;
     box-shadow: 0px 0px 7px #666;
@@ -78,5 +78,31 @@
   
   .arrow-right {
     right: 8rem;
+  }
+}
+
+
+@media screen and (max-width: 425px) {
+
+  .carousel {
+    width: 100%;
+    height: 300px;
+  }
+  .slide {
+    border-radius: 0.5rem;
+    box-shadow: 0px 0px 7px #666;
+    width: 100%;
+    height: 80%;
+  }
+  .arrow {
+    position: absolute;
+  }
+
+  .arrow-left {
+    left: 0rem;
+  }
+  
+  .arrow-right {
+    right: 0rem;
   }
 }

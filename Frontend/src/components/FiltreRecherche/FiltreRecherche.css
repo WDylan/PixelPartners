@@ -109,6 +109,7 @@
   display: flex;
   justify-content: center;
 }
+
 .resetFiltre {
   text-align: center;
   width: 40%;
@@ -124,6 +125,13 @@
   background-color: #222831;
   color: #59a52c;
   transition: background-color 0.5s ease;
+}
+
+@media only screen and (max-width: 1024px) {
+  .caseJeu {
+    width: fit-content;
+    height: fit-content;
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -145,12 +153,14 @@
 }
 
 @media only screen and (max-width: 425px) {
-  .listJeu{
+  .listJeu {
     flex-direction: column;
   }
+
   .caseJeu {
     width: 50%;
   }
+
   .resetFiltre {
     width: 100%;
   }
