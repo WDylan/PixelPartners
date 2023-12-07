@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
         console.log("User data from checkAuthStatus:", userData);
         login(userData);
       } catch (error) {
-        // Gérer l'erreur ou définir l'état isConnected sur false
+        // Gére l'erreur ou défini l'état isConnected sur false
         console.error("Error checking auth status:", error);
         setConnected(false);
       } finally {

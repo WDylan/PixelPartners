@@ -158,7 +158,7 @@ const RegistrationForm = () => {
       });
       setMessage(response.data);
 
-      // Réinitialisez les états après une inscription réussie
+      // Réinitialise les états après une inscription réussie
       if (response.status === 200) {
         setUsername("");
         setEmail("");

@@ -101,13 +101,13 @@ export default function Compte() {
   const handleInputChange = (field, value) => {
     setEditData((prevData) => {
       if (field === "password") {
-        // Si le champ est le mot de passe, assurez-vous de le gérer correctement
+        // Si le champ est le mot de passe, s'assure de le gérer correctement
         return {
           ...prevData,
           password: value,
         };
       } else if (field === "dateNaissance") {
-        // Si le champ est la date de naissance, assurez-vous de le gérer correctement
+        // Si le champ est la date de naissance, s'assure de le gérer correctement
         return {
           ...prevData,
           dateNaissance: {
@@ -126,7 +126,7 @@ export default function Compte() {
         setProfileImageUrl(URL.createObjectURL(value));
         return newEditData;
       } else {
-        // Pour les autres champs, procédez comme d'habitude
+        // Pour les autres champs, procéde comme d'habitude
         return {
           ...prevData,
           [field]: value,
@@ -147,9 +147,9 @@ export default function Compte() {
       setIsEditMode(false); // Désactive le mode édition après l'enregistrement
     } catch (error) {
       console.error("Erreur lors de la mise à jour du profil :", error.message);
-      // Vérifiez si l'erreur contient des informations supplémentaires
+      // Vérifie si l'erreur contient des informations supplémentaires
       console.error("Error details:", error.response?.data);
-      // Affichez un message d'erreur à l'utilisateur
+      // Affiche un message d'erreur à l'utilisateur
     }
   };
 

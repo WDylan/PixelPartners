@@ -90,7 +90,7 @@ function Nav() {
   };
 
   const handleDeconnexion = async () => {
-    // Ajoutez une fenêtre de confirmation avant de déconnecter
+    // Ajoute une fenêtre de confirmation avant de déconnecter
     const confirmLogout = window.confirm(
       "Êtes-vous sûr de vouloir vous déconnecter ?"
     );
@@ -105,10 +105,10 @@ function Nav() {
         credentials: "include",
       });
 
-      // Déconnectez l'utilisateur en utilisant la méthode du contexte d'authentification
+      // Déconnecte l'utilisateur en utilisant la méthode du contexte d'authentification
       logout();
 
-      // Redirigez l'utilisateur après la déconnexion
+      // Redirige l'utilisateur après la déconnexion
       navigate("/");
 
       console.log("Déconnexion réussie");

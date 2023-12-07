@@ -131,7 +131,7 @@ export default function DescriptifJeu() {
           id_user: user.id,
           id_jeu: jeu.id,
           note: note,
-          commentaire: commentaire || "", // Utilisez une chaîne vide si aucun commentaire n'est fourni
+          commentaire: commentaire || "", // Utilise une chaîne vide si aucun commentaire n'est fourni
         });
 
         console.log("Note sélectionnée :", note);

@@ -23,10 +23,10 @@ app.use(express.static(path.join(__dirname, 'image')));
 // Middleware pour vérifier si l'utilisateur est connecté
 const isLoggedIn = (req, res, next) => {
     if (req.session.user) {
-        // L'utilisateur est connecté, autorisez l'accès
+        // L'utilisateur est connecté, autorise l'accès
         return next();
     } else {
-        // L'utilisateur n'est pas connecté, renvoyez une réponse d'erreur ou redirigez-le vers la page de connexion
+        // L'utilisateur n'est pas connecté, renvois une réponse d'erreur ou redirige vers la page de connexion
         return res.status(401).json({ error: 'Non autorisé' });
     }
 };
@@ -39,7 +39,7 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
 }));
 
-// Ajoutez des journaux ici pour déboguer
+// Journaux  pour déboguer
 console.log('Before session middleware');
 
 app.use(session({
@@ -55,7 +55,7 @@ app.use(session({
     }
 }));
 
-// Ajoutez des journaux ici pour déboguer
+// Journaux  pour déboguer
 console.log('After session middleware');
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -112,7 +112,7 @@ app.get('/jeux/search', async (req, res) => {
 
         console.log('Search Results:', searchResults);
 
-        // Retournez les résultats (un tableau de jeux) au format JSON
+        // Retourne les résultats (un tableau de jeux) au format JSON
         res.json(searchResults);
     } catch (error) {
         console.error('Erreur côté serveur :', error);
@@ -133,7 +133,7 @@ app.get('/checkAuthStatus', (req, res) => {
 });
 
 // INSCRIPTION ET CONNEXION
-// Utilisez multer avec la configuration de stockage définie
+// Utilis multer avec la configuration de stockage définie
 const upload = multer({ storage: storage });
 
 // Route d'inscription
@@ -284,7 +284,7 @@ app.post('/profil', isLoggedIn, upload.single('image'), async (req, res) => {
     if (req.session.user) {
         console.log("Données de modification reçues :", req.body);
         console.log("Chemin du fichier côté serveur :", req.file ? req.file.filename : null);
-        // L'utilisateur est authentifié, vous pouvez maintenant traiter les données de modification
+        // L'utilisateur est authentifié, peut maintenant traiter les données de modification
         const {
             username,
             email,
@@ -299,14 +299,14 @@ app.post('/profil', isLoggedIn, upload.single('image'), async (req, res) => {
             telephonePortable,
         } = req.body;
 
-        // Obtenez les données de l'image depuis multer
+        // Obtiens les données de l'image depuis multer
         const image = req.file ? req.file.buffer : null;
 
-        // Assurez-vous que la date de naissance est fournie avant de la mettre à jour
+        // S'assure que la date de naissance est fournie avant de la mettre à jour
         if (dateNaissance) {
             const { jour, mois, annee } = dateNaissance;
 
-            // Vérifiez si le mot de passe a été modifié
+            // Vérifie si le mot de passe a été modifié
             const updatePasswordPart = password ? ', password=?' : '';
             const updatePasswordValues = password ? [password] : [];
 
@@ -324,7 +324,7 @@ app.post('/profil', isLoggedIn, upload.single('image'), async (req, res) => {
                 ville,
                 telephone,
                 telephonePortable,
-                // Obtenez les données de l'image depuis multer
+                // Obtiens les données de l'image depuis multer
                 req.file ? req.file.filename : null,
                 req.session.user.id
             ], async (updateErr, updateResult) => {
@@ -342,7 +342,7 @@ app.post('/profil', isLoggedIn, upload.single('image'), async (req, res) => {
                                 res.status(500).json({ error: 'Erreur lors de la mise à jour du mot de passe' });
                             } else {
                                 console.log('Profil mis à jour avec succès !');
-                                // Mettez à jour les données de session avec les nouvelles informations
+                                // Met à jour les données de session avec les nouvelles informations
                                 req.session.user = {
                                     ...req.session.user,
                                     username,
@@ -362,7 +362,7 @@ app.post('/profil', isLoggedIn, upload.single('image'), async (req, res) => {
                         });
                     } else {
                         console.log('Profil mis à jour avec succès !');
-                        // Mettez à jour les données de session avec les nouvelles informations
+                        // Met à jour les données de session avec les nouvelles informations
                         req.session.user = {
                             ...req.session.user,
                             username,
@@ -382,7 +382,7 @@ app.post('/profil', isLoggedIn, upload.single('image'), async (req, res) => {
                 }
             });
         } else {
-            // Si la date de naissance n'est pas fournie, mettez à jour les autres champs sans toucher à la date de naissance existante
+            // Si la date de naissance n'est pas fournie, met à jour les autres champs sans toucher à la date de naissance existante
             const updateQuery =
                 'UPDATE users SET username=?, email=?, genre=?, pays=?, adresse=?, codePostal=?, ville=?, telephone=?, telephonePortable=?, image=? WHERE id=?';
 
@@ -396,7 +396,7 @@ app.post('/profil', isLoggedIn, upload.single('image'), async (req, res) => {
                 ville,
                 telephone,
                 telephonePortable,
-                req.file ? req.file.filename : null, // Utilisez req.file.path pour obtenir le chemin du fichier téléchargé
+                req.file ? req.file.filename : null, // Utilise req.file.path pour obtenir le chemin du fichier téléchargé
                 req.session.user.id
             ], (updateErr, updateResult) => {
                 if (updateErr) {
@@ -404,7 +404,7 @@ app.post('/profil', isLoggedIn, upload.single('image'), async (req, res) => {
                     res.status(500).json({ error: 'Erreur lors de la mise à jour du profil' });
                 } else {
                     console.log('Profil mis à jour avec succès !');
-                    // Mettez à jour les données de session avec les nouvelles informations
+                    // Met à jour les données de session avec les nouvelles informations
                     req.session.user = {
                         ...req.session.user,
                         username,
@@ -423,7 +423,7 @@ app.post('/profil', isLoggedIn, upload.single('image'), async (req, res) => {
             });
         }
     } else {
-        // L'utilisateur n'est pas authentifié, renvoyez une erreur 401
+        // L'utilisateur n'est pas authentifié, renvois une erreur 401
         res.status(401).json({ error: 'Non autorisé' });
     }
 });
@@ -685,12 +685,12 @@ app.post('/logout', (req, res) => {
 
 //ROUTE SUPPRESSION COMPTE
 app.delete('/users', isLoggedIn, async (req, res) => {
-    const id_user = req.session.user.id; // Utilisez req.session.user.id pour récupérer l'id de l'utilisateur connecté
+    const id_user = req.session.user.id; // Utilise req.session.user.id pour récupérer l'id de l'utilisateur connecté
     try {
         const query = 'DELETE FROM users WHERE id = ?';
         await db.query(query, [id_user]);
 
-        // Déconnectez l'utilisateur après la suppression du compte
+        // Déconnecte l'utilisateur après la suppression du compte
         req.session.destroy((err) => {
             if (err) {
                 console.error('Erreur lors de la déconnexion :', err);
@@ -712,7 +712,7 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'PixelPartners/Frontend', ''));
 });
 
-// Servez l'application React depuis le backend
+// Sert l'application React depuis le backend
 app.use(express.static(path.join(__dirname, 'PixelPartners/Frontend')));
 
 
