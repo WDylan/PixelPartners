@@ -133,7 +133,7 @@ app.get('/checkAuthStatus', (req, res) => {
 });
 
 // INSCRIPTION ET CONNEXION
-// Utilis multer avec la configuration de stockage définie
+// Utilise multer avec la configuration de stockage définie
 const upload = multer({ storage: storage });
 
 // Route d'inscription
@@ -714,6 +714,15 @@ app.get('*', (req, res) => {
 
 // Sert l'application React depuis le backend
 app.use(express.static(path.join(__dirname, 'PixelPartners/Frontend')));
+
+// Route par défaut pour servir l'application  Admin
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'PixelPartners/Admin', ''));
+});
+
+// Sert l'application React Admin depuis le backend 
+app.use(express.static(path.join(__dirname, 'PixelPartners/Admin')));
+
 
 
 // Gestion des erreurs

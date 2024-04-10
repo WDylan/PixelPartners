@@ -178,7 +178,7 @@ const RegistrationForm = () => {
 
   const handleKeydown = (event) => {
     if (event.key === "Enter") {
-      // Appuyer sur Entrée dans le champ de mot de passe déclenche la connexion
+      // Appuyer sur Entrée dans le champ de mot de passe déclenche l'inscription
       handleRegister();
     }
   };

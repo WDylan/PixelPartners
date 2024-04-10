@@ -39,9 +39,9 @@ export default function DeleteAccount() {
     return (
         <div className="containerDelete">
             <div className="delete">
-                <h2>Support Gaming</h2>
+                <h2>Supprimer Compte</h2>
                 <hr />
-                <p>La suppresion du compte est irrémédiable, une fois valider,<br /> il sera impossible de récupérer le compte.</p>
+                <p>La suppression du compte est irrémédiable, une fois valider,<br /> il sera impossible de récupérer le compte.</p>
                 <div className="containerButton">
                     <button className="buttonDelete" onClick={handleDeleteAccount}>Supprimer le compte</button>
                 </div>

@@ -19,7 +19,7 @@
 }
 
  @media screen and (max-width: 425px) {
-  .titreAccueil {
+  .titreAccuei {
     display: flex;
     flex-direction: column;
     align-items: center;

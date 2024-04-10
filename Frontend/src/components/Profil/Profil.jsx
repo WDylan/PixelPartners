@@ -11,8 +11,11 @@ const Profil = () => {
         <NavLink to="compte" className="menuProfil" >
           <div activeClassName="activeLink" >Compte</div>
         </NavLink>
-        <NavLink to="supportGaming" className="menuProfil">
-          <div activeClassName="activeLink">Support Gaming</div>
+        <NavLink to="profilGaming" className="menuProfil" >
+          <div activeClassName="activeLink" >Profil Gaming</div>
+        </NavLink>
+        <NavLink to="deleteAccount" className="menuProfil">
+          <div activeClassName="activeLink">Supprimer Compte</div>
         </NavLink>
       </div>
       <div className="profilContent">
