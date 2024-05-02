@@ -13,6 +13,8 @@ export default function DescriptifJeu() {
   const [jeu, setJeu] = useState(null);
   const [plateformes, setPlateformes] = useState([]);
   const [genres, setGenres] = useState([]);
+  const [developpeurs, setDeveloppeurs] = useState([]);
+  const [editeurs, setEditeurs] = useState([]);
   const [noteHovered, setNoteHovered] = useState(null);
   const [selectedNote, setSelectedNote] = useState(null);
   const [userNote, setUserNote] = useState(null); // Ajout de l'état pour stocker la note de l'utilisateur
@@ -95,6 +97,18 @@ export default function DescriptifJeu() {
           `http://localhost:5000/jeux/${id}/genres`
         );
         setGenres(genresResponse.data);
+
+        // Récupérer les développeurs associés au jeu
+        const developpeursResponse = await axios.get(
+          `http://localhost:5000/jeux/${id}/developpeurs`
+        );
+        setDeveloppeurs(developpeursResponse.data);
+
+        // Récupérer les éditeurs associés au jeu
+        const editeursResponse = await axios.get(
+          `http://localhost:5000/jeux/${id}/editeurs`
+        );
+        setEditeurs(editeursResponse.data);
 
         // Appelle la fonction pour récupérer la note de l'utilisateur
         fetchNote(); // Utilisation de 'await' pour s'assurer que la note est récupérée avant de continuer
@@ -397,11 +411,11 @@ export default function DescriptifJeu() {
             <div className="editionPart2">
               <p>
                 <span className="labelJeu">Developpeur : </span>
-                {jeu.developpeur}
+                {developpeurs.map((developpeur)=> developpeur.nom).join(", ")}
               </p>
               <p>
                 <span className="labelJeu">Éditeur : </span>
-                {jeu.editeur}
+                {editeurs.map((editeur) => editeur.nom).join(", ")}
               </p>
             </div>
             <div className="editionPart3">
