@@ -45,6 +45,7 @@ La maquette du projet est disponible sur le projet Figma : https://www.figma.com
 
 
 • Démarrer le serveur Node.js
+
                  node app.js
 
 # Front-end
