@@ -1,25 +1,32 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Footer.css";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 
 function Footer() {
+  const navigate = useNavigate();
+  const goToAccueil = () => {
+    // Navigue vers la page d'Accueil
+    navigate("/");
+  };
+
   return (
     <footer>
       <div className="footerLinks">
         <div className="footerLink">
           <ul>
-            <li>Lorem</li>
-            <li>Lorem</li>
-            <li>Lorem</li>
-            <li>Lorem</li>
+            <li onClick={goToAccueil}>Accueil</li>
+            <li>FAQ</li>
+            <li>Contact</li>
+            <li>Mentions légales</li>
           </ul>
         </div>
         <div className="footerSocials">
-          <FacebookIcon />
-          <InstagramIcon />
-          <TwitterIcon />
+          <img className="facebook" src="./img/icons/facebook.png"></img>
+          <img className="twitter" src="./img/icons/twitter.png"></img>
+          <img className="instagram" src="./img/icons/instagram.png"></img>
         </div>
         <div className="footerSlogan">
           Lorem ipsum dolor sit amet consectetur adipisicing elit.

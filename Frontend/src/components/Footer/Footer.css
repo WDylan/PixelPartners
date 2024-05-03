@@ -1,12 +1,13 @@
 footer {
   height: 10em;
   width: 100%;
-  background-color: #222831;
-  color :#59a52c;
+  background-color: #F8F8FF;
+  color :#222930;
   font-family: Helvetica;
   list-style: none;
   font-size: 1em;
   margin-top: 2.5em;
+  border-top: 1px solid #467B2E;
 }
 
 .footerLink {
@@ -22,17 +23,20 @@ footer {
 
 .footerLink ul li {
   margin: auto 1.5em;
+  cursor: pointer;
 }
 
 .footerSocials {
   display: flex;
   justify-content: center;
+  height: 3.5em;
+  align-items: center;
 }
 
-.footerSocials svg {
-  width: 2em;
-  height: 2em;
-  margin: auto 1em;
+.facebook, 
+.twitter,
+.instagram {
+  cursor: pointer;
 }
 
 .footerSlogan {
@@ -41,7 +45,6 @@ footer {
   margin: 1em;
   font-style: italic;
 }
-
 @media screen and (max-width: 425px) {
   .footerLink ul {
    padding: 0;

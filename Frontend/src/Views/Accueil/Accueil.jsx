@@ -10,17 +10,19 @@ export default function Accueil() {
   return (
     <div className="accueilPage">
       <Nav />
-      <div className="titreAccueil">
-        <h1>Nouvelles sorties</h1>
-        <Carousel data={slides} />
-      </div>
-      <div className="titreAccueil">
-        <h1>Prochaines sorties</h1>
-        <Carousel data={slides} />
-      </div>
-      <div className="titreAccueil">
-        <h1>Les mieux notés</h1>
-        <Carousel data={slides} />
+      <div className="accueilContainer">
+        <div className="titreAccueil">
+          <h1>Nouvelles sorties</h1>
+          <Carousel data={slides} />
+        </div>
+        <div className="titreAccueil">
+          <h1>Prochaines sorties</h1>
+          <Carousel data={slides} />
+        </div>
+        <div className="titreAccueil">
+          <h1>Les mieux notés</h1>
+          <Carousel data={slides} />
+        </div>
       </div>
       <Footer />
     </div>

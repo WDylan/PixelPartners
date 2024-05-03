@@ -127,11 +127,11 @@ function Nav() {
     <header>
       <div className={`navBar ${isMenuOpen ? "menu-open" : ""}`}>
         <div className="logoNav" onClick={goToAccueil}>
-          <img className="logo" src="./img/LogoPixelPartners.png" alt="img" />
+          <img className="logo" src="./img/logo/Pixel_Partners_logo.png" alt="img" />
         </div>
 
         <div className="rechercheFonction" ref={searchRef}>
-          <div>
+          <div className="divRecherche">
             <input
               className="rechercheNav"
               type="text"
@@ -157,37 +157,11 @@ function Nav() {
         </div>
 
         <BurgerMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
+        <div>
+          <button className="classement" onClick={goToClassement}>Classement</button>
+          <button className="titre">Titre</button>
+        </div>
 
-        <li className="classementNav" onClick={goToClassement}>
-          Classement
-          <ul className="navbarClassement">
-            <li className="vide"></li>
-            <li>
-              <a href="./">Note</a>
-            </li>
-            <li>
-              <a href="./">Sortie</a>
-            </li>
-            <li>
-              <a href="./">Prochainement</a>
-            </li>
-          </ul>
-        </li>
-        <li className="titreNav">
-          Titre
-          <ul className="navbarTitre">
-            <li className="vide"></li>
-            <li>
-              <a href="./">Option 1</a>
-            </li>
-            <li>
-              <a href="./">Option 2</a>
-            </li>
-            <li>
-              <a href="./">Option 3</a>
-            </li>
-          </ul>
-        </li>
         <div>
           {isAuthenticated ? (
             <>

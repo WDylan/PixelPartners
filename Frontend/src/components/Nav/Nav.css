@@ -1,13 +1,15 @@
 /* MENU */
 header {
   width: 100%;
-  background-color: #222831;
-  color: #59a52c;
+  background-color: #467b2e;
+  color: #f8f8ff;
   font-family: Helvetica;
   list-style: none;
   font-size: 1.3em;
   z-index: 2;
   margin-bottom: 2em;
+  border-bottom: 1px solid #f8f8ff;
+  position: fixed;
 }
 
 .navBar {
@@ -26,6 +28,7 @@ header {
 .logo {
   width: 7em;
   height: 7em;
+  cursor: pointer;
 }
 
 .classementNav {
@@ -38,22 +41,29 @@ header {
 }
 
 .classementNav li a {
-  color: #59a52c;
+  color: #F8F8FF;
   text-decoration: none;
 }
 
 .rechercheFonction {
   display: flex;
   justify-content: center;
+  width: 15em;
+}
+
+.divRecherche {
+  width: 100%;
 }
 
 .rechercheNav {
-  margin-right: 7em;
   height: 3em;
   width: 100%;
   display: flex;
   align-items: center;
-  border-radius: 1.5em;
+  border-radius: 0.5em;
+  background-color: #f8f8ff;
+  color: #467b2e;
+  border: 1px solid #467b2e;
 }
 
 .rechercheResult {
@@ -61,11 +71,11 @@ header {
   height: fit-content;
   width: fit-content;
   margin-top: 4.5em;
-  background-color: #222831;
+  background-color: #467b2e;
   position: absolute;
-  border-left: 1px solid #81e883;
-  border-right: 1px solid #81e883;
-  border-bottom: 1px solid #81e883;
+  border-left: 1px solid #f8f8ff;
+  border-right: 1px solid #f8f8ff;
+  border-bottom: 1px solid #f8f8ff;
   border-bottom-left-radius: 1em;
   border-bottom-right-radius: 1em;
   padding-left: 1em;
@@ -77,7 +87,7 @@ header {
 }
 
 .rechercheResult ul li {
-  color: #59a52c;
+  color: #467b2e;
   margin: 0.5em;
   color: inherit;
   text-decoration: none;
@@ -86,80 +96,23 @@ header {
   text-decoration: none;
   color: inherit;
 }
-.titreNav {
-  height: 100%;
-  font-weight: bold;
-  align-items: center;
-  display: flex;
-  justify-content: space-around;
-  z-index: 1;
-}
-
-.titreNav li a {
-  color: #59a52c;
-  text-decoration: none;
-}
 
 .connexion,
 .inscription,
 .deconnexion,
-.profil {
-  background-color: #59a52c;
-  color: #222831;
+.profil,
+.classement,
+.titre {
+  cursor: pointer;
+  background-color: #f8f8ff;
+  color: #467b2e;
   font-weight: bold;
   font-size: 15px;
-  height: 4em;
+  height: 3em;
   width: 10em;
-  border-radius: 1.5em;
+  border-radius: 15px;
   margin-left: 2em;
-  border: 1px solid #81e883;
-}
-
-/* MENUS DEROULANTS */
-
-.navBar li ul {
-  /* PERMET L'APPARITION DU SS-MENU */
-  display: none;
-  list-style: none;
-  padding: 0;
-  width: 13%;
-  z-index: -2;
-}
-
-.navBar li:hover ul {
-  display: block;
-}
-
-/* SOUS MENUS DEROULANT */
-.navbarClassement {
-  position: absolute;
-  display: block;
-  text-align: center;
-  background-color: #222831;
-  border-radius: 2%;
-  margin-top: 2.7em;
-  z-index: -1;
-}
-
-.navbarTitre {
-  position: absolute;
-  display: block;
-  text-align: center;
-  background-color: #222831;
-  border-radius: 2%;
-  margin-top: 2.7em;
-  z-index: -1;
-}
-
-/* TAILLE DES SS-CATEGORIES */
-
-.navbarClassement li a,
-.navbarTitre li a {
-  line-height: 2em;
-}
-
-.navBar li.vide {
-  height: 10.3em;
+  border: 1px solid #467b2e;
 }
 
 /* Media query pour les tablettes en mode portrait */
@@ -170,30 +123,29 @@ header {
   .inscription,
   .deconnexion,
   .profil {
-    display: none; 
+    display: none;
   }
 
   .navBar {
     margin-left: 5em;
-    height: 5em; 
+    height: 5em;
     justify-content: space-between;
   }
 
   .logo {
-    width: 5em; 
+    width: 5em;
     height: 5em;
   }
 
   .rechercheNav {
-    margin-right: 2em; 
+    margin-right: 2em;
   }
 
   .rechercheResult {
-    margin-top: 3.6em; 
+    margin-top: 3.6em;
     width: 15em;
   }
 }
-
 
 @media only screen and (max-width: 425px) {
   .rechercheFonction {

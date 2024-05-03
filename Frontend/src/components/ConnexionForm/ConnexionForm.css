@@ -1,11 +1,12 @@
 .formConnexion {
-  height: 60%;
   width: 40em;
-  border: solid 1px;
-  border-radius: 5%;
+  border: solid 1px #467b2e;
+  border-radius: 3%;
   padding: 1em;
-  background-color: #222831;
+  background-color: #f8f8ff;
   text-align: center;
+  margin-top: 11em;
+  margin-bottom: 4.2em;
 }
 
 .formConnexion h2 {
@@ -14,7 +15,7 @@
 
 .formConnexion hr {
   margin-bottom: 3em;
-  border-color: #81e883;
+  border-color: #467b2e;
 }
 
 .formConnexion input {
@@ -23,6 +24,15 @@
   height: 3em;
   border-radius: 1em;
   margin-bottom: 1.5em;
+  background: rgba(69.91, 123.46, 46.01, 0.4);
+  border-color: #467b2e;
+  color: #222831;
+  font-size: large
+}
+
+::placeholder {
+  color: #222831;
+  opacity: 80%;
 }
 
 .formConnexion label {
@@ -34,13 +44,14 @@
 }
 
 .buttonConnexion {
-  color: #222831;
-  background-color: #59a52c;
+  cursor: pointer;
+  color: #F8F8FF;
+  background-color: #58A52D;
   font-weight: bold;
-  font-size: 15px;
-  height: 3em;
+  font-size: 20px;
+  height: 2.5em;
   width: 10em;
-  border-radius: 1em;
+  border-radius: 1.5em;
   margin-bottom: 2em;
   border: 1px solid #81e883;
 }
@@ -62,6 +73,7 @@
   transform: translateY(-50%);
   right: 10em;
   cursor: pointer;
+  height: 2em;
 }
 
 @media only screen and (max-width: 768px) {
