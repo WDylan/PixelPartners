@@ -1,9 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Footer.css";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import TwitterIcon from "@mui/icons-material/Twitter";
 
 function Footer() {
   const navigate = useNavigate();
@@ -24,9 +21,9 @@ function Footer() {
           </ul>
         </div>
         <div className="footerSocials">
-          <img className="facebook" src="./img/icons/facebook.png"></img>
-          <img className="twitter" src="./img/icons/twitter.png"></img>
-          <img className="instagram" src="./img/icons/instagram.png"></img>
+          <img className="facebook" src="/img/icons/facebook.png"></img>
+          <img className="twitter" src="/img/icons/twitter.png"></img>
+          <img className="instagram" src="/img/icons/instagram.png"></img>
         </div>
         <div className="footerSlogan">
           Lorem ipsum dolor sit amet consectetur adipisicing elit.

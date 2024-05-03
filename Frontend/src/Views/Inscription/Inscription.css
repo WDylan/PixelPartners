@@ -1,9 +1,9 @@
 .inscriptionPage {
-    height: 120vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #37414F;
-    color: #59a52c;
-  }
+  height: 120vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(#467b2e, #f8f8ff);
+  color: #222930;
+}

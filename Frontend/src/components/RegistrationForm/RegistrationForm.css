@@ -2,12 +2,12 @@
   height: fit-content;
   width: 40em;
   border: solid 1px;
-  border-radius: 5%;
-  padding-top: 1em;
-  padding-left: 2em;
-  padding-bottom: 1em;
-  background-color: #222831;
+  border-radius: 3%;
+  padding: 1em 2em;
+  background-color: #F8F8FF;
   margin-top: 11em;
+  font-family: 'Inter', sans-serif;
+  border: 3px solid #467b2e;
 }
 
 .formInscription h2 {
@@ -15,7 +15,7 @@
 }
 
 .formInscription hr {
-  border-color: #81e883;
+  border-color: #467b2e;
 }
 
 .formInscription input {
@@ -23,6 +23,10 @@
   height: 3em;
   border-radius: 1em;
   margin-bottom: 1em;
+  background: rgba(69.91, 123.46, 46.01, 0.4);
+  border-color: #467b2e;
+  color: #222831;
+  font-size: large
 }
 
 .formInscription label {
@@ -30,30 +34,26 @@
   font-weight: bold;
 }
 
+::placeholder {
+  color: #222831;
+  opacity: 80%;
+}
+
 .buttonRegistration {
   text-align: center;
 }
 
 .buttonEnvoyer {
-  color: #222831;
+  cursor: pointer;
+  color: #f8f8ff;
   background-color: #59a52c;
   border: 1px solid #81e883;
   font-weight: bold;
-  font-size: 15px;
-  height: 3em;
+  font-size: 20px;
+  height: 2.5em;
   width: 10em;
-  border-radius: 1em;
+  border-radius: 1.5em;
 }
-.inputDateNaissance {
-  display: flex;
-  justify-content: space-between;
-  width: 90%;
-}
-
-.inputDateNaissance input {
-  width: 100%;
-}
-
 .red {
   color: red;
 }

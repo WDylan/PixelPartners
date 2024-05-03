@@ -7,6 +7,8 @@
   text-align: center;
   margin-top: 11em;
   margin-bottom: 4.2em;
+  font-family: 'Inter', sans-serif;
+  border: 3px solid #467b2e;
 }
 
 .formConnexion h2 {
@@ -69,11 +71,17 @@
 
 .passwordToggleIcon {
   position: absolute;
-  top: 50%;
+  top: 55%;
   transform: translateY(-50%);
   right: 10em;
   cursor: pointer;
   height: 2em;
+}
+
+.linkInscription {
+  text-decoration: none;
+  color: #58A52D;
+  font-style: italic;
 }
 
 @media only screen and (max-width: 768px) {

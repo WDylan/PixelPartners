@@ -110,7 +110,7 @@ export default function ConnexionForm() {
           <br />
           Vous n'êtes pas encore membre ?<br />
           Rejoignez-nous !<br />
-          <a href="/inscription">Inscription</a>
+          <a className="linkInscription" href="/inscription">Inscription</a>
         </span>
       </div>
     </div>

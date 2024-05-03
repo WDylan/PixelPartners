@@ -1,11 +1,12 @@
 .containerFiltre {
   padding-left: 2em;
-  padding-right: 2em;
   min-height: 70vh;
+  padding-top: 11em;
+  font-family: "Inter", sans-serif;
 }
 
 .containerFiltre hr {
-  border-color: #81e883;
+  border-color: #467b2e;
 }
 
 .filtreDisplay {
@@ -28,8 +29,8 @@
   box-sizing: border-box;
   padding: 0.5em;
   margin: 1em;
-  border: 1px solid #81e883;
-  background-color: #222831;
+  border: 3px solid #467b2e;
+  background-color: #f8f8ff;
   overflow: hidden;
   max-height: 25vh;
 }
@@ -37,7 +38,7 @@
 .imageJeu {
   height: 200px;
   width: 150px;
-  border: 1px solid #81e883;
+  border: 2px solid #467b2e;
   margin-right: 1em;
 }
 
@@ -59,13 +60,13 @@
 }
 
 .buttonPagination {
+  cursor: pointer;
   margin: 0.5em;
   height: 2em;
   width: 2em;
-  background-color: #59a52c;
+  background-color: #6d6868;
   color: #222831;
-  border-radius: 0.5em;
-  border: 1px solid #81e883;
+  border-radius: 50%;
   font-size: 1em;
 }
 
@@ -75,7 +76,8 @@
   padding-bottom: 1em;
   display: flex;
   flex-direction: column;
-  border: 1px solid #81e883;
+  border: 3px solid #467b2e;
+  background-color: #f8f8ff;
   border-radius: 0.5em;
   width: 30%;
   height: 100%;
@@ -83,11 +85,19 @@
 
 .dropdown {
   cursor: pointer;
+  border: 1px solid #467b2e;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
 }
 
 .dropdownContent {
   display: flex;
   flex-direction: column;
+  max-height: 12.5em;
+  overflow-y: auto;
+  background-color: rgba(70, 123, 46, 0.5);
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
 }
 
 .plateformeGenreChoise {
@@ -96,14 +106,31 @@
   border-radius: 0.5em;
 }
 
+.plateformeGenreButton {
+  height: 3em;
+  display: flex;
+  align-items: center;
+  background-color: #467b2e;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
+
 .plateformeGenreButton:hover,
 .plateformeGenreChoise:hover,
 .plateformeGenreButton:active,
-.plateformeGenreChoise:active {
-  background-color: #59a52c;
+.plateformeGenreChoise:active,
+.selectedFilter {
+  background-color: rgba(70, 123, 46, 0.5);
   color: #222831;
-  border: 1px solid #81e883;
-  border-radius: 0.5em;
+  border: 1px solid #467b2e;
+}
+
+.selectedFilter {
+  display: flex;
+  align-items: center;
+  height: 3em;
+  border-bottom-left-radius: 0.5em;
+  
 }
 
 .containerButtonFiltre {
@@ -112,20 +139,22 @@
 }
 
 .resetFiltre {
+  cursor: pointer;
   text-align: center;
   width: fit-content;
-  height: 3em;
+  height: 2.5em;
   background-color: #59a52c;
-  color: #222831;
+  color: #f8f8ff;
   border: 1px solid #81e883;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 20px;
   border-radius: 1.5em;
 }
 
 .resetButtonClicked {
-  background-color: #222831;
+  background-color: #f8f8ff;
   color: #59a52c;
+  border: 1px solid #59a52c;
   transition: background-color 0.5s ease;
 }
 

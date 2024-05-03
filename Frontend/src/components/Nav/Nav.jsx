@@ -127,7 +127,7 @@ function Nav() {
     <header>
       <div className={`navBar ${isMenuOpen ? "menu-open" : ""}`}>
         <div className="logoNav" onClick={goToAccueil}>
-          <img className="logo" src="./img/logo/Pixel_Partners_logo.png" alt="img" />
+          <img className="logo" src="/img/logo/Pixel_Partners_logo.png" alt="img" />
         </div>
 
         <div className="rechercheFonction" ref={searchRef}>

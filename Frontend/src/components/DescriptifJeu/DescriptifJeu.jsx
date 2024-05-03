@@ -7,7 +7,7 @@ import YouTube from "react-youtube";
 
 import "./DescriptifJeu.css";
 
-export default function DescriptifJeu() {
+export default function DescriptifJeu2() {
   const { id } = useParams(); // Récupére l'ID du jeu depuis les paramètres d'URL
   const { isAuthenticated, user } = useAuth(); // Utilise useAuth pour obtenir l'état d'authentification
   const [jeu, setJeu] = useState(null);
