@@ -10,7 +10,7 @@ export default function Accueil() {
   return (
     <div className="accueilPage">
       <Nav />
-      <div className="accueilContainer">
+      {/* <div className="accueilContainer">
         <div className="titreAccueil">
           <h1>Nouvelles sorties</h1>
           <Carousel data={slides} />
@@ -24,7 +24,7 @@ export default function Accueil() {
           <Carousel data={slides} />
         </div>
       </div>
-      <Footer />
+      <Footer /> */}
     </div>
   );
 }

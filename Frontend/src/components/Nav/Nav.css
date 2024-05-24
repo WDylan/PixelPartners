@@ -1,168 +1,29 @@
-/* MENU */
-header {
-  width: 100%;
-  background-color: #467b2e;
-  color: #f8f8ff;
-  font-family: "Inter", sans-serif;
-  list-style: none;
-  font-size: 1.3em;
-  z-index: 2;
-  margin-bottom: 2em;
-  border-bottom: 1px solid #f8f8ff;
-  position: fixed;
-}
-
-.navBar {
-  height: 7em;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-}
-
-.logoNav {
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.logo {
-  width: 7em;
-  height: 7em;
-  cursor: pointer;
-}
-
-.classementNav {
-  height: 100%;
-  font-weight: bold;
-  align-items: center;
-  display: flex;
-  justify-content: space-around;
-  z-index: 1;
-}
-
-.classementNav li a {
-  color: #f8f8ff;
-  text-decoration: none;
-}
-
-.rechercheFonction {
-  display: flex;
-  justify-content: center;
-  width: 15em;
-}
-
-.divRecherche {
-  width: 100%;
-}
-
-.rechercheNav {
-  height: 3em;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  border-radius: 0.5em;
-  background-color: #f8f8ff;
-  color: #467b2e;
-  border: 1px solid #467b2e;
-}
-
-.rechercheResult {
-  opacity: 90%;
-  height: fit-content;
-  width: fit-content;
-  margin-top: 4.5em;
-  background-color: #467b2e;
-  position: absolute;
-  border-left: 1px solid #f8f8ff;
-  border-right: 1px solid #f8f8ff;
-  border-bottom: 1px solid #f8f8ff;
-  border-bottom-left-radius: 1em;
-  border-bottom-right-radius: 1em;
-  padding-left: 1em;
-  padding-right: 1em;
-}
-
-.rechercheResult ul {
-  list-style: none;
-}
-
-.rechercheResult ul li {
-  color: #467b2e;
-  margin: 0.5em;
-  color: inherit;
-  text-decoration: none;
-}
-.jeuRecherches {
-  text-decoration: none;
-  color: inherit;
-}
-
-.connexion,
-.inscription,
-.deconnexion,
-.profil,
-.classement,
-.titre {
-  cursor: pointer;
-  background-color: #f8f8ff;
-  color: #467b2e;
-  font-weight: bold;
-  font-size: 15px;
-  height: 3em;
-  width: 10em;
-  border-radius: 15px;
-  margin-left: 2em;
-  border: 1px solid #467b2e;
-}
-
-/* Media query pour les tablettes en mode portrait */
-@media screen and (max-width: 1024px) {
-  .blockButtons {
-    display: none;
+@media screen and (max-width: 425px) {
+  .navBar {
+    width: 100%;
+    height: 7em;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #467b2e;
   }
 
-  .navBar {
-    height: 5em;
-    justify-content: space-around;
+  .logoNav {
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
 
   .logo {
-    width: 5em;
-    height: 5em;
-  }
-
-  .rechercheNav {
-    margin-right: 2em;
-  }
-
-  .rechercheResult {
-    margin-top: 3.6em;
-    width: 15em;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .navbar{
-    margin-left: 0;
-    justify-content: space-around;
+    height: 7em;
+    width: auto;
+    cursor: pointer;
   }
 
   .blockButtons {
-    display: none
+    display: none;
   }
-};
-  
-
-@media only screen and (max-width: 425px) {
-  .rechercheFonction {
-    margin-right: 2em;
-  }
-  .rechercheNav {
-    width: 11em;
-  }
-  .navBar {
-    display: flex;
-    margin-left: 0em;
-    justify-content: flex-start;
+  .divRecherche {
+    width: auto;
   }
 }

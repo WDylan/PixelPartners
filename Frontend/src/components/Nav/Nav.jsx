@@ -124,7 +124,6 @@ function Nav() {
   };
 
   return (
-    <header>
       <div className={`navBar ${isMenuOpen ? "menu-open" : ""}`}>
         <div className="logoNav" onClick={goToAccueil}>
           <img className="logo" src="/img/logo/Pixel_Partners_logo.png" alt="img" />
@@ -184,7 +183,6 @@ function Nav() {
           )}
         </div>
       </div>
-    </header>
   );
 }
 export default Nav;
