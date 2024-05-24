@@ -3,7 +3,7 @@ header {
   width: 100%;
   background-color: #467b2e;
   color: #f8f8ff;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   list-style: none;
   font-size: 1.3em;
   z-index: 2;
@@ -41,7 +41,7 @@ header {
 }
 
 .classementNav li a {
-  color: #F8F8FF;
+  color: #f8f8ff;
   text-decoration: none;
 }
 
@@ -117,19 +117,13 @@ header {
 
 /* Media query pour les tablettes en mode portrait */
 @media screen and (max-width: 1024px) {
-  .classementNav,
-  .titreNav,
-  .connexion,
-  .inscription,
-  .deconnexion,
-  .profil {
+  .blockButtons {
     display: none;
   }
 
   .navBar {
-    margin-left: 5em;
     height: 5em;
-    justify-content: space-between;
+    justify-content: space-around;
   }
 
   .logo {
@@ -146,6 +140,18 @@ header {
     width: 15em;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .navbar{
+    margin-left: 0;
+    justify-content: space-around;
+  }
+
+  .blockButtons {
+    display: none
+  }
+};
+  
 
 @media only screen and (max-width: 425px) {
   .rechercheFonction {

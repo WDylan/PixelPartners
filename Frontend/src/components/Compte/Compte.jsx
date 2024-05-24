@@ -17,11 +17,6 @@ export default function Compte() {
     },
     genre: "",
     pays: "",
-    adresse: "",
-    codePostal: "",
-    ville: "",
-    telephone: "",
-    telephonePortable: "",
     image: null,
   });
 
@@ -48,11 +43,6 @@ export default function Compte() {
             dateNaissance: formatDateNaissance(response.data.dateNaissance),
             genre: response.data.genre || "",
             pays: response.data.pays || "",
-            adresse: response.data.adresse || "",
-            codePostal: response.data.codePostal || "",
-            ville: response.data.ville || "",
-            telephone: response.data.telephone || "",
-            telephonePortable: response.data.telephonePortable || "",
             image: response.data.image || null,
           }));
           const imageUrl = response.data.image;
@@ -183,8 +173,7 @@ export default function Compte() {
               `http://localhost:5000/${editData.image}`
             )}
           </div>
-          <div className="labelCompte">
-          </div>
+          <div className="labelCompte"></div>
           <div className="inputCompte">
             <input
               className="inputComptePseudo"
@@ -206,11 +195,6 @@ export default function Compte() {
             <label>Genre : </label>
             <label>Pays : </label>
             <strong>Pays :</strong>
-            <label>Adresse : </label>
-            <label>Code Postal : </label>
-            <label>Ville : </label>
-            <label>Téléphone : </label>
-            <label>Téléphone Portable : </label>
           </div>
           <div className="inputCompte">
             <div>
@@ -327,60 +311,6 @@ export default function Compte() {
                 readOnly={!isEditMode}
               />
               <div>{editData.pays}</div>
-            </div>
-            <div>
-              <input
-                className="inputCompteText"
-                type="text"
-                placeholder="Adresse"
-                value={editData.adresse}
-                onChange={(e) => handleInputChange("adresse", e.target.value)}
-                readOnly={!isEditMode}
-              />
-            </div>
-            <div>
-              <input
-                className="inputCompteText"
-                type="text"
-                placeholder="Code Postal"
-                value={editData.codePostal}
-                onChange={(e) =>
-                  handleInputChange("codePostal", e.target.value)
-                }
-                readOnly={!isEditMode}
-              />
-            </div>
-            <div>
-              <input
-                className="inputCompteText"
-                type="text"
-                placeholder="Ville"
-                value={editData.ville}
-                onChange={(e) => handleInputChange("ville", e.target.value)}
-                readOnly={!isEditMode}
-              />
-            </div>
-            <div>
-              <input
-                className="inputCompteText"
-                type="text"
-                placeholder="Téléphone"
-                value={editData.telephone}
-                onChange={(e) => handleInputChange("telephone", e.target.value)}
-                readOnly={!isEditMode}
-              />
-            </div>
-            <div>
-              <input
-                className="inputCompteText"
-                type="text"
-                placeholder="Téléphone Portable"
-                value={editData.telephonePortable}
-                onChange={(e) =>
-                  handleInputChange("telephonePortable", e.target.value)
-                }
-                readOnly={!isEditMode}
-              />
             </div>
           </div>
         </div>

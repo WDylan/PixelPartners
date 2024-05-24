@@ -2,10 +2,13 @@
   height: 100vh;
   display: flex;
   border: solid 1px;
-  background-color: #222831;
+  background: linear-gradient(#467B2E, #F8F8FF);
+  border: 3px solid #467B2E;
+  color: #222930;
   flex-direction: row;
   border-radius: 2%;
-  border-right: 1px solid #81e883;
+  border-right: 1px solid #F8F8FF;
+  margin-top: 11em;
 }
 
 .parametres {
@@ -14,21 +17,21 @@
   flex-direction: column;
   align-items: flex-start;
   text-decoration: none;
-  color: #59a52c;
+  color: #222930;
 }
 .parametres h2 {
   padding-left: 0.5em;
 }
 .parametres a {
   text-decoration: none;
-  color: #59a52c;
+  color: #222930;
   font-weight: bold;
   width: 100%;
 }
 
 .menuProfil {
   width: 100%;
-  height: 10%;
+  height: 7%;
   font-size: 1.2em;
   text-align: left;
   display: flex;
@@ -37,7 +40,7 @@
 }
 
 .active {
-  background-color: #37414f;
+  background-color: #F8F8FF;
 }
 
 .profilContent {

@@ -9,7 +9,7 @@ import ProfilGaming from "./components/ProfilGaming/ProfilGaming";
 import Compte from "./components/Compte/Compte";
 import Classement from "./Views/Classement/Classement";
 import PageProfil from "./Views/PageProfil/PageProfil";
-import PageAdmin from "./Views/PageAdmin/PageAdmin.jsx";
+import AdminPanel from "./components/PanelAdmin/AdminPanel";
 import Jeu from "./Views/Jeu/Jeu";
 
 import { AuthProvider } from "./components/AuthContext";
@@ -30,7 +30,7 @@ function App() {
         </Route>
         <Route path="/classement" element={<Classement />} />
         <Route path="/jeu/:id" element={<Jeu />} />
-        <Route path="/paneladmin" element={<PageAdmin />} />
+        <Route path="/adminPanel" element={<AdminPanel />} />
       </Routes>
     </AuthProvider>
   );

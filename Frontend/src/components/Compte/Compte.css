@@ -2,8 +2,9 @@
   height: 100%;
   border-top-right-radius: 2%;
   border-bottom-right-radius: 2%;
-  background-color: #37414f;
-  border-left: 1px solid #81e883;
+  background-color: #F8F8FF;
+  border-left: 3px solid #467B2E;
+  border-right: 3px solid #467B2E;
 }
 
 .compte {
@@ -12,10 +13,14 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  border-top-right-radius: 2%;
+  border-bottom-right-radius: 2%;
 }
 
 .compte h2 {
   padding-left: 1em;
+  color: #467B2E;
+  font-size: 1.5em;
 }
 
 .comptePseudo {
@@ -25,13 +30,14 @@
 }
 
 .buttonModif {
-  background-color: #59a52c;
-  color: #222831;
+  cursor: pointer;
+  color: #F8F8FF;
+  background-color: #58A52D;
   font-weight: bold;
-  font-size: 1em;
-  height: 3em;
+  font-size: 20px;
+  height: 2.5em;
   width: 10em;
-  border-radius: 1em;
+  border-radius: 1.5em;
   margin-bottom: 2em;
   border: 1px solid #81e883;
 }
@@ -71,13 +77,17 @@
   width: 100%;
   height: 2em;
   border-radius: 0.5em;
+  background: rgba(69.91, 123.46, 46.01, 0.4);
+  border-color: #467b2e;
+  color: #222831;
 }
 
 .inputComptePseudo {
   width: 90%;
   height: 2em;
   border-radius: 0.5em;
-  background-color: #59a52c;
+  background: rgba(69.91, 123.46, 46.01, 0.4);
+  border-color: #467b2e;
   color: #222831;
   border: none;
   font-weight: bolder;
@@ -99,17 +109,27 @@
   height: 2em;
   border-radius: 0.5em;
   text-align: center;
+  background: rgba(69.91, 123.46, 46.01, 0.4);
+  border-color: #467b2e;
+  color: #222831;
 }
 
 .inputComptePays {
   width: 100%;
   height: 2em;
   border-radius: 0.5em;
+  background: rgba(69.91, 123.46, 46.01, 0.4);
+  border-color: #467b2e;
+  color: #222831;
 }
 
 .inputCompteRadio {
   height: 1em;
   border-radius: 0.5em;
+}
+
+input[type="radio"].inputCompteRadio {
+  background-color: red;
 }
 
 .compteGenre {

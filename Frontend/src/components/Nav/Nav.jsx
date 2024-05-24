@@ -157,12 +157,12 @@ function Nav() {
         </div>
 
         <BurgerMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
-        <div>
+        <div className="blockButtons">
           <button className="classement" onClick={goToClassement}>Classement</button>
           <button className="titre">Titre</button>
         </div>
 
-        <div>
+        <div className="blockButtons">
           {isAuthenticated ? (
             <>
               <button className="deconnexion" onClick={handleDeconnexion}>
