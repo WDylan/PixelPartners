@@ -1,29 +1,91 @@
-@media screen and (max-width: 425px) {
-  .navBar {
-    width: 100%;
-    height: 7em;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    background-color: #467b2e;
-  }
+.navBar {
+  font-family: "Inter";
+  width: 100%;
+  height: 121px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #467b2e;
+}
 
-  .logoNav {
-    height: 100%;
-    display: flex;
-    align-items: center;
-  }
+.logoNav {
+  height: 115px;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
 
-  .logo {
-    height: 7em;
-    width: auto;
-    cursor: pointer;
-  }
+.logo {
+  height: 100%;
+  width: auto;
+  cursor: pointer;
+}
 
+.blockButtons {
+  display: none;
+}
+
+.rechercheFonction {
+  display: none;
+}
+
+/* MEDIA QUERY POUR MOBILE PAYSAGE*/
+@media only screen and (min-width: 600px) {
+  .rechercheFonction {
+    display: block;
+    width: 25%;
+  }
+  .rechercheNav {
+    width: 90%;
+    height: 2em;
+    border-radius: 0.5em;
+    border: 1px solid #467b2e;
+    background-color: #f8f8ff;
+    color: #58a52d;
+    padding: 0 1em;
+  }
+  .rechercheNav::placeholder {
+    color: #58a52d;
+    font-weight: bold;
+    opacity: 80%;
+  }
+}
+
+/* MEDIA QUERY POUR TABLETTE*/
+@media only screen and (min-width: 900px) {
   .blockButtons {
-    display: none;
+    display: flex;
+    justify-content: space-around;
+    width: 25%;
   }
-  .divRecherche {
-    width: auto;
+  .classement,
+  .titre,
+  .deconnexion,
+  .profil,
+  .connexion,
+  .inscription {
+    height: 2em;
+    width: 45%;
+    border-radius: 0.5em;
+    color: #58a52d;
+    background-color: #f8f8ff;
+    font-weight: 600;
+    font-size: 16px;
+  }
+}
+
+/* MEDIA QUERY POUR DESKTOP*/
+@media only screen and (min-width: 1440px) {
+  .rechercheNav {
+    height: 2.5em;
+  }
+  .classement,
+  .titre,
+  .deconnexion,
+  .profil,
+  .connexion,
+  .inscription {
+    height: 2.5em;
+    width: 35%;
   }
 }

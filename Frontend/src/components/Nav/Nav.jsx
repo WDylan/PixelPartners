@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
-import "./Nav.css";
 import axios from "axios";
+import "../resetCSS.css";
+import "./Nav.css";
 
 function Nav() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -124,65 +125,69 @@ function Nav() {
   };
 
   return (
-      <div className={`navBar ${isMenuOpen ? "menu-open" : ""}`}>
-        <div className="logoNav" onClick={goToAccueil}>
-          <img className="logo" src="/img/logo/Pixel_Partners_logo.png" alt="img" />
-        </div>
-
-        <div className="rechercheFonction" ref={searchRef}>
-          <div className="divRecherche">
-            <input
-              className="rechercheNav"
-              type="text"
-              placeholder="Rechercher..."
-              value={searchTerm}
-              onChange={handleChange}
-            />
-          </div>
-          {isSearchOpen && searchResults.length > 0 && (
-            <div className="rechercheResult">
-              <h3>Résultats de la recherche :</h3>
-              <ul>
-                {searchResults.map((result) => (
-                  <li key={result.id}>
-                    <a className="jeuRecherches" href={`/jeu/${result.id}`}>
-                      {result.titre}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-
-        <BurgerMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
-        <div className="blockButtons">
-          <button className="classement" onClick={goToClassement}>Classement</button>
-          <button className="titre">Titre</button>
-        </div>
-
-        <div className="blockButtons">
-          {isAuthenticated ? (
-            <>
-              <button className="deconnexion" onClick={handleDeconnexion}>
-                Déconnexion
-              </button>
-              <button className="profil" onClick={goToProfil}>
-                Profil
-              </button>
-            </>
-          ) : (
-            <>
-              <button className="connexion" onClick={goToConnexion}>
-                Connexion
-              </button>
-              <button className="inscription" onClick={goToInscription}>
-                Inscription
-              </button>
-            </>
-          )}
-        </div>
+    <div className={`navBar ${isMenuOpen ? "menu-open" : ""}`}>
+      <div className="logoNav" onClick={goToAccueil}>
+        <img
+          className="logo"
+          src="/img/logo/Pixel_Partners_logo.png"
+          alt="img"
+        />
       </div>
+      <div className="rechercheFonction" ref={searchRef}>
+        <div className="divRecherche">
+          <input
+            className="rechercheNav"
+            type="text"
+            placeholder="Rechercher..."
+            value={searchTerm}
+            onChange={handleChange}
+          />
+        </div>
+        {isSearchOpen && searchResults.length > 0 && (
+          <div className="rechercheResult">
+            <h3>Résultats de la recherche :</h3>
+            <ul>
+              {searchResults.map((result) => (
+                <li key={result.id}>
+                  <a className="jeuRecherches" href={`/jeu/${result.id}`}>
+                    {result.titre}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+      <BurgerMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
+      <div className="blockButtons">
+        <button className="classement" onClick={goToClassement}>
+          Classement
+        </button>
+        <button className="titre">Titre</button>
+      </div>
+
+      <div className="blockButtons">
+        {isAuthenticated ? (
+          <>
+            <button className="deconnexion" onClick={handleDeconnexion}>
+              Déconnexion
+            </button>
+            <button className="profil" onClick={goToProfil}>
+              Profil
+            </button>
+          </>
+        ) : (
+          <>
+            <button className="connexion" onClick={goToConnexion}>
+              Connexion
+            </button>
+            <button className="inscription" onClick={goToInscription}>
+              Inscription
+            </button>
+          </>
+        )}
+      </div>
+    </div>
   );
 }
 export default Nav;

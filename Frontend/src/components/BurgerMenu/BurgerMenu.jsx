@@ -2,6 +2,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
+import "../resetCSS.css";
 import "./BurgerMenu.css";
 
 const BurgerMenu = ({ isOpen, toggleMenu }) => {
@@ -61,30 +62,32 @@ const BurgerMenu = ({ isOpen, toggleMenu }) => {
 
   return (
     <div className={`burger-menu ${isOpen ? "open" : ""}`}>
-      {/* Les trois lignes du menu hamburger */}
-      <div className="burger-bars" onClick={toggleMenu}>
-        <div className="bar"></div>
-        <div className="bar"></div>
-        <div className="bar"></div>
-      </div>
+      <div className="burger-menu-container">
+        {/* Les trois lignes du menu hamburger */}
+        <div className="burger-bars" onClick={toggleMenu}>
+          <div className="bar"></div>
+          <div className="bar"></div>
+          <div className="bar"></div>
+        </div>
 
-      {isOpen && (
-        <ul className="burger-menu-links">
-          <li onClick={goToAccueil}>Accueil</li>
-          <li onClick={goToClassement}>Classement</li>
-          {isAuthenticated ? (
-            <>
-              <li onClick={goToProfil}>Profil</li>
-              <li onClick={handleDeconnexion}>Déconnexion</li>
-            </>
-          ) : (
-            <>
-              <li onClick={goToInscription}>Inscription</li>
-              <li onClick={goToConnexion}>Connexion</li>
-            </>
-          )}
-        </ul>
-      )}
+        {isOpen && (
+          <ul className="burger-menu-links">
+            <li onClick={goToAccueil}>Accueil</li>
+            <li onClick={goToClassement}>Classement</li>
+            {isAuthenticated ? (
+              <>
+                <li onClick={goToProfil}>Profil</li>
+                <li onClick={handleDeconnexion}>Déconnexion</li>
+              </>
+            ) : (
+              <>
+                <li onClick={goToInscription}>Inscription</li>
+                <li onClick={goToConnexion}>Connexion</li>
+              </>
+            )}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };

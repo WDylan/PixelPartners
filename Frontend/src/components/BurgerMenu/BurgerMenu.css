@@ -6,67 +6,77 @@
 
 .bar {
   display: none;
-  width: 25px;
+  width: 30px;
   height: 3px;
-  background-color: #59a52c;
-  margin: 6px 0;
+  background-color: #222930;
+  margin: 7px 0;
   transition: 0.4s;
 }
 
 .burger-menu.open {
   display: none;
 }
-.burger-menu.open .bar:nth-child(1) {
-  transform: rotate(-45deg) translate(-6px, 6px);
-}
-
-.burger-menu.open .bar:nth-child(2) {
-  opacity: 0;
-}
-
-.burger-menu.open .bar:nth-child(3) {
-  transform: rotate(45deg) translate(-6px, -6px);
-}
-
-.burger-menu-links {
-  display: none;
-  margin-top: 3.4em;
-  opacity: 95%;
-  list-style: none;
-  background-color: #467b2e;
+.burger-menu.open .burger-bars {
   position: absolute;
-  border-left: 1px solid #f8f8ff;
-  border-right: 1px solid #f8f8ff;
-  border-bottom: 1px solid #f8f8ff;
-  display: flex;
-  flex-direction: column;
-  border-bottom-left-radius: 1em;
-  border-bottom-right-radius: 1em;
-  padding-left: 1em;
-  padding-right: 1em;
+  z-index: 1;
+  top: 0;
+  padding: 2.5em;
 }
 
-.burger-menu-links li {
-  color: #59a52c;
-  margin: 0.5em;
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (max-width: 1023px
-) {
-  .burger-menu, .bar, .burger-menu-links {
+/* MEDIA QUERY POUR MOBILE PAYSAGE / TABLETTE*/
+@media screen and (max-width: 900px) {
+  .burger-menu,
+  .bar,
+  .burger-menu-links {
     display: block;
   }
+  .burger-menu-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
 
+  .burger-menu-links {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    list-style: none;
+    background-color: #467b2e;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    font-weight: 800;
+    font-size: 28px;
+    padding-top: 5em;
+    padding-left: 1em;
+
+  }
+
+  .burger-menu-links li {
+    margin: 0.5em;
+    color: inherit;
+    text-decoration: none;
+  }
   .burger-menu.open {
     display: flex;
     justify-content: center;
   }
-}
 
-@media only screen and (max-width: 425px) {
-.burger-menu-links {
-  width: 27%;
-}  
+  .burger-menu.open .bar:nth-child(1) {
+    transform: rotate(-45deg) translate(-8px, 7px);
+  }
+
+  .burger-menu.open .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .burger-menu.open .bar:nth-child(3) {
+    transform: rotate(45deg) translate(-6px, -7px);
+  }
+  ul {
+    padding-inline-start: 0;
+  }
 }

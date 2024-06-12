@@ -1,23 +1,33 @@
 footer {
-  height: 10em;
+  height: 191px;
   width: 100%;
-  background-color: #F8F8FF;
-  color :#222930;
-  font-family: 'Inter', sans-serif;
+  background-color: #f8f8ff;
+  color: #222930;
+  font-family: "Inter", sans-serif;
   list-style: none;
   font-size: 1em;
   margin-top: 2.5em;
-  border-top: 1px solid #467B2E;
+  border-top: 1px solid #467b2e;
+}
+
+.footerLinks {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
 }
 
 .footerLink {
   display: flex;
   justify-content: space-around;
+  height: 85%;
+  width: 33%;
 }
 
 .footerLink ul {
   list-style: none;
   display: flex;
+  flex-direction: column;
   font-weight: bolder;
 }
 
@@ -29,24 +39,28 @@ footer {
 .footerSocials {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   height: 3.5em;
   align-items: center;
+  height: 85%;
+  width: 33%;
+  border-left: 2px solid #467b2e;
+  border-right: 2px solid #467b2e;
 }
 
-.facebook, 
+.facebook,
 .twitter,
 .instagram {
   cursor: pointer;
+  height: 55px;
 }
 
 .footerSlogan {
   display: flex;
   justify-content: center;
-  margin: 1em;
   font-style: italic;
-}
-@media screen and (max-width: 425px) {
-  .footerLink ul {
-   padding: 0;
-  }
+  width: 33%;
+  height: 85%;
+  padding: 0 0.5em;
+  align-items: center;
 }

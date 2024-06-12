@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "../resetCSS.css";
 import "./Footer.css";
 
 function Footer() {
